@@ -1,0 +1,166 @@
+<html>
+
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Smart MediCine</title>
+	
+	<link rel="stylesheet" href="css/medikamentenVerwalten.css">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/toggle/bootstrap-toggle.min.css" rel="stylesheet">
+	
+	<!-- Javascript -->
+     <script src="js/jquery/jquery-1.12.4.js"></script>
+     <script src="js/toggle/bootstrap-toggle.min.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+	<script src="js/intakeNotificationModal.js"></script>
+     
+     <script>
+
+     </script>
+</head>
+<body>
+<!-- 
+<div align="center">
+
+<img width="400" src="img/SmartMedicineLogo.png">
+<hr>
+</div>-->
+
+
+
+<div class="divContainer" id="divContainer"> 
+    <!-- input fields -->        
+	<div align="center">
+
+<img src="img/Akustische_Erinnerung.png">
+<hr>
+
+</div>
+
+
+	
+    <table width="100%">
+    <tr>
+    	<td width="20%"><img src="img/lautsprecher_blue.png" width="60px"> &nbsp;&nbsp;&nbsp;&nbsp;<font>Lautsprecher</font></td>
+    	<td width="20%" align="right"><input id="toggle-event" type="checkbox" data-toggle="toggle" data-size="large"  data-width="150"></td>
+    </tr>
+    </table>
+   
+    <br/>
+
+    <div id="divNotificationSoundSelection" align="center">
+    <table  style=" border-spacing: 20px; border-collapse: separate;" align="center">
+    	<tr>
+    		<td id="tdNotification1"><a id="aNotification1"></a></td>
+    		<td id="tdNotification2"><a id="aNotification2"></a></td>
+    		<td id="tdNotification3"><a id="aNotification3"></a></td>
+    	</tr>
+    	 <tr>
+    		<td width="200px" id="tdNameNot1"></td>
+    		<td width="200px" id="tdNameNot2"></td>
+    		<td width="200px" id="tdNameNot3"></td>
+    	</tr>
+    </table>
+    </div>
+    <br/>
+
+    
+    <table width="100%">
+    <tr>
+    	<td align="left"><button id="btnManageNotification" class='btn btn-primary'><font class="white">zurück</font></button></td>
+    	<td align="right"><button id="btnSaveAcousticalConfiguration" class='btn btn-success'><font class="white">speichern</font></button></td>	
+    </tr>
+    </table>
+  </div>
+  
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="btnSaveAccousticalNotification"
+style="visibility:hidden">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+     
+        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"> Status des Speichervorgangs</h4>
+      </div>
+      <div class="modal-body" align="center">
+         <font style="color:green"><b>Einstellungen erfolgreich gespeichert</b></font>
+        
+         <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCloseModal" style="visibility:hidden">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  
+<!-- Modal Start here-->
+<div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1"
+    role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span class="glyphicon glyphicon-time">
+                    </span>&nbsp;&nbsp;Bitte warten
+                 </h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info
+                    progress-bar-striped active"
+                    style="width: 100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal ends Here -->
+  
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" id="btnNotificationStatus" style="display: none;">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" 
+   data-keyboard="false" 
+   href="#">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle"><p align="center"><b>Medikamenteneinnahmezeitpunkt</b></p></h3>
+        
+      </div>
+      <div class="modal-body" align="center">
+        Sie müssen die folgenden Medikamente einnehmen:   
+        <br>
+        <br>
+        
+        <table id="tblDispenseMedicineInformation">
+        	<tr id="trMedicineName" align="center"></tr>
+        	<tr id="trMedicineIcon" align="center"></tr>
+        	<tr id="trIntakeTime" align="center"></tr>
+        	<tr id="trButtonNavigation" align="center"></tr>
+
+        </table>
+                     
+      </div>
+      <div class="modal-footer" style="visibility:hidden">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseNotificationModal">Close</button>
+        <button type="button" class="btn btn-primary">Ausgeben</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ <script type="text/javascript" src="js/accousticalSettings.js"></script>
+</body>
+</html>

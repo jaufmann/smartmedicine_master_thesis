@@ -1,0 +1,18 @@
+2016-07-25 00:39:35.854 [WARN ] [o.config.core.ConfigDispatcher] - Main openHAB configuration file 'configurations/openhab.cfg' does not exist.
+2016-07-25 00:39:35.874 [INFO ] [.o.core.internal.CoreActivator] - openHAB runtime has been started (v1.8.3).
+2016-07-25 00:39:36.854 [INFO ] [o.o.i.s.i.DiscoveryServiceImpl] - mDNS service has been started
+2016-07-25 00:39:37.175 [INFO ] [o.o.i.s.i.DiscoveryServiceImpl] - Service Discovery initialization completed.
+2016-07-25 00:39:39.359 [INFO ] [penhab.io.rest.RESTApplication] - Started REST API at /rest
+2016-07-25 00:39:47.758 [INFO ] [.o.u.w.i.servlet.WebAppServlet] - Started Classic UI at /classicui/openhab.app
+2016-07-25 01:40:08.748 [WARN ] [o.config.core.ConfigDispatcher] - Main openHAB configuration file 'configurations/openhab.cfg' does not exist.
+2016-07-25 01:40:08.760 [INFO ] [.o.core.internal.CoreActivator] - openHAB runtime has been started (v1.8.3).
+2016-07-25 01:40:09.600 [INFO ] [o.o.i.s.i.DiscoveryServiceImpl] - mDNS service has been started
+2016-07-25 01:40:09.997 [INFO ] [o.o.i.s.i.DiscoveryServiceImpl] - Service Discovery initialization completed.
+2016-07-25 01:40:12.069 [INFO ] [penhab.io.rest.RESTApplication] - Started REST API at /rest
+2016-07-25 01:40:20.637 [INFO ] [.o.u.w.i.servlet.WebAppServlet] - Started Classic UI at /classicui/openhab.app
+2016-07-25 01:42:32.258 [WARN ] [o.config.core.ConfigDispatcher] - Main openHAB configuration file 'configurations/openhab.cfg' does not exist.
+2016-07-25 01:42:32.265 [INFO ] [.o.core.internal.CoreActivator] - openHAB runtime has been started (v1.8.3).
+2016-07-25 01:42:33.196 [INFO ] [o.o.i.s.i.DiscoveryServiceImpl] - mDNS service has been started
+2016-07-25 01:42:33.499 [INFO ] [o.o.i.s.i.DiscoveryServiceImpl] - Service Discovery initialization completed.
+2016-07-25 01:42:35.645 [INFO ] [penhab.io.rest.RESTApplication] - Started REST API at /rest
+2016-07-25 01:42:44.095 [INFO ] [.o.u.w.i.servlet.WebAppServlet] - Started Classic UI at /classicui/openhab.app

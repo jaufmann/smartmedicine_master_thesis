@@ -1,0 +1,40 @@
+@CHARSET "ISO-8859-1";
+table.overview {
+	margin-left:auto; 
+    margin-right:auto;
+}
+
+table.overview td {
+	width:200px;
+}
+
+img.headerNavigation {
+	width:60px; 
+	height:60px;	
+}
+
+img.interval {
+	width:90px; 
+	height:30px;	
+}
+
+img.imgAttention{
+	width:20px; 
+	height:20px;
+}
+
+img.imgHeader {
+	width:400px;
+}
+img.transparent{
+	opacity:0.4;
+}
+ 
+font.transparent{
+	opacity:0.4;
+}
+
+form-control {
+	width:10px !important; 
+	
+}

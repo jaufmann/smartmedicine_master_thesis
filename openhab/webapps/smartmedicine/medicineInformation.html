@@ -1,0 +1,96 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Smart MediCine</title>
+    
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/medikamentenVerwalten.css">
+    
+    <!-- Javascript -->
+     <script src="js/jquery/jquery-1.12.4.js"></script>
+     <script src="js/datatable/jquery.dataTables.min.js"></script>
+     <script src="js/datatable/dataTables.bootstrap4.min.js"></script>
+	<script type = "text/javascript" src="js/smartmedicine.js" /></script>
+	<script type = "text/javascript" src="js/navigation1.js" /></script>
+		<style type="text/css">
+		#parent
+		{
+		  position: relative
+		}
+		#child_1, #child_2
+		{
+		  width: 600px;
+		  height: 70px;
+		   margin: 0 auto; 
+		}
+	</style>
+</head>
+<body>
+     <div id="divHeader"align="center">
+	</div>
+ <div class="divContainer" id="divContainer"> 
+   <div id="parent">
+      <div id="child_1"><img src="img/Medikamenten_details_logo_1.png"></div>
+   </div>
+
+
+
+     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+     
+       <thead>
+           <tr>
+                <th colspan="6	"><font>Medikamenteninformationen</font></th>
+            </tr>
+            <tr>
+                <th>Medikament</th>
+                <th>Krankheit/Beschwerde</th>
+                <th>Bestand</th>
+                <th>Sicherheitsbestand</th>
+                <th>Benachrichtigungsart</th>
+                <th>Bezugsperson</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<tr>
+        	<td id="tdMedicineName"></td>
+        	<td id="tdDisease"></td>
+        	<td id="tdStock"></td>
+        	<td id="tdSavetyStock"></td>
+        	<td id="tdPertinence"></td>
+        	<td id="tdContactType"></td>
+        	</tr>
+        </tbody>
+     </table>
+
+     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+       <thead>
+            <tr>
+                <th colspan="4"><font>Termininformationen</font></th>
+            </tr>
+            <tr>
+                <th>Anzahl Termine</th>
+                <th>Termine ausgelöst</th>
+                <th>Termine wahrgenommen</th>
+                <th>Termine verpasst</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<tr>
+        	<td id="tdIntakeTimes"></td>
+        	<td id="tdNotificationTriggered"></td>
+        	<td id="tdIntakeTriggered"></td>
+        	<td id="tdIntakeMissed"></td>
+        	</tr>
+        </tbody>
+     </table>
+     
+     
+     
+     
+		<button id="btnMedicineOverview" class='btn btn-primary'><font class="white">zurück</font></button>
+		</div>
+		
+	<!-- javascript -->
+	</body>
+</html>

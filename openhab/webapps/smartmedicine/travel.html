@@ -1,0 +1,241 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- Bootstrap Core CSS -->
+	<title>Smart MediCine</title>
+
+	<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+	<link href="css/timedropper.css" rel="stylesheet" type="text/css">
+	
+	
+    <link rel="stylesheet" href="css/medikamentenVerwalten.css">
+    <link rel="stylesheet" href="css/addMedicine.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/datepicker/default.css">
+	<link rel="stylesheet" href="css/datepicker/default.date.css">
+    
+    
+    <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/timedropper.js"></script>
+    <script type = "text/javascript" src="js/smartmedicine.js" /></script>	
+    <script type = "text/javascript" src="js/navigation1.js" /></script>
+        <script src="js/intakeNotificationModal.js"></script>
+</head>
+<body>
+<div align="center">
+<img width="" src="img/manuell_Ausgabe_header_2.png"><hr>
+</div>
+    <!-- overview of the current status -->
+    <!-- input fields -->         
+    <table>
+    <tr>
+    	<td width="100%"><font>Startdatum:</font>
+    	
+    	                <input
+                    id="1"
+                    class="datepicker form-control"
+                    name="date"
+                    type="text"
+                    autofocuss
+                    value="14 August, 2014"
+                    data-valuee="2014-08-08">
+                    
+                    </td>
+    	<td width="100%"><font>Startzeitpunkt:</font> <input type="text" class='form-control' id="alarm" /></td>
+    </tr>
+    <tr>
+    	<td width="100%">&nbsp;</td>
+    </tr>
+    <tr>
+    	<td width="100%">&nbsp;</td>
+    </tr>
+    <tr>
+    	<td width="100%"><font>Enddatum:</font>
+    	
+    	                <input
+                    id="2"
+                    class="datepicker form-control"
+                    name="date"
+                    type="text"
+                    autofocuss
+                    value="14 August, 2014"
+                    data-valuee="2014-08-08">
+    	
+    	</td>
+    	<td width="100%"><font>Endzeitpunkt:</font> <input type="text" class='form-control' id="alarm1" /></td>
+    </tr>
+    </table>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <table width="100%" id="tblNavigation">
+    <tr>
+    <td align="left" id="tdBackFirstAddMedicine"><button id="btnStart" class='btn btn-primary' ><font class="white">zurück</font></button></td> 
+    	<td align="left" id="tdBackAddIntakeTime"></td>
+    	<td align="right""><button id="btnForwardIntakeTimeVacation" class='btn btn-success'><font class="white">weiter</font></button></td>	
+    </tr>
+    </table>
+    
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="saveStatusModal" style="display: none;">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"> Informationen gespeichert</h4>
+      </div>
+      <div class="modal-body" align="center">   
+           <font style="size:40"> Weitere Termine eintragen?</font>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" id="btnYes">Ja</button>
+        <button type="button" class="btn btn-primary btn-lg" id="btnNo">Nein</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+ 
+
+
+
+    <section class="section">
+
+        <form>
+            
+            
+        </form>
+
+     
+        <div id="container"></div>
+
+
+    </section>
+
+
+    <script src="js/datepicker/picker.js"></script>
+    <script src="js/datepicker/picker.date.js"></script>
+    <script src="js/datepicker/legacy.js"></script>
+
+    <script type="text/javascript">
+ // Extend the default picker options for all instances.
+    $.extend($.fn.pickadate.defaults, {
+        monthsFull: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'July', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+        weekdaysShort: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+        today: 'heute',
+        clear: 'löschen',
+        close: 'schließen',
+        formatSubmit: 'yyyy/mm/dd'
+      })
+    
+    var starDateUnix = "";
+    var endDateUnix= "";
+    var endDate = new Date();
+    var startDate = new Date();
+
+    var $endDate = $( '#2' ).pickadate({
+        formatSubmit: 'yyyy/mm/dd',
+        // min: [2015, 7, 14],
+        
+        container: '#container',
+        // editable: true,
+        closeOnSelect: false,
+        closeOnClear: false,
+        selectYears : true,
+        selectMonths : true,
+        onSet: function(context) {
+        	endDateUnix = context.select;
+    	},
+    	
+    	onClose: function(){
+    		localStorage.setItem("endDateUnix", endDateUnix);
+    	},
+    })
+    
+        var $startDate = $( '#1' ).pickadate({
+            formatSubmit: 'yyyy/mm/dd',
+            // min: [2015, 7, 14],
+            
+            container: '#container',
+            // editable: true,
+            closeOnSelect: false,
+            closeOnClear: false,
+            onSet: function(context) {      
+              	var pickerEndDate = $endDate.pickadate('picker');
+              	pickerEndDate.set('select', $startDate.pickadate('picker').get("select"));
+              	pickerEndDate.set('min', $startDate.pickadate('picker').get("select"));
+              	startDateUnix = context.select;
+              },
+              
+             onClose: function(){
+            	 localStorage.setItem("startDateUnix", startDateUnix); 
+             },
+        })
+        
+          
+        $(document).ready(function(){
+        	var pickerStartDate = $startDate.pickadate('picker');
+        	var date = new Date();
+        	pickerStartDate.set("select", date);
+        })
+
+       // var picker = $input.pickadate('picker')
+        //picker.set('select', '14 October, 2014')
+	
+	        // picker.open()
+
+        // $('button').on('click', function() {
+        //     picker.set('disable', true);
+        // });
+
+    </script>
+    
+          <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" id="btnNotificationStatus" style="display: none;">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" 
+   data-keyboard="false" 
+   href="#">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle"><p align="center"><b>Medikamenteneinnahmezeitpunkt</b></p></h3>
+        
+      </div>
+      <div class="modal-body" align="center">
+        Sie müssen die folgenden Medikamente einnehmen:   
+        <br>
+        <br>
+        
+        <table id="tblDispenseMedicineInformation">
+        	<tr id="trMedicineName" align="center"></tr>
+        	<tr id="trMedicineIcon" align="center"></tr>
+        	<tr id="trIntakeTime" align="center"></tr>
+        	<tr id="trButtonNavigation" align="center"></tr>
+
+        </table>
+                     
+      </div>
+      <div class="modal-footer" style="visibility:hidden">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseNotificationModal">Close</button>
+        <button type="button" class="btn btn-primary">Ausgeben</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

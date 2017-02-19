@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>Smart MediCine</title>
+     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+     <script type="text/javascript">
+     
+     $(document).ready(function(){
+    	    $('#btnConfiguration').click(function(){
+    	        window.location='test.html'
+    	    });
+     })
+
+     
+     </script>
+  </head>
+  <body>     
+   
+   <!-- Navigationsfelder -->
+   <div id="mainContainer">
+   <div class="divContainer" id="divContainer"> 
+ 
+   <!-- Überschrift -->
+   <table class="tableContainerMain"> 
+   	<tr class="head">
+ 	<td>	
+     <button id="btnManageMedicine" class='size btn btn-primary'><img width="300" src="img/medikamente_logo.png"></img></button>
+    </td>
+    </tr>
+    <tr  class="head">
+ 	<td colspan="2">	
+     <button id="btnConfiguration" class='size btn btn-warning'><img width="300" src="img/einstellungen_logo.png"></button>
+    </td>
+    </tr>
+   </table>
+   </div>	
+   </div>
+  </body>
+</html>

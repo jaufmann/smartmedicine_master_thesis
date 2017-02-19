@@ -1,0 +1,10 @@
+sitemap demo label="Demo House"
+{
+	Frame {
+		Switch item=testSound
+		Switch item=MilightSwitch label="LED1"
+		Selection item=lightColorName mappings=["white"="white", "red"="red", "green"="green", "blue"="blue", "magenta"="magenta"]
+		Switch item=hue
+
+	}
+}

@@ -1,0 +1,278 @@
+import org.openhab.model.script.actions.Timer
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+import org.joda.time.*
+import java.lang.Integer.*
+import java.lang.Math
+import org.joda.time.DateTime
+import java.util.List
+import java.util.ArrayList
+
+var Timer myTimer=null
+var String lightState = ""
+
+
+rule "Test JSONPath"
+when 
+   Time cron "0/20 * * * * ? "   // every minute
+then
+  //get all intaketime information to check, if the intake time is overdue
+  var intakeTimeInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getIntakeTimeInformation")
+  var int numberIntakeTimes = Integer::parseInt(transform("JSONPATH","$.numberIntakeTimes", intakeTimeInformation ))
+   
+  var int k = -1
+  var long intakeTimeUnixTimeStamp = 0
+  var long currentTimeUnixTimeStamp = now.getMillis() / 1000L
+  var ArrayList<String> listMedicineInformations = newArrayList()
+  
+  var boolean notifikationTriggered = false
+  var boolean triggerAcousticalNotification = false
+  var boolean triggerVisualNotification = false
+
+  //checking the intkate time with the current time as long as all intake time entries from the json result are looped trough
+  while ((k=k+1) < numberIntakeTimes) {
+     intakeTimeUnixTimeStamp= Long::parseLong(transform("JSONPATH","$.intaketime["+k+"].intakeTime", intakeTimeInformation ))
+     notifikationTriggered = Boolean::parseBoolean(transform("JSONPATH","$.intaketime["+k+"].notificationTriggered", intakeTimeInformation))
+     
+     var medicineID = Integer::parseInt(transform("JSONPATH","$.intaketime["+k+"].medicineID", intakeTimeInformation ))
+     var intakeTimeID = Integer::parseInt(transform("JSONPATH","$.intaketime["+k+"].intakeTimeID", intakeTimeInformation )
+     
+     //get the related medicine information
+     var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByMedicineID/"+medicineID) 
+     var medicineName = transform("JSONPATH","$.medicineName", medicineInformation )
+     var note = transform("JSONPATH","$.note", medicineInformation )
+     var boxID = Integer::parseInt(transform("JSONPATH","$.boxID", medicineInformation))
+
+     println("current"+currentTimeUnixTimeStamp)
+     println("intakeTime"+intakeTimeUnixTimeStamp)
+
+     if(intakeTimeUnixTimeStamp<currentTimeUnixTimeStamp && notifikationTriggered != true) {
+	listMedicineInformations.add(0, "{\"medicineID\":"+medicineID+", \"intakeTimeID\":"+intakeTimeID+",\"medicineName\":\""+medicineName+"\",\"note\":\""+note+"\",\"boxID\":"+boxID+",\"intakeTime\":"+intakeTimeUnixTimeStamp+"}")
+	
+
+	sendCommand(arrTriggeredMedicine, "{\"triggeredMedicine\":"+listMedicineInformations+"}")
+	
+	if(notificationTriggered.state!=ON){
+		sendCommand(notificationTriggered, ON)
+	}
+
+	sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/setNotificationStatus/"+intakeTimeID+"/1") 
+
+	if(boxID==1){
+		sendCommand(intakeNoteBox1, note)
+		executeCommandLine("python@@/opt/openhab/configurations/scripts/led_1_on.py")
+	}
+
+	if(boxID==2){
+		sendCommand(intakeNoteBox2, note)
+		executeCommandLine("python@@/opt/openhab/configurations/scripts/led_2_on.py")
+	}
+	
+	if(boxID==3){
+		sendCommand(intakeNoteBox3, note)
+		executeCommandLine("python@@/opt/openhab/configurations/scripts/led_3_on.py")
+	}
+     }   
+  }
+end
+
+
+
+rule "Error message if the main medicine chamber is not in the slot"
+when
+	Item boxNotFound received command 
+then
+	executeCommandLine("/opt/openhab/configurations/scripts/tts.sh@@Die Medikamentenennahmebox konnte nichtt gefunden werden@@", 2000)
+end
+
+rule "Check the status of the main medicine chamber"
+when
+	Item medicineChamberStatus received command 
+then
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/hall.py")
+end
+
+
+rule "Dispense medicine of box 1"
+when
+	Item dispenseMedicineBox1 received command 
+then
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo.py")
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/led_1_off.py")
+end
+
+rule "Check the status for the dispense box (1)"
+when
+	Item checkMainBoxStatus1 received command 
+then
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/hall.py")
+end
+
+
+rule "Dispense medicine of box 2"
+when
+	Item dispenseMedicineBox2 received command 
+then
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo2.py")
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/led_2_off.py")
+end
+
+rule "Check the status for the dispense box (2)"
+when
+	Item checkMainBoxStatus2 received command 
+then
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/hall2.py")
+end
+
+
+rule "Dispense medicine of box 3"
+when
+	Item dispenseMedicineBox3 received command 
+then
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo3.py")
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/led_3_off.py")
+end
+
+rule "Check the status for the dispense box (2)"
+when
+	Item checkMainBoxStatus3 received command 
+then
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/hall3.py")
+end
+
+
+rule "play note information for the box number 1"
+when
+	Item playNote1 received command 
+then
+	sendCommand(playStatus, OFF)
+	executeCommandLine("/opt/openhab/configurations/scripts/tts.sh@@"+intakeNoteBox1.state+"@@", 2000)
+end
+
+
+rule "play note information for the box number 2"
+when
+	Item playNote2 received command 
+then
+	sendCommand(playStatus, OFF)
+	executeCommandLine("/opt/openhab/configurations/scripts/tts.sh@@"+intakeNoteBox2.state+"@@", 2000)
+end
+
+rule "play note information for the box number 3"
+when
+	Item playNote3 received command 
+then
+	sendCommand(playStatus, OFF)
+	executeCommandLine("/opt/openhab/configurations/scripts/tts.sh@@"+intakeNoteBox3.state+"@@", 2000)
+end
+
+rule "check Box Status"
+when
+	Item checkBoxStatus received command 
+then
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/hall.py")
+end
+
+rule "Trigger the notification "
+when
+    Item notificationTriggered received command 
+then
+	if(notificationTriggered.state==ON){
+		
+		//get all settings informations to check, if the light or the sound notification should be triggered
+  		var settings = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getNotificationConfiguration")
+  		var String lightColor = transform("JSONPATH","$.lightColor", settings)
+  		var String notificationSoundName = transform("JSONPATH","$.notificationSoundName", settings)
+  		var boolean useSpeaker = Boolean::parseBoolean(transform("JSONPATH","$.useSpeaker", settings))
+  		var boolean useLight = Boolean::parseBoolean(transform("JSONPATH","$.useLight", settings))
+		
+
+		if(useSpeaker==true){
+			sendCommand(playStatus, ON)
+			createTimer(now.plusSeconds(2)) [|    
+       				sendCommand(AccousticalTest, notificationSoundName)
+   		   	 ]
+		}
+
+		if(useLight==true){
+			lightState==OFF
+			sendCommand(lightColorName, lightColor)
+		}
+
+
+	
+	} else if(notificationTriggered.state==OFF){
+		sendCommand(playStatus, OFF)
+		
+		sendCommand(hueColor, new HSBType(new DecimalType(0),new PercentType(0),new PercentType(0)))		
+		if(lightState==OFF){ 
+			createTimer(now.plusSeconds(5)) [|    
+       				sendCommand(hue, OFF)
+   		   	 ]
+		}
+	}	
+end
+
+rule "lightColor selection"
+when
+    Item lightColorName received command 
+then
+
+
+	if (receivedCommand=="white") { 
+	       	sendCommand(hueColor, new HSBType(new DecimalType(0),new PercentType(0),new PercentType(0)))		
+		if(lightState==OFF){ 
+			createTimer(now.plusSeconds(5)) [|    
+       				sendCommand(hue, OFF)
+   		   	 ]
+		}
+	}
+
+	if (receivedCommand=="red") { 
+		lightState = hue.state
+    		sendCommand(hueColor, HSBType::RED)	
+	}
+	if (receivedCommand=="green") { 
+		lightState = hue.state
+    		sendCommand(hueColor, HSBType::GREEN)
+	}
+	if (receivedCommand=="blue") {
+		lightState = hue.state 
+    		sendCommand(hueColor, HSBType::BLUE)
+	}
+	if (receivedCommand=="violette") { 
+		lightState = hue.state
+    		sendCommand(hueColor, new HSBType(new DecimalType(286),new PercentType(99),new PercentType(100))) 
+	}
+end
+
+rule "Test notification sound"
+when
+    Item AccousticalTest received command 
+then
+
+   //if(testNotificationSound==OFF){
+  //	createTimer(now.plusSeconds(30)) [|    
+  //     		sendCommand(playStatus,OFF)
+//		sendCommand(notificationTriggered, OFF)
+//   	]
+ //  }
+
+   if (receivedCommand=="notification1") { 
+	while(playStatus.state==ON){
+   		executeCommandLine("mpg321@@/opt/openhab/sounds/notification_1.mp3")
+        	 Thread::sleep(1000)
+	}
+   } else if (receivedCommand=="notification2"){
+	while(playStatus.state==ON){
+		 executeCommandLine("mpg321@@/opt/openhab/sounds/notification_2.mp3")
+		 Thread::sleep(1000)
+	}
+   } else if (receivedCommand=="notification3"){
+ 	while(playStatus.state==ON){ 
+		executeCommandLine("mpg321@@/opt/openhab/sounds/notification_3.mp3")
+		Thread::sleep(1000)
+	}   	
+   }
+end

@@ -1,0 +1,46 @@
+Switch testSound
+Switch MilightSwitch	{milight="bridge1;6;whiteMode"}
+String lightColorName 
+String AccousticalTest 
+Color  Light_scene_ColorSelect "Scene Selector"   <colorwheel> (MiLight)    {milight="bridge1;6;rgb"} 
+
+Switch hue {hue="2"}
+Color  hueColor    {hue="2"}
+
+Switch dispenseMedicineBox1
+Switch dispenseMedicineBox2
+Switch dispenseMedicineBox3
+
+Switch playStatus
+Switch dispenseMedicine
+Switch boxStatus
+
+String box1MedicineInformation
+String box2MedicineInformation
+String box3MedicineInformation
+String arrTriggeredBoxIDs
+
+String intakeNoteBox1
+String intakeNoteBox2
+String intakeNoteBox3
+
+Switch playNote1
+Switch playNote2
+Switch playNote3
+
+Switch checkBoxStatus 
+
+Switch boxNotFound 
+
+String arrTriggeredMedicine
+
+Switch medicineChamberStatus
+
+Switch notificationTriggered
+
+Switch testNotificationSound
+
+
+Switch checkMainBoxStatus1
+Switch checkMainBoxStatus2
+Switch checkMainBoxStatus3

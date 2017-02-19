@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="https://mottie.github.io/Keyboard/css/keyboard-basic.css">
+     <script src="js/jquery/jquery-1.12.4.js"></script>
+
+<script src="https://mottie.github.io/Keyboard/js/jquery.keyboard.js"></script>
+<script src="https://mottie.github.io/Keyboard/js/jquery.keyboard.extension-extender.js"></script>
+<script src="https://mottie.github.io/Keyboard/js/jquery.keyboard.extension-typing.js"></script>
+
+
+
+
+<style type="text/css">
+/* jQuery UI is not loaded! 
+  this demo uses the "keyboard-basic.css" theme
+  ( https://github.com/Mottie/Keyboard/blob/master/css/keyboard-basic.css )
+  to add a basic white theme to the keyboard
+
+  The theme includes css to position the keyboard
+  at the botom of the browser window
+*/
+
+body {
+  margin-top: 10px;
+}
+
+#wrap {
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="wrap">
+  <input id="keyboard" type="text" placeholder="Enter something..." />
+</div>
+
+
+<script type="text/javascript">
+
+$('#keyboard').keyboard({
+    layout: 'ipad',
+    customLayout: {
+'normal': [
+			'q w e r t y u i o p {bksp}',
+			'a s d f g h j k l {enter}',
+			'{s} z x c v b n m , . {s}',
+			'{meta1} {space} {meta1} {accept}'
+		],
+		'shift': [
+			'Q W E R T Y U I O P {bksp}',
+			'A S D F G H J K L {enter}',
+			'{s} Z X C V B N M ! ? {s}',
+			'{meta1} {space} {meta1} {accept}'
+		],
+		'meta1': [
+			'1 2 3 4 5 6 7 8 9 0 {bksp}',
+			'- / : ; ( ) \u20ac & @ {enter}',
+			'{meta2} . , ? ! \' " {meta2}',
+			'{normal} {space} {normal} {accept}'
+		],
+		'meta2': [
+			'[ ] { } # % ^ * + = {bksp}',
+			'_ \\ | ~ &lt; &gt; $ \u00a3 \u00a5 {enter}',
+			'{meta1} . , ? ! \' " {meta1}',
+			'{normal} {space} {normal} {accept}'
+		]
+    },
+    usePreview: false,
+    acceptValid: true,
+    validate: function(kb, val) {
+      return val.length > 3;
+    }
+  })
+  // activate the typing extension
+  .addTyping({
+    showTyping: true,
+    delay: 250
+  })
+  .addExtender({
+    layout: 'numpad',
+    showing: false,
+    reposition: true
+  });
+
+</script>
+
+</body>
+</html>
