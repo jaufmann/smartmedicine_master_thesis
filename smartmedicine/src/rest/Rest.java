@@ -36,6 +36,7 @@ import classes.Medicine;
 import classes.NotificationSetting;
 import database.DBStatements;
 
+
 @Path("/medicineinformation")
 public class Rest {
 	  private DBStatements dbstatement = null;
