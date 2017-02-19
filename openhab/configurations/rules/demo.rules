@@ -17,6 +17,8 @@ rule "Test JSONPath"
 when 
    Time cron "0/20 * * * * ? "   // every minute
 then
+  //sendMail("wjaufmann166@gmail.com", "This is the email subject", "This is the email body")
+
   //get all intaketime information to check, if the intake time is overdue
   var intakeTimeInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getIntakeTimeInformation")
   var int numberIntakeTimes = Integer::parseInt(transform("JSONPATH","$.numberIntakeTimes", intakeTimeInformation ))
@@ -182,6 +184,9 @@ then
 		
 		//get all settings informations to check, if the light or the sound notification should be triggered
   		var settings = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getNotificationConfiguration")
+		var contactPerson = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getContactPerson") 
+		
+		
   		var String lightColor = transform("JSONPATH","$.lightColor", settings)
   		var String notificationSoundName = transform("JSONPATH","$.notificationSoundName", settings)
   		var boolean useSpeaker = Boolean::parseBoolean(transform("JSONPATH","$.useSpeaker", settings))
@@ -193,13 +198,30 @@ then
 			createTimer(now.plusSeconds(2)) [|    
        				sendCommand(AccousticalTest, notificationSoundName)
    		   	 ]
+
 		}
 
 		if(useLight==true){
 			lightState==OFF
 			sendCommand(lightColorName, lightColor)
+
 		}
 
+
+		createTimer(now.plusSeconds(30)) [|   
+			  if(notificationTriggered.state!=OFF){
+       				sendCommand(hue, OFF)
+				sendCommand(AccousticalTest, notificationSoundName)
+				sendCommand(playStatus,OFF)
+				sendCommand(notificationTriggered, OFF)
+				var email = transform("JSONPATH","$.psychologicalParent[0].email", contactPerson)
+				var name  = transform("JSONPATH","$.psychologicalParent[0].name", contactPerson)
+				var medicineName = arrTriggeredMedicine.state							
+
+				sendMail(email, "Eine wichtige Einnahme wurde verpasst", "Hallo "+name+", Es wurde eine wichtiges Medikament vergessen"+medicineName)
+			    }
+   			 ]
+		
 
 	
 	} else if(notificationTriggered.state==OFF){
@@ -252,11 +274,11 @@ when
     Item AccousticalTest received command 
 then
 
-   //if(testNotificationSound==OFF){
-  //	createTimer(now.plusSeconds(30)) [|    
-  //     		sendCommand(playStatus,OFF)
+    //if(testNotificationSound==OFF){
+   //	createTimer(now.plusSeconds(5)) [|    
+   //    		sendCommand(playStatus,OFF)
 //		sendCommand(notificationTriggered, OFF)
-//   	]
+ //  	]
  //  }
 
    if (receivedCommand=="notification1") { 
