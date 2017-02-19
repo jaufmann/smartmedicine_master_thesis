@@ -1,0 +1,132 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Smart MediCine</title>
+    
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/medikamentenVerwalten.css">
+    
+    
+    <!-- Javascript -->
+     <script src="js/jquery/jquery-1.12.4.js"></script>
+     <script src="js/datatable/jquery.dataTables.min.js"></script>
+     <script src="js/datatable/dataTables.bootstrap4.min.js"></script>
+	<script type = "text/javascript" src="js/smartmedicine.js" /></script>
+	<script type = "text/javascript" src="js/navigation1.js" /></script>
+	<script src="js/bootstrap.min.js"></script>
+    <script src="js/intakeNotificationModal.js"></script>
+	<style type="text/css">
+
+		#parent
+		{
+
+		  position: relative;
+		}
+		#child_1, #child_2
+		{
+		  width: 400px;
+		  height: 70px;
+		  margin: 0 auto; 
+		}
+		
+		#parent_2
+		{
+
+		  position: absolute;
+		}
+		#child_2
+		{
+		  width: 600px;
+		  height: 70px;
+		  position: absolute;
+		}
+
+	</style>
+</head>
+<body>
+     <div id="divHeader"align="center">
+	</div>
+ <div class="divContainer" id="divContainer"> 
+    <div id="parent">
+      <div id="child_1"><img src="img/Termine_löschen_1_Llogo.png"></div>
+    </div>
+    
+          <div id="parent_2">
+      <div id="child_2">
+       <table>
+      
+      <tr>	
+       <td><button id="btnAddMedicineForwardFirst" class='btn btn-primary' value="hi"><img width="30" height="30" src="img/icon-calendar-white.png"></button></td>
+    	<td><button id="btnAddMedicineForwardFirst" class='btn btn-primary' value="hi"><img width="30" height="30" src="img/pill-512.png"></button></td>
+    
+       
+      </tr>
+      </table>
+      </div>
+      </div>
+     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+     
+       <thead>
+            <tr>
+                <th><font>Medikament</font></th>
+                <th><font>Beschwerde</font></th>
+                <th><font>Löschen</font></th>
+            </tr>
+        </thead>
+     </table>
+     
+       <table width="100%">
+    <tr>
+    	<td align="left" id="tdBackFirstAddMedicine"><button id="btnManageIntakeTime" class='btn btn-primary'><font class="white">zurück</font></button></td>
+    	<td align="right" id="tdForwardFirstAddMedicine">
+
+    	</td>	
+    </tr>
+    </table>
+     
+		
+		</div>
+
+
+      <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" id="btnNotificationStatus" style="display: none;">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" 
+   data-keyboard="false" 
+   href="#">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle"><p align="center"><b>Medikamenteneinnahmezeitpunkt</b></p></h3>
+        
+      </div>
+      <div class="modal-body" align="center">
+        Sie müssen die folgenden Medikamente einnehmen:   
+        <br>
+        <br>
+        
+        <table id="tblDispenseMedicineInformation">
+        	<tr id="trMedicineName" align="center"></tr>
+        	<tr id="trMedicineIcon" align="center"></tr>
+        	<tr id="trIntakeTime" align="center"></tr>
+        	<tr id="trButtonNavigation" align="center"></tr>
+
+        </table>
+                     
+      </div>
+      <div class="modal-footer" style="visibility:hidden">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseNotificationModal">Close</button>
+        <button type="button" class="btn btn-primary">Ausgeben</button>
+      </div>
+    </div>
+  </div>
+</div>
+   
+   
+   
+	</body>
+</html>

@@ -1,0 +1,162 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Smart MediCine</title>
+	
+	<link rel="stylesheet" href="css/medikamentenVerwalten.css">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/toggle/bootstrap-toggle.min.css" rel="stylesheet">
+	
+	<!-- Javascript -->
+     <script src="js/jquery-1.9.1.min.js"></script>
+     <script src="js/toggle/bootstrap-toggle.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/intakeNotificationModal.js"></script>
+	     
+    
+</head>
+<body>
+
+
+ <div class="divContainer" id="divContainer"> 
+ 
+ <div align="center">
+   	<img src="img/Visuelle_Erinnerungen.png">
+   	</div>
+    <!-- input fields -->   
+    
+
+    <hr>    
+
+    <table width="100%">
+    <tr>
+
+    	<td width="20%"><img src="img/blue_2.png" width="40px"> &nbsp;&nbsp;&nbsp;&nbsp;<font>Lichtfarbe</font></td>
+    	<td width="20%" align="right"> <input id="toggle-event" type="checkbox" data-toggle="toggle" data-size="large" data-width="150"></td>
+    </tr>
+    </table>
+    <br/>
+    <br/>
+    
+    <!-- Displaying the different lamp colors to choose -->
+	<div id="lighSelection" align="center" style="background-color:#FFFFFF">
+	<table>
+		<tr>
+		  	<td><a id="aViolette"></a></td>
+		    <td><a id="aRed"></a></td>
+		    <td><a id="aBlue"></a></td>
+		    <td><a id="aGreen"></a></td>
+		</tr>
+	  	<tr>
+			<td align="center" id="tdViolette"></td>
+			<td align="center" id="tdRed"></td>
+			<td align="center" id="tdBlue"></td>
+			<td align="center" id="tdGreen"></td>
+		</tr>
+	</table>
+	</div>
+    <br/>
+    <br/> 
+    <table width="100%">
+    <tr>
+    	<td align="left"><button id="btnManageNotification" class='btn btn-primary'><font class="white">zurück</font></button></td>
+    	<td align="right"><button id="btnSaveVisualConfiguration" class='btn btn-success'><font class="white">speichern</font></button></td>	
+    </tr>
+    </table>
+  </div>
+  
+  
+  
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="btnSaveVisualNotification"
+style="visibility:hidden">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+     
+        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"> Status des Speichervorgangs</h4>
+      </div>
+      <div class="modal-body" align="center">
+         <font style="color:green"><b>Einstellungen erfolgreich gespeichert</b></font>
+        
+         <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCloseModal" style="visibility:hidden">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal Start here-->
+<div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1"
+    role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span class="glyphicon glyphicon-time">
+                    </span>&nbsp;&nbsp;Bitte warten
+                 </h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info
+                    progress-bar-striped active"
+                    style="width: 100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal ends Here -->
+
+
+  	</div> 
+  	
+  	
+  	
+  	          <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" id="btnNotificationStatus" style="display: none;">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" 
+   data-keyboard="false" 
+   href="#">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle"><p align="center"><b>Medikamenteneinnahmezeitpunkt</b></p></h3>
+        
+      </div>
+      <div class="modal-body" align="center">
+        Sie müssen die folgenden Medikamente einnehmen:   
+        <br>
+        <br>
+        
+        <table id="tblDispenseMedicineInformation">
+        	<tr id="trMedicineName" align="center"></tr>
+        	<tr id="trMedicineIcon" align="center"></tr>
+        	<tr id="trIntakeTime" align="center"></tr>
+        	<tr id="trButtonNavigation" align="center"></tr>
+
+        </table>
+                     
+      </div>
+      <div class="modal-footer" style="visibility:hidden">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseNotificationModal">Close</button>
+        <button type="button" class="btn btn-primary">Ausgeben</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="js/lightSelection.js"></script>
+</html>

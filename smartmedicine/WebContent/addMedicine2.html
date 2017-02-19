@@ -1,0 +1,89 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Smart MediCine</title>
+    
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="css/medikamentenVerwalten.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/addMedicine.css" rel="stylesheet">
+    
+   	<script src="js/jquery/jquery-1.12.4.js"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script type = "text/javascript" src="js/navigation1.js" /></script>		
+    <script src="js/smartmedicine.js" type="text/javascript"></script> 	
+</head>
+<body>
+<!-- 
+   <div align="center">
+
+<img width="400" src="img/SmartMedicineLogo.png"><hr>
+</div>
+-->
+    <div class="divContainer" id="divContainer"> 
+	<table class="overview">
+	<tr>
+		<td><img class="headerNavigation transparent" src="img/pills-blue.png"><font style="color:2875bd" class="transparent"><b>Allgemein</b></font></h4></td>
+		<td><img class="headerNavigation" src="img/Information_icon.png"><font style="color:2875bd"><b>Info</b></font></td>
+		<td id="tdIntakeTimeInformation"><img class="headerNavigation transparent"  src="img/clock.png"><font style="color:2875bd" class='transparent'><b>Zeitpunkt</b></font></h4></td>
+	</tr>
+	</table>
+	<hr>
+	
+	
+    <!-- input fields -->         
+    <table>
+    <tr>
+    	<td width="100%"><font>Notiz:</b></font> <input class='form-control' type="text"  id="txtNote"/> </td>
+    </tr>
+    <tr>
+    	<td>&nbsp;</td>
+    </tr>
+    <tr>
+    	<td width="100%"><a id="savetyStock"></a><font>Bestand:</font> <input class='form-control'  type="number" min="1" id="txtStock"/></td>
+    	<td width="100"></td>
+    </tr>
+        <tr>
+    	<td>&nbsp;</td>
+    </tr>
+    <tr>
+    	<td width="100%"><font>Automatische Nachlieferung ab:</b></font> <input class='form-control' type="number" min="1"  id="txtSavetyStock"/> </td>
+    </tr>
+    </table>
+    <br/>
+    
+    <table width="100%">
+    <tr>
+    	<td align="left" id="tdBackToFirstAddMedicine"><button id="btnBackToFirstAddMedicine" class='btn btn-primary'><font class="white">zurück</font></button></td>
+    	<td align="right" id="tdAddMedicineForwardSecond"><button id="btnAddMedicineForwardSecond" class='btn btn-warning'><font class="white">weiter</font></button></td>	
+    </tr>
+    </table>
+    
+    
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="btnOpenEditMedicineModal"
+style="visibility:hidden">
+  Launch demo modal
+</button>
+  
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+     
+        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"> Status des Speichervorgangs</h4>
+      </div>
+      <div class="modal-body" align="center">
+         <font style="color:green"><b>Medikamenteninformationen erfolgreich aktualisiert</b></font>
+        
+         <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCloseEditMedicineModal" style="visibility:hidden">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  </div>
+
+</body>
+</html>
