@@ -9,8 +9,13 @@ import org.joda.time.DateTime
 import java.util.List
 import java.util.ArrayList
 
+import java.util.HashMap
+import java.util.LinkedHashMap
+
 var Timer myTimer=null
 var String lightState = ""
+var ArrayList<String> listTriggeredMedicineNames = newArrayList()
+var ArrayList<Integer> listTriggeredMedicineIDs = newArrayList()
 
 
 rule "Test JSONPath"
@@ -18,6 +23,7 @@ when
    Time cron "0/20 * * * * ? "   // every minute
 then
   //sendMail("wjaufmann166@gmail.com", "This is the email subject", "This is the email body")
+
 
   //get all intaketime information to check, if the intake time is overdue
   var intakeTimeInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getIntakeTimeInformation")
@@ -50,8 +56,10 @@ then
      println("intakeTime"+intakeTimeUnixTimeStamp)
 
      if(intakeTimeUnixTimeStamp<currentTimeUnixTimeStamp && notifikationTriggered != true) {
-	listMedicineInformations.add(0, "{\"medicineID\":"+medicineID+", \"intakeTimeID\":"+intakeTimeID+",\"medicineName\":\""+medicineName+"\",\"note\":\""+note+"\",\"boxID\":"+boxID+",\"intakeTime\":"+intakeTimeUnixTimeStamp+"}")
 	
+	listMedicineInformations.add(0, "{\"medicineID\":"+medicineID+", \"intakeTimeID\":"+intakeTimeID+",\"medicineName\":\""+medicineName+"\",\"note\":\""+note+"\",\"boxID\":"+boxID+",\"intakeTime\":"+intakeTimeUnixTimeStamp+"}")
+	listTriggeredMedicineNames.add(0, medicineName)
+	listTriggeredMedicineIDs.add(0, medicineID)
 
 	sendCommand(arrTriggeredMedicine, "{\"triggeredMedicine\":"+listMedicineInformations+"}")
 	
@@ -206,19 +214,66 @@ then
 			sendCommand(lightColorName, lightColor)
 
 		}
-
-
-		createTimer(now.plusSeconds(30)) [|   
+		
+		
+		createTimer(now.plusSeconds(30)) [|   	  
+			 
 			  if(notificationTriggered.state!=OFF){
        				sendCommand(hue, OFF)
 				sendCommand(AccousticalTest, notificationSoundName)
 				sendCommand(playStatus,OFF)
 				sendCommand(notificationTriggered, OFF)
-				var email = transform("JSONPATH","$.psychologicalParent[0].email", contactPerson)
-				var name  = transform("JSONPATH","$.psychologicalParent[0].name", contactPerson)
-				var medicineName = arrTriggeredMedicine.state							
+				
+				var medicineName = arrTriggeredMedicine.state
+			
 
-				sendMail(email, "Eine wichtige Einnahme wurde verpasst", "Hallo "+name+", Es wurde eine wichtiges Medikament vergessen"+medicineName)
+				executeCommandLine("python@@/opt/openhab/configurations/scripts/led_1_off.py")
+				executeCommandLine("python@@/opt/openhab/configurations/scripts/led_2_off.py")
+				executeCommandLine("python@@/opt/openhab/configurations/scripts/led_3_off.py")
+			
+				var int numberOfContactPersons = Integer::parseInt(transform("JSONPATH","$.numberOfContactPersons", contactPerson))
+				
+				var int k = -1
+				var int i = -1
+				var int m = -1
+				while ((k=k+1) < listTriggeredMedicineIDs.size) {
+					var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByMedicineID/"+listTriggeredMedicineIDs.get(k))
+					var sendNotification = Boolean::parseBoolean(transform("JSONPATH","$.sendNotification", medicineInformation)) 
+					var medicineName = transform("JSONPATH","$.medicineName", medicineInformation)
+					var contactTypeMedicine = transform("JSONPATH","$.contactType", medicineInformation)
+
+					if(sendNotification==true){
+						while ((i=i+1) < numberOfContactPersons) {
+							var email = transform("JSONPATH","$.psychologicalParent["+i+"].email", contactPerson)
+							var name  = transform("JSONPATH","$.psychologicalParent["+i+"].name", contactPerson)
+							var recieveNotification = Boolean::parseBoolean(transform("JSONPATH","$.psychologicalParent["+i+"].recieveNotification", contactPerson))
+							var contactTypeContactPerson = transform("JSONPATH","$.psychologicalParent["+i+"].contactType", contactPerson)
+
+
+							
+						
+							if(recieveNotification==true && contactTypeMedicine == contactTypeContactPerson){
+								while ((m=m+1) < listTriggeredMedicineNames.size) {
+									var long currentTime =  now.getMillis() / 1000L
+									var long timeStamp =   currentTime - (2*60)
+									var DateTime dt = new DateTime(timeStamp*1000L)
+									
+									var int hour = dt.getHourOfDay()
+   									var int min = dt.getMinuteOfHour()
+									var int day = dt.getDayOfMonth()
+									var int month = dt.getMonthOfYear()
+									var int year = dt.getYear()
+
+									sendMail(email, "Das Medikament \""+listTriggeredMedicineNames.get(m)+"\" wurde vergessen einzunehmen", "Hallo "+name+", Die Einnahme von "+listTriggeredMedicineNames.get(m)+" wurde am "+day+"."+month+"."+year+" um "+(hour+1)+":"+min+" vergessen einzunehmen")
+								}
+							}
+						}
+					}
+				}
+				
+
+				listTriggeredMedicineNames = newArrayList()
+				listTriggeredMedicineIDs = newArrayList()
 			    }
    			 ]
 		
