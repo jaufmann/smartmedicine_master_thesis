@@ -387,6 +387,8 @@ $(document).ready(function() {
 				    		$('#btnDispense'+i).click(function(){
 				    			intakeTimeID = $(this).val().substring(0, $(this).val().indexOf("/"));
 				    			medicineID = $(this).val().substring(parseInt($(this).val().indexOf("/"))+1, $(this).val().length);
+				    			console.log("medicineID: "+medicineID);
+				    			localStorage.setItem("medicineID", medicineID);
 				    			var boxID = getMedicineInformationByMedicineID().boxID;
 				    			localStorage.setItem("boxID", boxID);
 				    			dispenseMedicineBox();
@@ -875,7 +877,14 @@ $(document).ready(function() {
 
 
 	$('#btnCloseModalPsychologicalParent').click(function(){
-		window.location = "managePsychologicalParent.html";
+		console.log(localStorage.getItem("destination"));
+		if(localStorage.getItem("destination") ==  "addPsychologicalParent"){
+			window.location = "managePsychologicalParent.html";
+		} else {
+			localStorage.setItem("destination", "editPsychologicalParent");
+			window.location = "editPsychologicalParent.html";
+		}
+		
 	})
 	
 	$('#btnDaily').click(function(){
@@ -1114,6 +1123,7 @@ $(document).ready(function() {
 	        	$('#btnOpenEditMedicineModal').trigger("click"); 
 	        	
 	        	setTimeout(function () {
+	        		localStorage.clear();
 	        		$('#btnCloseEditMedicineModal').trigger("click");
 	            }, 2000);
 	        	

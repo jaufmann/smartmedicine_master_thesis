@@ -8,6 +8,7 @@ public class ContactPerson {
 	private int id;
 	private String contactType;
 	private boolean recieveNotification;
+	private int numberOfContactPersons;
 	
 	public String getName() {
 		return name;
@@ -50,5 +51,11 @@ public class ContactPerson {
 	}
 	public void setRecieveNotification(boolean recieveNotification) {
 		this.recieveNotification = recieveNotification;
+	}
+	public int getNumberOfContactPersons() {
+		return numberOfContactPersons;
+	}
+	public void setNumberOfContactPersons(int numberOfContactPersons) {
+		this.numberOfContactPersons = numberOfContactPersons;
 	}
 }

@@ -489,7 +489,7 @@ public class DBStatements {
 		ArrayList<ContactPerson> listContactPerson = new ArrayList<ContactPerson>();
 		
 		String sqlContactPerson = "SELECT * FROM psychologicalparent";
-		
+		int numberOfContactPersons = 0;
 		
 		try{
 			con = DBConnection.getConnection();
@@ -504,8 +504,11 @@ public class DBStatements {
 				contactPerson.setEmail(rs.getString("email"));
 				contactPerson.setSex(rs.getString("sex"));
 				contactPerson.setId(rs.getInt("psychologicalParentID"));
+				contactPerson.setRecieveNotification(rs.getBoolean("recieveNotification"));
+				contactPerson.setContactType(rs.getString("contactType"));
 				listContactPerson.add(contactPerson);
 			}
+			
 		}finally{
 			if(rs != null) rs.close();
 			if(pstmt != null)pstmt.close();			

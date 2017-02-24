@@ -114,6 +114,7 @@ public class Rest {
 		jsonObject = new JSONObject();
 	  	
 		jsonObject.put("psychologicalParent", dbstatement.getContactPerson());
+		jsonObject.put("numberOfContactPersons", dbstatement.getContactPerson().size());
 		return Response.status(200).entity(jsonObject.toString()).build();
 	  }
 	  

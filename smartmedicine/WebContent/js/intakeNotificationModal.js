@@ -12,7 +12,7 @@ var isBox3DispensingTriggered = false;
 var listBoxTriggered = new Array();
 var listMedicineDispensed = new Array();
 
-var host = "http://192.168.0.101";//+window.location.hostname;
+var host = "http://"+window.location.hostname;
 var port = "8080";
 
 	

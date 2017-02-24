@@ -130,8 +130,8 @@
     <script type="text/javascript">
  // Extend the default picker options for all instances.
     $.extend($.fn.pickadate.defaults, {
-        monthsFull: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'July', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-        weekdaysShort: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+        monthsFull: ['Januar', 'Februar', 'March', 'April', 'Mai', 'Juni', 'July', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+        weekdaysFull: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
         today: 'heute',
         clear: 'löschen',
         close: 'schließen',
@@ -170,6 +170,8 @@
             // editable: true,
             closeOnSelect: false,
             closeOnClear: false,
+            selectYears : true,
+            selectMonths : true,
             onSet: function(context) {      
               	var pickerEndDate = $endDate.pickadate('picker');
               	pickerEndDate.set('select', $startDate.pickadate('picker').get("select"));
