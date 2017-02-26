@@ -13,55 +13,60 @@
     <!-- Javascript -->
  	<script src="js/jquery/jquery-1.12.4.js"></script>
     <script type = "text/javascript" src="js/navigation1.js" /></script>
-    <script type = "text/javascript" src="js/smartmedicine.js" /></script>	
     <script src="js/bootstrap.min.js"></script>
     <script src="js/intakeNotificationModal.js"></script>
+    <script src="js/sourceOfSupply.js"></script>
+
 	
   </head>
   <body>   
-  
-  <!-- "D:/logos/"
-
+  <!-- 
+   <div align="center">
 
 <img width="400" src="img/SmartMedicineLogo.png"><hr>
--->
-   <div align="center">
-	<img src="img/Termine_Verwalten_1.jpg">
-			       <div style="background-image: url(../smartmedicine/img/space_header.png);background-repeat:repeat-x;
+</div>-->
+
+     <div align="center">
+
+<img src="img/bezugsquellen_verwalten_logo_1.png">
+		       <div style="background-image: url(../smartmedicine/img/space_header.png);background-repeat:repeat-x;
 float:left;width:100%">
 &nbsp;
 </div>
-	
-	</div>
+
+</div>
+
   <!-- Navigationsfelder -->
    <div class="divContainer" id="divContainer"> 
    <table class="tableContainer"> 
    	<tr  class="head">
  	<td>	
-     <button id="btnIntakeTimeOverview" class='size btn btn-success' ><img width="300" src="img/hinzufuegen_logo.png"></button>
+     <button id="btnAddSourceOfSupply" class='size btn btn-success' ><img width="300" src="img/hinzufuegen_logo.png"></button>
     </td>
     <td  class="head">	
-     <button id="btnIntakeTimeOverview_2" class='size btn btn-primary' ><img width="300"src="img/uebersicht_logo.png"/></button>
+     <button id="btnContactPersonOverview" class='size btn btn-primary' ><img width="300"src="img/uebersicht_logo.png"/></button>
     </td>
     </tr>
     <tr class="head">
  	<td >	
-     <button id="btnEditIntakeTime" class='size btn btn-warning'><img width="300" src="img/bearbeiten_logo.png"/></button>
+     <button id="btnEditPsychologicalParent" class='size btn btn-warning'><img width="300" src="img/bearbeiten_logo.png"/></button>
     </td>
     <td>	
-     <button id="btnDeleteIntakeTimeSortMedicine" class='size btn btn-danger'><img width="300" src="img/loeschen_logo.png"/></button>
+     <button id="btnDeleteSourceOfSupply" class='size btn btn-danger'><img width="300" src="img/loeschen_logo.png"/></button>
     </td>
-    </tr>
-    <tr>
-    <td></td>
     </tr>
    </table>
    </div>
    
+   	   <div style="background-image: url(../smartmedicine/img/space_footer.png);background-repeat:repeat-x;
+float:left;width:100%">
+&nbsp;
+</div>
+
+	
+	<button id="btnManageOptionSelection" class='btn btn-lg btn-primary'><font>zurück</font></button>
    
-   
-    
-   <!-- Button trigger modal -->
+      <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" id="btnNotificationStatus" style="display: none;">
   Launch demo modal
 </button>
@@ -97,10 +102,6 @@ float:left;width:100%">
     </div>
   </div>
 </div>
-   	   <div style="background-image: url(../smartmedicine/img/space_footer.png);background-repeat:repeat-x;
-float:left;width:100%">
-&nbsp;
-</div>
-<button id="btnManageOptionSelection" class='btn btn-lg btn-primary'><font>zurück</font></button>
+   
   </body>
 </html>

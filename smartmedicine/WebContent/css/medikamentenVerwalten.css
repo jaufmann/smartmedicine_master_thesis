@@ -24,7 +24,7 @@ table.tableContainerMain{
 }
 
 tr.head{
-	height:180px;
+	height:160px;
 }
 
 button.size{
@@ -55,7 +55,7 @@ button.btnClass{
 
 font{
 	margin:auto;
-	font-size:150%;
+	font-size:120%;
 }
 font.white{
 	color:white;

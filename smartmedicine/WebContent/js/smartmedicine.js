@@ -76,9 +76,13 @@ $(document).ready(function() {
 		}
 		
 		else if(destination == "editMedicine"){
+			$("#divMainHeader").append("<img src='img/medikament_bearbeiten_logo_1.png'>");
+			$('#divStatus').append("<img src='img/status_allgemein_bearbeiten.png'>");
 			$("#tdIntakeTimeInformation").empty();
 			laodEditMedicineInformation();
 		} else if(destination == "editMedicine2"){
+			$("#divMainHeader").append("<img src='img/medikament_bearbeiten_logo_1.png'>");
+			$('#divStatus').append("<img src='img/status_einnahme_bearbeiten.png'>");
 			$("#tdIntakeTimeInformation").empty();
 			laodEditMedicineInformation();
 		}
@@ -151,6 +155,9 @@ $(document).ready(function() {
 	 	}
 		
 		else if(destination=="addOnlyIntakeTime"){
+			$("#divMainHeader").append("<img src='img/Termine_hinzufügen_1_logo_.png'>");
+			$('#divStatus').empty();
+			
 			var pickerStartDate = $startDate.pickadate('picker');
         	var date = new Date();
         	pickerStartDate.set("select", date);
@@ -162,7 +169,7 @@ $(document).ready(function() {
 			$('#txtIteration').attr('disabled', true);
 			
 			$('#tdBackAddIntakeTime').empty();
-			$("<button id='btnBackToAddIntakeTimeOverview' class='btn btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
+			$("<button id='btnBackToAddIntakeTimeOverview' class='btn btn-lg btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
 			$('#btnBackToAddIntakeTimeOverview').click(function(){
 				localStorage.setItem("destination", "addIntakeTimeOverview");
 				window.location = 'addIntakeTimeOverview.html';
@@ -179,6 +186,8 @@ $(document).ready(function() {
 		} else if(destination=="intakeTimeOverview"){
 			loadDeleteIntakeTimeTable();
 		} else if(destination=="editIntakeItem"){
+			$("#divMainHeader").append("<img src='img/Termine_bearbeiten_1_logo.png'>");
+			$('#divStatus').empty();
 			var pickerStartDate = $startDate.pickadate('picker');
 			$("#tblRepeatIntakeTime").hide();
 			$("#btnNoInterval").trigger("click");
@@ -188,7 +197,7 @@ $(document).ready(function() {
 			pickerStartDate.set('min', date);
 
 			$('#tdBackAddIntakeTime').empty();
-			$("<button id='btnBackToEditIntakeItemOverview' class='btn btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
+			$("<button id='btnBackToEditIntakeItemOverview' class='btn btn-lg btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
 			$('#btnBackToEditIntakeItemOverview').click(function(){
 				localStorage.setItem("destination", "editIntakeTimeOverview");
 				window.location = 'editIntakeTimeOverview.html';
@@ -212,6 +221,9 @@ $(document).ready(function() {
 		} 
 		
 		else if(destination=="addMedicine"){
+			$("#divMainHeader").append("<img src='img/medikament_hinzufügen_logo_1.png'>");
+			$('#divStatus').append("<img width='500px' height='50px' src='img/status_allgemein_hinzufügen.png'>");
+			
 			$('#divContactPerson').hide();
 			$('#txtMedicineName').val(localStorage.getItem("medicineName"));
 			$('#txtDisease').val(localStorage.getItem("disease"));
@@ -262,7 +274,8 @@ $(document).ready(function() {
 
 		
 		} else if(destination=="addMedicine2"){
-
+			$("#divMainHeader").append("<img src='img/medikament_hinzufügen_logo_1.png'>");
+			$('#divStatus').append("<img width='500px' height='50px' src='img/status_einnahme_hinzufügen.png'>");
 			if(localStorage.getItem("stock")==null){
 				$('#txtSavetyStock').attr('disabled', true);
 			} else {
@@ -273,6 +286,9 @@ $(document).ready(function() {
 			$("#txtStock").val(localStorage.getItem("stock"));
 			$("#txtSavetyStock").val(localStorage.getItem("savetyStock"));
 		} else if(destination=="addIntakeTime"){
+			$("#divMainHeader").append("<img src='img/medikament_hinzufügen_logo_1.png'>");
+			$('#divStatus').append("<img width='500px' height='50px' src='img/status_termine.png'>");
+			
 			var pickerStartDate = $startDate.pickadate('picker');
         	var date = new Date();
         	pickerStartDate.set("select", date);
@@ -306,7 +322,7 @@ $(document).ready(function() {
 			$('#txtIteration').attr('disabled', true);
 			
 			$('#tdBackAddIntakeTime').empty();
-			$("<button id='btnBackToAddMedicine' class='btn btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
+			$("<button id='btnBackToAddMedicine' class='btn btn-lg btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
 			$('#btnBackToAddMedicine').click(function(){
 				localStorage.setItem("iteration", $('#txtIteration').val());
 				localStorage.setItem("startDate", $('#txtStartDate').val());

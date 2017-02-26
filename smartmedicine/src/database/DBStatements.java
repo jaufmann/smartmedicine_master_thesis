@@ -18,6 +18,7 @@ import classes.ContactPerson;
 import classes.IntakeTime;
 import classes.Medicine;
 import classes.NotificationSetting;
+import classes.SourceOfSupply;
 
 public class DBStatements {
 	
@@ -210,14 +211,7 @@ public class DBStatements {
 	        }
 	}	 
 	
-	public static void main(String[] args) throws IOException {
-		Medicine medicine = new Medicine();
-		medicine.setNote("hallo");
-		medicine.setMedicineName("medicineName");
-		medicine.setDisease("dis");
-		medicine.setContactType("contact");
-		createMedicine(medicine);
-	}
+
 	public static void createMedicine(Medicine medicine) throws IOException {
 		 	Connection conn = null;
 			PreparedStatement pstmtMedicine = null;
@@ -764,5 +758,101 @@ public class DBStatements {
 			return listActiveMedicineBoxes;		
 		}
 	
-	
+	public static void main(String[] args) {
+		
+		SourceOfSupply sourceOfSupply = new SourceOfSupply();
+		sourceOfSupply.setName("Dr. Haberbeck");
+		sourceOfSupply.setAddress("Mainzer Ring 59");
+		sourceOfSupply.setEmail("wjaufmann@gmc.de");
+		sourceOfSupply.setSourceType("Arzt");
+		//createSourceOfSupply(sourceOfSupply);
+	}
+
+	public void createSourceOfSupply(SourceOfSupply sourceOfSupply) {
+		Connection conn = null;
+		PreparedStatement pstmtSourceOfSupply = null;
+		
+		try{					 
+			  conn = DBConnection.getConnection(); 
+			  String sqlSourceOfSupply = " insert into sourceofsupply (name, address, email, sourceType, recieveMail)"
+				        + " values (?, ?, ?, ?, ?)";
+	    	  
+			  pstmtSourceOfSupply = conn.prepareStatement(sqlSourceOfSupply);
+			  pstmtSourceOfSupply.setString(1, sourceOfSupply.getName());
+			  pstmtSourceOfSupply.setString(2, sourceOfSupply.getAddress());
+			  pstmtSourceOfSupply.setString(3, sourceOfSupply.getEmail());
+		      pstmtSourceOfSupply.setString(4, sourceOfSupply.getSourceType());
+		      pstmtSourceOfSupply.setBoolean(5, sourceOfSupply.isRecieveMail());
+		      
+		      pstmtSourceOfSupply.executeUpdate();
+		 } catch(Exception e){
+			 
+		 }  finally {
+	            try {   
+	            	pstmtSourceOfSupply.close();
+	                conn.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+		
+	}
+
+	public ArrayList<SourceOfSupply> getSourceOfSupply() throws ClassNotFoundException, SQLException, IOException {
+		// TODO Auto-generated method stub
+				SourceOfSupply sourceOfSupply= null;
+				
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				ArrayList<SourceOfSupply> listSourceOfSupply = new ArrayList<SourceOfSupply>();
+				
+				String sqlSourceOfSupply = "SELECT * FROM sourceofsupply";
+				
+				try{
+					con = DBConnection.getConnection();
+					pstmt = con.prepareStatement(sqlSourceOfSupply);
+					
+					rs = pstmt.executeQuery();
+					while(rs.next()){
+						sourceOfSupply = new SourceOfSupply();
+						sourceOfSupply.setName(rs.getString("name"));
+						sourceOfSupply.setEmail(rs.getString("email"));
+						sourceOfSupply.setId(rs.getInt("id"));
+						sourceOfSupply.setAddress(rs.getString("address"));
+						sourceOfSupply.setRecieveMail(rs.getBoolean("recieveMail"));
+						sourceOfSupply.setSourceType(rs.getString("sourceType"));
+						listSourceOfSupply.add(sourceOfSupply);
+					}
+					
+				}finally{
+					if(rs != null) rs.close();
+					if(pstmt != null)pstmt.close();			
+					if(con !=null)con.close();
+				}		
+				
+				return listSourceOfSupply;
+	}
+
+	public void deleteSourceOfSupply(int sourceOfSupplyID) {
+		Connection con = null;
+        Statement stmt = null;
+        try
+        {
+        	con = DBConnection.getConnection();
+             
+            stmt = con.createStatement();
+            stmt.execute("DELETE FROM sourceofsupply WHERE id ="+sourceOfSupplyID);
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {   
+                stmt.close();
+                con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+	}
 }

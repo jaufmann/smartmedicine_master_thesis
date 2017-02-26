@@ -34,6 +34,7 @@ import classes.ContactPerson;
 import classes.IntakeTime;
 import classes.Medicine;
 import classes.NotificationSetting;
+import classes.SourceOfSupply;
 import database.DBStatements;
 
 
@@ -118,6 +119,16 @@ public class Rest {
 		return Response.status(200).entity(jsonObject.toString()).build();
 	  }
 	  
+	  @GET @Path("/getSourceOfSupply") 
+	  @Produces("application/json")
+	  public Response getSourceOfSupply() throws JSONException, ClassNotFoundException, SQLException, IOException, ParseException {
+	  	dbstatement = new DBStatements();
+		jsonObject = new JSONObject();
+	  	
+		jsonObject.put("sourceOfSupply", dbstatement.getSourceOfSupply());
+		return Response.status(200).entity(jsonObject.toString()).build();
+	  }
+	  
 	  @GET
 	  @Path("/getIntakeTimeByMedicineID/{medicineID}")
 	  @Produces("application/json")
@@ -183,6 +194,14 @@ public class Rest {
 		    dbstatement = new DBStatements();
 			
 		    dbstatement.deletePsychologicalParent(psychologicalParentID);
+	  }
+	  
+	  @DELETE @Path("/deleteSourceOfSupply/{sourceOfSupplyID}")
+	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  public void deleteSourceOfSupply(@PathParam("sourceOfSupplyID") int sourceOfSupplyID) throws JSONException, SQLException {
+		    dbstatement = new DBStatements();
+			
+		    dbstatement.deleteSourceOfSupply(sourceOfSupplyID);
 	  }
 	  
 	  @DELETE @Path("/deleteMedicineInformation/{medicineID}")
@@ -357,6 +376,20 @@ public class Rest {
 	  	ContactPerson contactPerson = mapper.readValue(jsonInString, ContactPerson.class);
 	 
   		dbstatement.createContactPerson(contactPerson);
+	  }
+	  
+	  @POST
+	  @Path("/createSourceOfSupply")
+	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  public void createSourceOfSupply(Object objSourceOfSupply) throws JsonGenerationException, JsonMappingException, IOException  {
+	  	dbstatement = new DBStatements();
+	  	ObjectMapper mapper = new ObjectMapper();
+	  	
+	  	String jsonInString = mapper.writeValueAsString(objSourceOfSupply);
+	  	SourceOfSupply sourceOfSupply = mapper.readValue(jsonInString, SourceOfSupply.class);
+	 
+  		dbstatement.createSourceOfSupply(sourceOfSupply);
 	  }
 	  
 	  

@@ -20,22 +20,57 @@
 	<script src="js/timedropper.js"></script>
     <script type = "text/javascript" src="js/smartmedicine.js" /></script>	
     <script type = "text/javascript" src="js/navigation1.js" /></script>
+    
+    <script type="text/javascript">console.log(localStorage.getItem("destination"))</script>
+     
+    		<style type="text/css">
+							#parent
+		{
+
+		  position: relative;
+		}
+		#child_1, #child_2
+		{
+		  width: 500px;
+		  height: 70px;
+		  margin: 0 auto; 
+		}
+		
+		#parent_2
+		{
+
+		  position: absolute;
+		}
+		#child_2
+		{
+		  width: 500px;
+		  height: 70px;
+		  position: absolute;
+		}
+		</style>	
 </head>
 <body>
-<!-- 
-<div align="center">
-<img width="400" src="img/SmartMedicineLogo.png"><hr>
-</div>-->
-    <!-- overview of the current status -->
-	<table class="overview" id="tblHeaderOverview">
-	<tr>
-		<td><img  class="headerNavigation" src="img/clock.png"><font ><b>Zeitpunkt</b></font></td>
-	</tr>
-	</table>
-	    <hr>
 
+ <div id="parent">
+      <div id="child_1">
+      
+      <div id="divMainHeader"></div>
+      <div align="center" id="divStatus"></div>
+    <!-- 
+      <img src="img/medikament_bearbeiten_logo_1.png">
+      <img  width="500px" height="50px" src="img/status_termine.png">
+       -->  
+      </div>
+ </div>
+ <br>
+        <div style="background-image: url(../smartmedicine/img/space_header.png);background-repeat:repeat-x;
+float:left;width:100%">
+&nbsp;
+</div>
 
 <div class="divContainer" id="divContainer"> 
+
+
     <!-- input fields --> 
             
     <table>
@@ -78,19 +113,11 @@
     </td> 	
     	 	
     </tr>
-    
+
     
     </table>
+        <br/>
     <br/>
-    <br/>
-    <br/>
-    <br/>
-    <table width="100%" id="tblNavigation">
-    <tr>
-    	<td align="left" id="tdBackAddIntakeTime"></td>
-    	<td align="right""><button id="btnSaveIntakeTime" class='btn btn-success'><font class="white">speichern</font></button></td>	
-    </tr>
-    </table>
     
     <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="saveStatusModal" style="display: none;">
@@ -119,6 +146,18 @@
  </div>
  
   
+     <div style="background-image: url(../smartmedicine/img/space_footer.png);background-repeat:repeat-x;
+float:left;width:100%">
+&nbsp;
+</div>
+
+    <table width="100%" id="tblNavigation">
+    <tr>
+    	<td align="left" id="tdBackAddIntakeTime"></td>
+    	<td align="right""><button id="btnSaveIntakeTime" class='btn btn-lg btn-success'><font class="white">speichern</font></button></td>	
+    </tr>
+    </table>
+    
 
 
     	

@@ -13,7 +13,33 @@
 	<script src="js/jquery/jquery-1.12.4.js"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script type = "text/javascript" src="js/navigation1.js" /></script>		
-    <script src="js/smartmedicine.js" type="text/javascript"></script> 	
+    <script src="js/smartmedicine.js" type="text/javascript"></script> 
+    
+    		<style type="text/css">
+							#parent
+		{
+
+		  position: relative;
+		}
+		#child_1, #child_2
+		{
+		  width: 500px;
+		  height: 70px;
+		  margin: 0 auto; 
+		}
+		
+		#parent_2
+		{
+
+		  position: absolute;
+		}
+		#child_2
+		{
+		  width: 500px;
+		  height: 70px;
+		  position: absolute;
+		}
+		</style>	
 </head>
 <body>
 
@@ -22,17 +48,22 @@
 
 <img width="400" src="img/SmartMedicineLogo.png"><hr>
 </div>-->
-
+ <div id="parent">
+      <div id="child_1">
+      
+      <div id="divMainHeader"></div>
+      <div align="center" id="divStatus"></div>
+      
+      </div>
+ </div>
+ <br><br>
+	       <div style="background-image: url(../smartmedicine/img/space_header.png);background-repeat:repeat-x;
+float:left;width:100%">
+&nbsp;
+</div>
 <div class="divContainer" id="divContainer"> 
-    <!-- overview of the current status -->
-	<table class="overview" id="tblHeaderOverview">
-	<tr>
-		<td id="tdMedicineBasicInformation"><img class="headerNavigation" src="img/pills-blue.png"><font style="color:2875bd"><b>Allgemein</b></font></h4></td>
-		<td id="tdMedicineAdditionalInformation"><img class="transparent headerNavigation"  src="img/Information_icon.png"><font style="color:2875bd" class="transparent"><b>Info</b></font></td>
-		<td id="tdIntakeTimeInformation"><img class="transparent headerNavigation"  src="img/clock.png"><font style="color:2875bd" class='transparent'><b>Zeitpunkt</b></font></h4></td>
-	</tr>
-	</table>
-	<hr>
+
+
     <!-- input fields -->         
     <table >
     	    <tr>
@@ -91,15 +122,20 @@
     </div>
 
     
+    
+  </div>
+</div>
+
+
+           <div style="background-image: url(../smartmedicine/img/space_footer.png);background-repeat:repeat-x;
+float:left;width:100%">
+&nbsp;
+</div>
     <table width="100%">
     <tr>
     	<td align="left" id="tdBackFirstAddMedicine"><button id="btnManageMedicine" class='btn btn-primary' ><font class="white">zurück</font></button></td>
     	<td align="right" id="tdForwardFirstAddMedicine"><button id="btnAddMedicineForwardFirst" class='btn btn-warning' value="hi"><font class="white">weiter</font></button></td>	
     </tr>
     </table>
-    
-    
-  </div>
-</div>
 </body>
 </html>

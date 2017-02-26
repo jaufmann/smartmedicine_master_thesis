@@ -5,6 +5,22 @@ $(document).ready(function() {
 
 
 	
+
+	$("#btnAddSourceOfSupply").click(function(event){
+		localStorage.setItem("destination", "addSourceOfSupply");
+	    window.location = 'addSourceOfSupply.html';
+	});
+
+	$("#btnDeleteSourceOfSupply").click(function(event){
+		localStorage.setItem("destination", "deleteSourceOfSupply");
+	    window.location = 'deleteSourceOfSupply.html';
+	});
+	
+	$("#btnSourceOfSupply").click(function(event){
+		localStorage.setItem("destination", "manageSourceOfSupply");
+	    window.location = 'manageSourceOfSupply.html';
+	});
+	
 	$("#btnMedicineOptionChoice").click(function(event){
 	      window.location = ' medicineOptionChoice.html';
 	});
