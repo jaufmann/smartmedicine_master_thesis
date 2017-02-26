@@ -1585,7 +1585,7 @@ $(document).ready(function() {
 			
 			//
 			$('#tdForwardFirstAddMedicine').empty();
-			$('#tdForwardFirstAddMedicine').append("<button id='btnAddMedicineForwardFirst' class='btn btn-warning' value='editMedicine2'><font class='white'>weiter</font></button>");
+			$('#tdForwardFirstAddMedicine').append("<button id='btnAddMedicineForwardFirst' class='btn btn-lg btn-warning' value='editMedicine2'><font class='white'>weiter</font></button>");
 			
 			$('#btnAddMedicineForwardFirst').click(function(){
 				localStorage.setItem("destination", $(this).val());
@@ -1596,7 +1596,7 @@ $(document).ready(function() {
 			
 			//changing the original button redirect destination to the editMedicineOverview.html destination
 			$('#tdBackFirstAddMedicine').empty();
-			$('#tdBackFirstAddMedicine').append("<button id='btnBackToEditMedicineOverview' class='btn btn-primary'><font class='white'>zurück</font></button>")
+			$('#tdBackFirstAddMedicine').append("<button id='btnBackToEditMedicineOverview' class='btn btn-lg btn-primary'><font class='white'>zurück</font></button>")
 			$('#btnBackToEditMedicineOverview').click(function(){
 				localStorage.clear();
 				localStorage.setItem("destination", "editMedicineInformationOverview");
@@ -1619,7 +1619,7 @@ $(document).ready(function() {
 			}
 			
 			$('#tdBackToFirstAddMedicine').empty();
-			$('#tdBackToFirstAddMedicine').append("<button value='backFromEditMedicine' id='btnBackToFirstAddMedicine' class='btn btn-primary'><font class='white'>zurück</font></button>");
+			$('#tdBackToFirstAddMedicine').append("<button value='backFromEditMedicine' id='btnBackToFirstAddMedicine' class='btn btn-lg btn-primary'><font class='white'>zurück</font></button>");
 			
 			$('#btnBackToFirstAddMedicine').click(function(){
 				localStorage.setItem("destination", "editMedicine");
@@ -1631,7 +1631,7 @@ $(document).ready(function() {
 			})
 			
 			$('#tdAddMedicineForwardSecond').empty();
-			$('#tdAddMedicineForwardSecond').append("<button id='btnSaveEditMedicineInformation' class='btn btn-success'><font class='white'>speichern</font></button>");
+			$('#tdAddMedicineForwardSecond').append("<button id='btnSaveEditMedicineInformation' class='btn btn-lg btn-success'><font class='white'>speichern</font></button>");
 			$('#btnSaveEditMedicineInformation').click(function(){
 				
 				
