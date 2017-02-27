@@ -757,16 +757,7 @@ public class DBStatements {
 			}	
 			return listActiveMedicineBoxes;		
 		}
-	
-	public static void main(String[] args) {
-		
-		SourceOfSupply sourceOfSupply = new SourceOfSupply();
-		sourceOfSupply.setName("Dr. Haberbeck");
-		sourceOfSupply.setAddress("Mainzer Ring 59");
-		sourceOfSupply.setEmail("wjaufmann@gmc.de");
-		sourceOfSupply.setSourceType("Arzt");
-		//createSourceOfSupply(sourceOfSupply);
-	}
+
 
 	public void createSourceOfSupply(SourceOfSupply sourceOfSupply) {
 		Connection conn = null;
@@ -854,5 +845,79 @@ public class DBStatements {
                 e.printStackTrace();
             }
         }
+	}
+
+	public SourceOfSupply getSourceOfSupplyBySourceOfSupplyID(int sourceOfSupplyID) throws ClassNotFoundException, SQLException, IOException {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		SourceOfSupply sourceOfSupply = null;
+		String query = " SELECT * FROM sourceofsupply WHERE id = "+sourceOfSupplyID+"";
+		
+		try{
+			con = DBConnection.getConnection();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			while(rs.next()){
+				sourceOfSupply = new SourceOfSupply();
+				sourceOfSupply.setId(rs.getInt("id"));
+				sourceOfSupply.setName(rs.getString("name"));
+				sourceOfSupply.setAddress(rs.getString("address"));
+				sourceOfSupply.setEmail(rs.getString("email"));
+				sourceOfSupply.setSourceType(rs.getString("sourcetype"));
+				sourceOfSupply.setRecieveMail(rs.getBoolean("recievemail"));
+			}
+		}finally{
+			if(rs != null) rs.close();
+			if(stmt != null)stmt.close();			
+			if(con !=null)con.close();
+		}	
+		return sourceOfSupply;		
+	}
+
+	
+	public static void main(String[] args) {
+		
+		SourceOfSupply sourceOfSupply = new SourceOfSupply();
+		sourceOfSupply.setName("Dr. Haberbeck");
+		sourceOfSupply.setAddress("Mainzer Ring 59");
+		sourceOfSupply.setEmail("wjaufmann@gmc.de");
+		sourceOfSupply.setSourceType("Arzt");
+		sourceOfSupply.setId(8);
+		sourceOfSupply.setRecieveMail(true);
+		editSourceOfSupply(sourceOfSupply);
+	}
+	
+	public static void editSourceOfSupply(SourceOfSupply sourceOfSupply) {
+		Connection conn = null;
+		PreparedStatement pstmtEditSourceOfSupply= null;
+
+		try{					 
+			 conn = DBConnection.getConnection();
+			 
+	    	 String sqlEditSourceOfSupply = " UPDATE sourceofsupply SET name = ?, address = ?, email = ?, "
+	    	 		+ " sourceType = ?, recieveMail = ? WHERE id = ?";
+	    	 
+	    	 pstmtEditSourceOfSupply = conn.prepareStatement(sqlEditSourceOfSupply);
+	    	 pstmtEditSourceOfSupply.setString(1, sourceOfSupply.getName());
+	    	 pstmtEditSourceOfSupply.setString(2, sourceOfSupply.getAddress());
+	    	 pstmtEditSourceOfSupply.setString(3, sourceOfSupply.getEmail());
+	    	 pstmtEditSourceOfSupply.setString(4, sourceOfSupply.getSourceType());
+	    	 pstmtEditSourceOfSupply.setBoolean(5, sourceOfSupply.isRecieveMail());
+	     	 pstmtEditSourceOfSupply.setInt(6, sourceOfSupply.getId());
+	     	 pstmtEditSourceOfSupply.executeUpdate();
+			  
+	    	  
+		 } catch(Exception e){
+			 
+		 }  finally {
+	            try {   
+	            	pstmtEditSourceOfSupply.close();
+	                conn.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+		
 	}
 }

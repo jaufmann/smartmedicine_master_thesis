@@ -24,12 +24,25 @@ table.tableContainerMain{
 }
 
 tr.head{
-	height:160px;
+	height:150px;
 }
 
 button.size{
 	width:100%;
 	height:100%;
+}
+
+th.btnAction{
+	width:15%;
+}
+
+
+
+.btn-custom {
+    padding: 10px 8px;
+    font-size: 20px;
+    border-radius: 10px;
+    width:100%;
 }
 
 button.blau{

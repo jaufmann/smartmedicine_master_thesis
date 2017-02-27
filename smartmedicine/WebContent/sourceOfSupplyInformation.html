@@ -11,7 +11,7 @@
      <script src="js/jquery/jquery-1.12.4.js"></script>
      <script src="js/datatable/jquery.dataTables.min.js"></script>
      <script src="js/datatable/dataTables.bootstrap4.min.js"></script>
-	<script type = "text/javascript" src="js/smartmedicine.js" /></script>
+	<script type = "text/javascript" src="js/sourceOfSupply.js" /></script>
 	<script type = "text/javascript" src="js/navigation1.js" /></script>
 		<style type="text/css">
 				#parent
@@ -41,7 +41,7 @@
 </head>
 <body>
    <div id="parent">
-      <div id="child_1"><img src="img/Personen_details_logo_1.png"></div>
+      <div id="child_1"><img src="img/bezugsquellen_übersicht_logo_1.png"></div>
       		       <div style="background-image: url(../smartmedicine/img/space_header.png);background-repeat:repeat-x;
 float:left;width:100%">
 &nbsp;
@@ -57,20 +57,14 @@ float:left;width:100%">
                 <th colspan="5"><font>Allgemein</font></th>
             </tr>
             <tr>
-                <th>Titel</th>
-                <th>Vorname</th>
                 <th>Name</th>
-                <th>Kontakttyp	</th>
+                <th>Typ	</th>
             </tr>
         </thead>
         <tbody>
         	<tr>
-        	<td id="tdSex"></td>
         	<td id="tdName"></td>
-        	<td id="tdSurname"></td>
-
-
-        	<td id="tdContactType"></td>
+        	<td id="tdSourceType"></td>
         	</tr>
         </tbody>
      </table>
@@ -82,13 +76,15 @@ float:left;width:100%">
             </tr>
             <tr>
                 <th>E-Mail</th>
-                <th>Nachrichten empfangen</th>
+                <th>Nachbestellungs-Email</th>
+                <th>Adresse</th>
             </tr>
         </thead>
         <tbody>
         	<tr>
         	<td id="tdEmail"></td>
         	<td id="tdRecieveNotification"></td>
+        	<td id="tdAddress"></td>
         	</tr>
         </tbody>
      </table>
@@ -100,7 +96,7 @@ float:left;width:100%">
 &nbsp;
 </div>
      
-		<button id="btnContactPersonOverview" class='btn btn-lg btn-primary'><font class="white">zurück</font></button>
+		<button id="btnSourceOfSupplyOverview" class='btn btn-lg btn-primary'><font class="white">zurück</font></button>
      		
 		
 	<!-- javascript -->

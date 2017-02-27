@@ -5,7 +5,18 @@ $(document).ready(function() {
 
 
 	
+	
 
+	$("#btnSourceOfSupplyOverview").click(function(event){
+		localStorage.setItem("destination", "sourceOfSupplyOverview");
+	    window.location = 'sourceOfSupplyOverview.html';
+	});
+	
+	$("#btnEditSourceOfSupply").click(function(event){
+		localStorage.setItem("destination", "editSourceOfSupply");
+	    window.location = 'editSourceOfSupply.html';
+	});
+	
 	$("#btnAddSourceOfSupply").click(function(event){
 		localStorage.setItem("destination", "addSourceOfSupply");
 	    window.location = 'addSourceOfSupply.html';

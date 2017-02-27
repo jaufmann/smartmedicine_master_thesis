@@ -15,15 +15,16 @@ $(document).ready(function(){
 	 * 
 	*/
 	
-	
-	
-	
 	$('#bootstrap-table').ready(function() {
 		var destination = localStorage.getItem("destination");
 		
 		if(destination=="editSourceOfSupply" || destination == "deleteSourceOfSupply" || destination == "sourceOfSupplyOverview"){
 			if(destination == "deleteSourceOfSupply"){
 				loadSourceOfSupplyDeleteTable();
+			}else if(destination=="editSourceOfSupply"){
+				loadSourceOfSupplyEditTable();
+			} else if(destination=="sourceOfSupplyOverview"){
+				loadSourceOfSupplyOverviewTable();
 			}
 			
 			$('#example').DataTable( {	
@@ -34,7 +35,7 @@ $(document).ready(function(){
 		                 className: 'mdl-data-table__cell--non-numeric'
 		             }
 		         ],
-		    	"lengthMenu": [[2, 25, 50, -1], [2, 25, 50, "All"]],
+		    	"lengthMenu": [[2, 25, 50, -1], [3, 25, 50, "All"]],
 		    } );	
 			
 		} else if(destination == "addSourceOfSupply"){
@@ -46,6 +47,13 @@ $(document).ready(function(){
 				$('#btnEditPsychologicalParent').prop("disabled", true);
 				$('#btnDeleteSourceOfSupply').prop("disabled", true);
 			}
+		} else if(destination == "editInputFields"){
+			$('#divHeader').empty();
+			$('#divHeader').append("<img src='img/bezugsquelle_bearbeiten_logo_1.png'>");
+			var sourceOfSupplyID = localStorage.getItem("sourceOfSupplyID");
+			loadEditSourceOfSupplyFormularInformations(sourceOfSupplyID);
+		} else if(destination == "sourceOfSupplyInformation"){
+			loadSourceOfSupplyInformationTable();
 		}
 	})
 	
@@ -77,7 +85,7 @@ $(document).ready(function(){
 	})
 	
 	$('#btnSourceTypeDrugStore').click(function(){
-		localStorage.setItem("sourceType", "durgStore");
+		localStorage.setItem("sourceType", "drugStore");
 		document.getElementById("btnSourceTypeDrugStore").style.opacity = 1;
 		document.getElementById("btnSourceTypeDoctor").style.opacity = 0.3;
 		document.getElementById("btnSourceTypeMisc").style.opacity = 0.3;
@@ -96,13 +104,23 @@ $(document).ready(function(){
 	 * Click-Functions for saving the source of supply
 	 */
 	$('#btnSaveSourceOfSupply').click(function(){
+		var destination = localStorage.getItem("destination");
+		
 		objSourceOfSupply = new Object();
 		objSourceOfSupply.name = $('#txtName').val();
 		objSourceOfSupply.address = $('#txtAddress').val();
 		objSourceOfSupply.email = $('#txtEmail').val();
 		objSourceOfSupply.sourceType = localStorage.getItem("sourceType");
 		objSourceOfSupply.recieveMail = localStorage.getItem("recieveMail");
-		createSourceOfSupply(objSourceOfSupply);
+		
+		if(destination=="addSourceOfSupply"){
+			createSourceOfSupply(objSourceOfSupply);
+		} else {
+			var sourceOfSupplyID = localStorage.getItem("sourceOfSupplyID");
+			objSourceOfSupply.id = sourceOfSupplyID;
+			editSourceOfSupply(objSourceOfSupply);
+		}
+		
 	})
 	
 	
@@ -136,13 +154,22 @@ $(document).ready(function(){
 		} else {
 		   	for(var i=0;i<listObjSourceOfSupply.length;i++){	  
 				var name = listObjSourceOfSupply[i].name;
-		   		var sourceType = listObjSourceOfSupply[i].sourceType;
+		   		var sourceType = "";
 		   		var id = listObjSourceOfSupply[i].id;
+		   		
+				if(listObjSourceOfSupply[i].sourceType="drugStore"){
+					sourceType = "Apotheke";
+				} else if(listObjSourceOfSupply[i].sourceType == "misc"){
+					sourceType = "Sonstige";
+				} else {
+					sourceType = "Arzt";
+				}
+				
 		   		
 		   		$("<tr><td><font>"+name+"</font></td>" 
 		   		+ "<td><font>"+sourceType+"</font></td>" 
-		   		+ "<td><button id='btnDeleteSourceOfSupply"+i+"' value="+id+" type='button' class='btn btn-danger'>" 
-		   		+ "<img src='img/delete_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
+		   		+ "<td><button id='btnDeleteSourceOfSupply"+i+"' value="+id+" type='button' class='btn btn-custom btn-danger'>" 
+		   		+ "<img src='img/delete_icon.png' width='30' heigth='30'/></button></td></tr>").appendTo("table[id='example']");
 				    		
 		   		$('#btnDeleteSourceOfSupply'+i).click(function(){
 		   			var sourceOfSupplyID = $(this).val();
@@ -152,15 +179,134 @@ $(document).ready(function(){
 		}
 	}
 	
+
+	function loadSourceOfSupplyOverviewTable() {
+		var listObjSourceOfSupply = getSourceOfSupply();
+		   	for(var i=0;i<listObjSourceOfSupply.length;i++){	  
+				var name = listObjSourceOfSupply[i].name;
+		   		var sourceType = "";
+		   		var id = listObjSourceOfSupply[i].id;
+		   		
+				
+				if(listObjSourceOfSupply[i].sourceType="drugStore"){
+					sourceType = "Apotheke";
+				} else if(listObjSourceOfSupply[i].sourceType == "misc"){
+					sourceType = "Sonstige";
+				} else {
+					sourceType = "Arzt";
+				}
+				
+		   		
+		   		$("<tr><td><font>"+name+"</font></td>" 
+		   		+ "<td><font>"+sourceType+"</font></td>" 
+		   		+ "<td><button id='btnSourceOfSupplyInformation"+i+"' value="+id+" type='button' class='btn btn-custom btn-success'>" 
+		   		+ "<img src='img/zoom_icon.png' width='30' heigth='30'/></button></td></tr>").appendTo("table[id='example']");
+				    		
+		   		$('#btnSourceOfSupplyInformation'+i).click(function(){
+		   			var sourceOfSupplyID = $(this).val();
+		   			localStorage.setItem("destination", "sourceOfSupplyInformation");
+		   			localStorage.setItem("sourceOfSupplyID", sourceOfSupplyID);
+		   			window.location = "sourceOfSupplyInformation.html";
+		   		})	
+		}
+	}
 	
+	function loadSourceOfSupplyEditTable() {
+		var listObjSourceOfSupply = getSourceOfSupply();
+		   	for(var i=0;i<listObjSourceOfSupply.length;i++){	  
+				var name = listObjSourceOfSupply[i].name;
+		   		var sourceType = listObjSourceOfSupply[i].sourceType;
+		   		var id = listObjSourceOfSupply[i].id;
+		   		
+		   		$("<tr><td><font>"+name+"</font></td>" 
+		   		+ "<td><font>"+sourceType+"</font></td>" 
+		   		+ "<td><button id='btnEditSourceOfSupply"+i+"' value="+id+" type='button' class='btn btn-custom btn-warning'>" 
+		   		+ "<img src='img/edit_icon.png' width='30' heigth='30'/></button></td></tr>").appendTo("table[id='example']");
+				    		
+		   		$('#btnEditSourceOfSupply'+i).click(function(){
+		   			var sourceOfSupplyID = $(this).val();
+		   			localStorage.setItem("destination", "editInputFields");
+		   			localStorage.setItem("sourceOfSupplyID", sourceOfSupplyID);
+		   			window.location = "addSourceOfSupply.html";
+		   		})	
+		}
+	}
+	
+	
+	function loadSourceOfSupplyInformationTable(){
+		var sourceOfSupplyID = localStorage.getItem("sourceOfSupplyID");
+		var objSourceOfSupply = getSourceOfSupplyBySourceOfSupplyID(sourceOfSupplyID);
+		$('#tdName').append(objSourceOfSupply.name);
+		$('#tdEmail').append(objSourceOfSupply.email);
+		
+		if(objSourceOfSupply.sourceType=="drugStore"){
+			$('#tdSourceType').append("Apotheke");
+		} else if(objSourceOfSupply.sourceType == "misc"){
+			$('#tdSourceType').append("Sonstige");
+		} else {
+			$('#tdSourceType').append("Arzt");
+		}
+		
+		
+		if(objSourceOfSupply.recieveMail==true){
+			$('#tdRecieveNotification').append("E-Mail wird gesendet");
+		} else {
+			$('#tdRecieveNotification').append("E-Mail wird nicht gesendet");
+		}
+		
+		$('#tdAddress').append(objSourceOfSupply.address); 
+		
+	}
+
+	
+	function loadEditSourceOfSupplyFormularInformations(sourceOfSupplyID) {
+		var objSourceOfSupply = getSourceOfSupplyBySourceOfSupplyID(sourceOfSupplyID);
+		$('#txtName').val(objSourceOfSupply.name);
+		$('#txtAddress').val(objSourceOfSupply.address);
+		$('#txtEmail').val(objSourceOfSupply.email);
+		
+		if(objSourceOfSupply.sourceType=="misc"){
+			$('#btnSourceTypeMisc').click();
+		} else if(objSourceOfSupply.sourceType=="doctor"){
+			$('#btnSourceTypeDoctor').click();
+		} else if(objSourceOfSupply.sourceType=="drugStore"){
+			$('#btnSourceTypeDrugStore').click();
+		}
+		
+		if(objSourceOfSupply.recieveMail==true){
+			$('#btnRecieveMail').click();
+		} else {
+			$('#btnDoNotRevieceMail').click();
+		}
+	}
+	
+	function getSourceOfSupplyBySourceOfSupplyID(sourceOfSupplyID){
+		objSourceOfSupply = new Object();
+		 $.ajax({
+			    dataType: 'json',
+			    async:false,
+			    success: function(data) {
+			    	objSourceOfSupply.name = data.name;
+			    	objSourceOfSupply.address = data.address;
+				   	objSourceOfSupply.email = data.email;
+				   	objSourceOfSupply.sourceType = data.sourceType;
+				  	objSourceOfSupply.recieveMail = data.recieveMail;
+				    objSourceOfSupply.id = data.id;
+			   },
+		    url: host+':'+port+'/smartmedicine/rest/medicineinformation/getSourceOfSupplyBySourceOfSupplyID/'+sourceOfSupplyID
+		});
+		return objSourceOfSupply;
+	}
+		
+		
 	function getSourceOfSupply(){
-		 objSourceOfSupply = new Object();
 		 listObjSourceOfSupply = [];
 		 $.ajax({
 			    dataType: 'json',
 			    async:false,
 			    success: function(data) {
 			    	for(var i=0;i<data.sourceOfSupply.length;i++){
+			    		objSourceOfSupply = new Object();
 			    		objSourceOfSupply.name = data.sourceOfSupply[i].name;
 			    		objSourceOfSupply.address = data.sourceOfSupply[i].address;
 				   		objSourceOfSupply.email = data.sourceOfSupply[i].email;
@@ -196,5 +342,25 @@ $(document).ready(function(){
 	    });
 	}
 	
+	
+	function editSourceOfSupply(objSourceOfSupply){
+	    $.ajax({
+	        type: 'POST',
+	        async:false,
+	        contentType: 'application/json',
+	        url: host+":"+port+"/smartmedicine/rest/medicineinformation/editSourceOfSupply",
+	        dataType: "json",
+	        data: JSON.stringify(objSourceOfSupply),
+	        success: function(data, textStatus, jqXHR){
+	        	$('#btnShowSourceOfSupplyStatusModal').trigger("click");
+	        	setTimeout(function () {
+	        		$('#btnCloseSourceOfSupplyStatusModal').trigger("click");
+	            }, 2000);
+	        },
+	        error: function(jqXHR, textStatus, errorThrown){
+	            alert('Fehler beim Speichern der Bezugsquelle aufgetreten: ' + textStatus);
+	        }
+	    });
+	}
 })
 

@@ -172,6 +172,14 @@ public class Rest {
 		return  dbstatement.getMedicineInformationByMedicineID(medicineID);
 	  }
 	  
+	  @GET
+	  @Path("/getSourceOfSupplyBySourceOfSupplyID/{sourceOfSupplyID}")
+	  @Produces("application/json")
+	  public SourceOfSupply getSourceOfSupplyBySourceOfSupplyID(@PathParam("sourceOfSupplyID") int sourceOfSupplyID) throws JSONException, ClassNotFoundException, SQLException, IOException {
+	  	dbstatement = new DBStatements();
+
+		return  dbstatement.getSourceOfSupplyBySourceOfSupplyID(sourceOfSupplyID);
+	  }
 	  
 	  
 	  @GET
@@ -269,6 +277,20 @@ public class Rest {
 			Medicine medicine = mapper.readValue(jsonInString, Medicine.class);
 
 			dbstatement.editMedicine(medicine);
+		
+	  }
+	  
+	  @POST @Path("/editSourceOfSupply")
+	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  public void editSourceOfSupply(Object objEditSourceOfSupply) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
+		  	dbstatement = new DBStatements();
+			ObjectMapper mapper = new ObjectMapper();
+			  	
+			String jsonInString = mapper.writeValueAsString(objEditSourceOfSupply);
+			SourceOfSupply sourceOfSupply = mapper.readValue(jsonInString, SourceOfSupply.class);
+
+			DBStatements.editSourceOfSupply(sourceOfSupply);
 		
 	  }
 	 
