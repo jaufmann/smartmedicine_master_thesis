@@ -197,7 +197,7 @@ public class DBStatements {
 	        	con = dbconnection.getConnection();
 	             
 	            stmt = con.createStatement();
-	            stmt.execute("DELETE FROM intakeTime WHERE intakeTimeID ="+intakeTimeID);
+	            stmt.execute("DELETE FROM intaketime WHERE intakeTimeID ="+intakeTimeID);
 	        } 
 	        catch (Exception e) {
 	            e.printStackTrace();

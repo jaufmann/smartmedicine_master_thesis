@@ -1,4 +1,50 @@
 @CHARSET "ISO-8859-1";
+/* Desktops and laptops ----------- */
+@media only screen  and (min-width : 1024px) {
+	font{
+		margin:auto;
+		font-size:150%;
+	}
+
+	div.smartMedicineLogo {
+		margin: auto;
+	    width: 100%;
+		-moz-box-shadow:0 5px 5px rgba(182, 182, 182, 0.75);
+		-webkit-box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);
+		box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);
+	    height: 70px;
+	    background-image: url('http://localhost:8080/smartmedicine/img/SmartMedicineLogo_2.png');
+	    background-position:50% 50%;
+	    background-repeat: no-repeat;
+	    background-size: contain;
+	}
+	
+	
+
+	tr.head{
+		height:162px;
+	}
+	
+	input[type="email"] {
+    	font-size:150%;
+	}
+	
+	input[type="text"] {
+    	font-size:150%;
+	}	
+}
+
+
+div.sectionLogo {
+
+	margin: auto;
+    width: 30%;
+
+}
+
+
+}
+
 div.header{
 	margin: auto;
 }
@@ -6,6 +52,8 @@ div.header{
 div.divContainer {
   	width:98%;
   	margin: auto;
+  	height:46.5%; 	
+  	
 }
 
 table.tableContainer{
@@ -23,9 +71,6 @@ table.tableContainerMain{
     height: 35px !important;
 }
 
-tr.head{
-	height:150px;
-}
 
 button.size{
 	width:100%;
@@ -66,25 +111,12 @@ button.btnClass{
 	height:50px;
 }
 
-font{
-	margin:auto;
-	font-size:120%;
-}
+
 font.white{
 	color:white;
 }
 
-input[type="text"] {
-    font-size:120%;
-}
 
-input[type="number"] {
-    font-size:120%;
-}
-
-input[type="email"] {
-    font-size:120%;
-}
 
 
 

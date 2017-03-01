@@ -13,8 +13,17 @@
      <script src="js/datatable/jquery.dataTables.min.js"></script>
      <script src="js/datatable/dataTables.bootstrap4.min.js"></script>		
 	<script src="js/sourceOfSupply.js" type="text/javascript"></script> 	
+		<script type = "text/javascript" src="js/navigation1.js" /></script>
+		
+		    <style type="text/css">
+    
+
+
+
+    </style>
 </head>
 <body>
+<div class="smartMedicineLogo"></div><br>
 	<!-- header logo and spacer image -->
 	<div align="center" id="divHeader">
 		<img src="img/bezugsquellen_hinzufügen_logo_1.png">
@@ -30,20 +39,20 @@
 		<!-- table with the main input fields -->
 		<table width="100%">
 	    	<tr>
-	    		<td width="100%" colspan="4"><a id="aFirstName"></a>&nbsp;<font>Name:</font><input class='form-control'  type="text" id="txtName" /> </td>
+	    		<td width="100%" colspan="4"><a id="aErroIconNameField"></a>&nbsp;<font>Name:</font><input class='form-control'  type="text" id="txtName" /> </td>
 	    	</tr>
 	    	<tr>
 	    		<td width="100">&nbsp;</td>
 	    	</tr>
 	    	<tr>
-	    		<td width="100%" colspan="4"><a id="aSecondName"></a>&nbsp;<font>Adresse:</font> <input class='form-control' type="text"  id="txtAddress"/></td>
+	    		<td width="100%" colspan="4"><a id="aErroIconAddressField"></a>&nbsp;<font>Adresse:</font> <input class='form-control' type="text"  id="txtAddress"/></td>
 	    		<td width="100"></td>
 	    	</tr>
 	    	<tr>
 	    		<td width="100">&nbsp;</td>
 	    	</tr>
 	    	<tr>
-	    		<td width="100%" ><a id="aEmail"></a>&nbsp;<font>E-Mail:</font> </td>
+	    		<td width="100%" ><a id="aErroIconEmailField"></a>&nbsp;<font>E-Mail:</font> </td>
 	    		<td width="100%" colspan="2"><font>Benachrichtigen?</font> </td>
 	    	</tr>
 	     	<tr>
@@ -95,12 +104,16 @@
 			&nbsp;
 	</div>
 		
-		<!-- table with the navigation button -->
+
+	    
+	     <div id="fussbereich">
+    		<!-- table with the navigation button -->
 	    <table width="100%">
 	    	<tr>
 	    		<td align="left"><button id="btnSourceOfSupply" class='btn btn-lg btn-primary'><font class="white">zurück</font></button></td>
 	    		<td align="right"><button id="btnSaveSourceOfSupply" class='btn btn-lg btn-success'><font class="white">speichern</font></button></td>	
 		    </tr>
-	    </table>    	 
+	    </table> 
+    </div>   	 
 	</body>
 </html>

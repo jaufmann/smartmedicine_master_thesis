@@ -17,6 +17,7 @@ $(document).ready(function(){
 	
 	$('#bootstrap-table').ready(function() {
 		var destination = localStorage.getItem("destination");
+		$('#btnShowSourceOfSupplyStatusModal').trigger("click");
 		
 		if(destination=="editSourceOfSupply" || destination == "deleteSourceOfSupply" || destination == "sourceOfSupplyOverview"){
 			if(destination == "deleteSourceOfSupply"){
@@ -100,27 +101,68 @@ $(document).ready(function(){
 	
 		
 	 /**
-	 * SAVE SOURVE OF SUPPLY
+	 * SAVE SOURCE OF SUPPLY
 	 * Click-Functions for saving the source of supply
 	 */
-	$('#btnSaveSourceOfSupply').click(function(){
-		var destination = localStorage.getItem("destination");
+	
+	function checkFields(){
+		//this part will be triggered, when the user is editing the contact person
+		var isNameFieldCorrect = true;
+		var isAddressFieldCorrect = true;
+		var isEmailFieldCorrect = true;
 		
-		objSourceOfSupply = new Object();
-		objSourceOfSupply.name = $('#txtName').val();
-		objSourceOfSupply.address = $('#txtAddress').val();
-		objSourceOfSupply.email = $('#txtEmail').val();
-		objSourceOfSupply.sourceType = localStorage.getItem("sourceType");
-		objSourceOfSupply.recieveMail = localStorage.getItem("recieveMail");
-		
-		if(destination=="addSourceOfSupply"){
-			createSourceOfSupply(objSourceOfSupply);
-		} else {
-			var sourceOfSupplyID = localStorage.getItem("sourceOfSupplyID");
-			objSourceOfSupply.id = sourceOfSupplyID;
-			editSourceOfSupply(objSourceOfSupply);
+		if($('#txtName').val()==""){
+			isNameFieldCorrect = false;
+			$('#aErroIconNameField').empty();
+			$('#aErroIconNameField').append("<img class='imgAttention'width='20' height='20' src='img/attention_icon.png'>");
+		}  else {
+			isNameFieldCorrect = true;
+			$('#aErroIconNameField').empty();
 		}
 		
+		if($('#txtAddress').val()==""){
+			isAddressFieldCorrect = false;
+			$('#aErroIconAddressField').empty();
+			$('#aErroIconAddressField').append("<img class='imgAttention'width='20' height='20' src='img/attention_icon.png'>");
+		} else {
+			isSecondNameFieldCorrect = true;
+			$('#aErroIconAddressField').empty();
+		}
+		
+		if($('#txtEmail').val()==""){
+			isEmailFieldCorrect = false;
+			$('#aErroIconEmailField').empty();
+			$('#aErroIconEmailField').append("<img class='imgAttention'width='20' height='20' src='img/attention_icon.png'>");
+		} else {
+			$('#aErroIconEmailField').empty();
+			isEmailFieldCorrect = true;
+		}
+		
+		if(isEmailFieldCorrect==true && isAddressFieldCorrect == true && isNameFieldCorrect == true){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	$('#btnSaveSourceOfSupply').click(function(){
+		if(checkFields()==true){
+			var destination = localStorage.getItem("destination");
+			
+			objSourceOfSupply = new Object();
+			objSourceOfSupply.name = $('#txtName').val();
+			objSourceOfSupply.address = $('#txtAddress').val();
+			objSourceOfSupply.email = $('#txtEmail').val();
+			objSourceOfSupply.sourceType = localStorage.getItem("sourceType");
+			objSourceOfSupply.recieveMail = localStorage.getItem("recieveMail");
+			
+			if(destination=="addSourceOfSupply"){
+				createSourceOfSupply(objSourceOfSupply);
+			} else {
+				var sourceOfSupplyID = localStorage.getItem("sourceOfSupplyID");
+				objSourceOfSupply.id = sourceOfSupplyID;
+				editSourceOfSupply(objSourceOfSupply);
+			}
+		}
 	})
 	
 	
@@ -154,22 +196,22 @@ $(document).ready(function(){
 		} else {
 		   	for(var i=0;i<listObjSourceOfSupply.length;i++){	  
 				var name = listObjSourceOfSupply[i].name;
-		   		var sourceType = "";
+				var sourceType = listObjSourceOfSupply[i].sourceType;
 		   		var id = listObjSourceOfSupply[i].id;
 		   		
-				if(listObjSourceOfSupply[i].sourceType="drugStore"){
-					sourceType = "Apotheke";
-				} else if(listObjSourceOfSupply[i].sourceType == "misc"){
-					sourceType = "Sonstige";
-				} else {
-					sourceType = "Arzt";
-				}
+		   		if(sourceType=="doctor"){
+		   			sourceType="Arzt";
+		   		} else if(sourceType=="drugStore"){
+		   			sourceType="Apotheke";
+		   		} else if(sourceType=="misc"){
+		   			sourceType="Sonstige";
+		   		}
 				
 		   		
 		   		$("<tr><td><font>"+name+"</font></td>" 
 		   		+ "<td><font>"+sourceType+"</font></td>" 
 		   		+ "<td><button id='btnDeleteSourceOfSupply"+i+"' value="+id+" type='button' class='btn btn-custom btn-danger'>" 
-		   		+ "<img src='img/delete_icon.png' width='30' heigth='30'/></button></td></tr>").appendTo("table[id='example']");
+		   		+ "<img src='img/delete_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
 				    		
 		   		$('#btnDeleteSourceOfSupply'+i).click(function(){
 		   			var sourceOfSupplyID = $(this).val();
@@ -184,23 +226,21 @@ $(document).ready(function(){
 		var listObjSourceOfSupply = getSourceOfSupply();
 		   	for(var i=0;i<listObjSourceOfSupply.length;i++){	  
 				var name = listObjSourceOfSupply[i].name;
-		   		var sourceType = "";
+				var sourceType = listObjSourceOfSupply[i].sourceType;
 		   		var id = listObjSourceOfSupply[i].id;
 		   		
-				
-				if(listObjSourceOfSupply[i].sourceType="drugStore"){
-					sourceType = "Apotheke";
-				} else if(listObjSourceOfSupply[i].sourceType == "misc"){
-					sourceType = "Sonstige";
-				} else {
-					sourceType = "Arzt";
-				}
-				
+		   		if(sourceType=="doctor"){
+		   			sourceType="Arzt";
+		   		} else if(sourceType=="drugStore"){
+		   			sourceType="Apotheke";
+		   		} else if(sourceType=="misc"){
+		   			sourceType="Sonstige";
+		   		}
 		   		
 		   		$("<tr><td><font>"+name+"</font></td>" 
 		   		+ "<td><font>"+sourceType+"</font></td>" 
 		   		+ "<td><button id='btnSourceOfSupplyInformation"+i+"' value="+id+" type='button' class='btn btn-custom btn-success'>" 
-		   		+ "<img src='img/zoom_icon.png' width='30' heigth='30'/></button></td></tr>").appendTo("table[id='example']");
+		   		+ "<img src='img/zoom_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
 				    		
 		   		$('#btnSourceOfSupplyInformation'+i).click(function(){
 		   			var sourceOfSupplyID = $(this).val();
@@ -218,10 +258,18 @@ $(document).ready(function(){
 		   		var sourceType = listObjSourceOfSupply[i].sourceType;
 		   		var id = listObjSourceOfSupply[i].id;
 		   		
+		   		if(sourceType=="doctor"){
+		   			sourceType="Arzt";
+		   		} else if(sourceType=="drugStore"){
+		   			sourceType="Apotheke";
+		   		} else if(sourceType=="misc"){
+		   			sourceType="Sonstige";
+		   		}
+		   		
 		   		$("<tr><td><font>"+name+"</font></td>" 
 		   		+ "<td><font>"+sourceType+"</font></td>" 
 		   		+ "<td><button id='btnEditSourceOfSupply"+i+"' value="+id+" type='button' class='btn btn-custom btn-warning'>" 
-		   		+ "<img src='img/edit_icon.png' width='30' heigth='30'/></button></td></tr>").appendTo("table[id='example']");
+		   		+ "<img src='img/edit_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
 				    		
 		   		$('#btnEditSourceOfSupply'+i).click(function(){
 		   			var sourceOfSupplyID = $(this).val();
@@ -332,9 +380,9 @@ $(document).ready(function(){
 	        data: JSON.stringify(objSourceOfSupply),
 	        success: function(data, textStatus, jqXHR){
 	        	$('#btnShowSourceOfSupplyStatusModal').trigger("click");
-	        	setTimeout(function () {
+	        	/*setTimeout(function () {
 	        		$('#btnCloseSourceOfSupplyStatusModal').trigger("click");
-	            }, 2000);
+	            }, 2000);*/
 	        },
 	        error: function(jqXHR, textStatus, errorThrown){
 	            alert('Fehler beim Speichern der Bezugsquelle aufgetreten: ' + textStatus);
