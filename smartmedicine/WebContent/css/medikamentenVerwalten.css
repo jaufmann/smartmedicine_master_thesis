@@ -19,12 +19,6 @@
 	    background-size: contain;
 	}
 	
-	
-
-	tr.head{
-		height:162px;
-	}
-	
 	input[type="email"] {
     	font-size:150%;
 	}
@@ -32,7 +26,33 @@
 	input[type="text"] {
     	font-size:150%;
 	}	
+	
+	input[type="number"] {
+    	font-size:150%;
+	}	
 }
+
+
+@media only screen  and (min-height : 400px) {
+	
+	tr.head{
+		min-height:90%;
+		height:150px;
+	}
+}
+
+img.sectionImage {
+	display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+
+
+
+
+
+
 
 
 div.sectionLogo {

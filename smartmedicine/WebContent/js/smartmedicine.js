@@ -397,7 +397,7 @@ $(document).ready(function() {
 				    		+ "<td><font>"+time+"</font></td>"
 				    		+ "<td><font>"+medicineName+"</font></td>"
 				    		+ "<td><font>"+data.intakeTime[i].pillQuantity+"</font></td>" 
-				    		+ "<td><font><button type='button' id='btnDispense"+i+"' class='btn btn-success' value='"+data.intakeTime[i].intakeTimeID+"/"+data.intakeTime[i].medicineID+"'><img class='btnClass' src='img/ausgeben_icon.png' width='40' heigth='40'/></button></font></td></tr>").appendTo("table[id='example']");
+				    		+ "<td><font><button type='button' id='btnDispense"+i+"' class='btn btn-custom btn-success' value='"+data.intakeTime[i].intakeTimeID+"/"+data.intakeTime[i].medicineID+"'><img class='btnClass' src='img/ausgeben_icon.png' width='40' heigth='40'/></button></font></td></tr>").appendTo("table[id='example']");
 				    		
 				    		
 				    		$('#btnDispense'+i).click(function(){

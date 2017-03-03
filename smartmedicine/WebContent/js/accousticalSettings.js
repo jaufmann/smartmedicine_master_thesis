@@ -220,7 +220,8 @@ $(document).ready(function(){
 		  $.ajax({
 			    type:"POST",
 			    dataType: 'xml',
-			    url: host+':'+port+'/CMD?AccousticalTest='+localStorage.getItem('notificationSound')+'&playStatus='+localStorage.getItem("playStatus")
+			    url: host+':'+port+'/CMD?AccousticalTest='+localStorage.getItem('notificationSound')
+			    +'&playStatus='+localStorage.getItem("playStatus")
 			});
 		};
 		

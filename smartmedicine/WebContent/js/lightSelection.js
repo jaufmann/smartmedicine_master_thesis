@@ -365,9 +365,6 @@ function saveVisualSettings() {
         		$('#btnCloseModal').trigger("click");
             }, 2000);
         	
-        	/*  	
-        	
-        	window.location = 'manageNotification.html';*/
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert('addWine error: ' + textStatus);
