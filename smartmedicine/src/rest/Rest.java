@@ -185,7 +185,8 @@ public class Rest {
 	  @GET
 	  @Path("/getIntakeTimeInformation")
 	  @Produces("application/json")
-	  public Response getIntakeTimeInformation() throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException {
+	  public Response getIntakeTimeInformation() throws JSONException, ClassNotFoundException, SQLException, ParseException, 
+	  IOException {
 	  	jsonObject = new JSONObject();
 	  	dbstatement = new DBStatements();
 	  	ArrayList<IntakeTime> listIntakeTime = new ArrayList<IntakeTime>(dbstatement.getIntakeTimeInformation());

@@ -118,7 +118,7 @@ public class DBStatements {
 		ArrayList<IntakeTime> listIntaketimes = new ArrayList<IntakeTime>();
 		
 		try{
-			con = dbconnection.getConnection();
+			con = DBConnection.getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			while(rs.next()){
