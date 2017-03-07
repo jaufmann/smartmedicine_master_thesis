@@ -43,6 +43,13 @@ public class Rest {
 	  private DBStatements dbstatement = null;
 	  private static JSONObject jsonObject = null;
 	  
+	  /**
+	  * Gibt die Medikamenteninformationen in der Form eines JSON-Resonses zurück
+	  *
+	  * @return Ein JSON-Objekt mit den Medikamenteninformationen
+	  *
+	  */
+	  
 	  @GET
 	  @Path("/getMedicineInformation")
 	  @Produces("application/json")

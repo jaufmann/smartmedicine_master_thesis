@@ -875,19 +875,7 @@ public class DBStatements {
 		return sourceOfSupply;		
 	}
 
-	
-	public static void main(String[] args) {
-		
-		SourceOfSupply sourceOfSupply = new SourceOfSupply();
-		sourceOfSupply.setName("Dr. Haberbeck");
-		sourceOfSupply.setAddress("Mainzer Ring 59");
-		sourceOfSupply.setEmail("wjaufmann@gmc.de");
-		sourceOfSupply.setSourceType("Arzt");
-		sourceOfSupply.setId(8);
-		sourceOfSupply.setRecieveMail(true);
-		editSourceOfSupply(sourceOfSupply);
-	}
-	
+
 	public static void editSourceOfSupply(SourceOfSupply sourceOfSupply) {
 		Connection conn = null;
 		PreparedStatement pstmtEditSourceOfSupply= null;
