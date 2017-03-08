@@ -42,18 +42,30 @@ import database.DBStatements;
 public class Rest {
 	  private DBStatements dbstatement = null;
 	  private static JSONObject jsonObject = null;
-	  
+
+/*-------------------------------------START--GET FUNCTIONS--START------------------------------------------------------------------------------*/
 	  /**
-	  * Gibt die Medikamenteninformationen in der Form eines JSON-Resonses zurück
+	  * Return medicine informations as a JSON-Response 
 	  *
-	  * @return Ein JSON-Objekt mit den Medikamenteninformationen
+	  * @return A RESPONSE-Object with all medicine informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
 	  *
 	  */
-	  
 	  @GET
 	  @Path("/getMedicineInformation")
 	  @Produces("application/json")
-	  public Response getMedicineInformation() throws JSONException, ClassNotFoundException, SQLException, IOException {
+	  public Response getMedicineInformation() throws JSONException, ClassNotFoundException, SQLException, IOException  {
 	  	jsonObject = new JSONObject();
 	  	dbstatement = new DBStatements();
 	  	
@@ -62,7 +74,30 @@ public class Rest {
 	  }
 	  
 
-	  
+	  /**
+	  * Return all intake times from the start and end date 
+	  *
+	  * @return A JSON-Object with all the intake time informations
+	  * 
+	  * @param startDateUnix
+	  * 	the start date in unix format
+	  * 
+	  * @param endDateUnix
+	  * 	the end date in unix format
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  *
+	  */	  
 	  @GET
 	  @Path("/getIntakeTimeByStartAndEndDate/{startDateUnix}/{endDateUnix}")
 	  @Produces("application/json")
@@ -72,31 +107,29 @@ public class Rest {
 		  	
 			jsonObject.put("intakeTime", dbstatement.getIntakeTimeForVacation(startDateUnix, endDateUnix));
 			return Response.status(200).entity(jsonObject.toString()).build();
-
 	  }
 	  
-	  @GET
-	  @Path("/setNotificationStatus/{intakeTimeID}/{notificationStatus}")
-	  @Produces("application/json")
-	  public String setNotificationStatus(@PathParam("intakeTimeID") int intakeTimeID, @PathParam("notificationStatus") int notificationStatus) throws JSONException, ClassNotFoundException, SQLException, IOException {
-		  	jsonObject = new JSONObject();
-		  	dbstatement = new DBStatements();
-		  	
-			dbstatement.setNotificationStatus(intakeTimeID, notificationStatus);
-			return "set";
-	  }
 	  
-	  @GET
-	  @Path("/setIntakeStatus/{intakeTimeID}/{intakeStatus}")
-	  @Produces("application/json")
-	  public String setIntakeStatus(@PathParam("intakeTimeID") int intakeTimeID, @PathParam("intakeStatus") int intakeStatus) throws JSONException, ClassNotFoundException, SQLException, IOException {
-		  	jsonObject = new JSONObject();
-		  	dbstatement = new DBStatements();
-		  	
-			dbstatement.setIntakeStatus(intakeTimeID, intakeStatus);
-			return "set";
-	  }
-	  
+	  /**
+	  * Return all medicine box informations 
+	  *
+	  * @return A RESPONSE-Object with all the medicine box informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  *
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  */
 	  @GET @Path("/getActiveMedicineBoxes") 
 	  @Produces("application/json")
 	  public Response getActiveMedicineBoxes() throws JSONException, ClassNotFoundException, SQLException, IOException, ParseException {
@@ -105,8 +138,30 @@ public class Rest {
 	  	
 	  	jsonObject.put("activeMedicineBoxes", dbstatement.getActiveMedicineBoxes());
 	  	return Response.status(200).entity(jsonObject.toString()).build();
-	  }	  
+	  }	 
+	 
 	  
+	  /**
+	  * Return all notification setting informations  
+	  *
+	  * @return A NotificationSetting-Object with all the notification informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  *
+	  */
 	  @GET @Path("/getNotificationConfiguration") 
 	  @Produces("application/json")
 	  public NotificationSetting getNotificationConfiguration() throws JSONException, ClassNotFoundException, SQLException, IOException, ParseException {
@@ -114,7 +169,29 @@ public class Rest {
 	  	
 		return dbstatement.getNotificationConfiguration();
 	  }
+
 	  
+	  /**
+	  * Return all contact person informations  
+	  *
+	  * @return A RESPONSE-Object with all contact person informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  *
+	  */
 	  @GET @Path("/getContactPerson") 
 	  @Produces("application/json")
 	  public Response getContactPerson() throws JSONException, ClassNotFoundException, SQLException, IOException, ParseException {
@@ -126,6 +203,29 @@ public class Rest {
 		return Response.status(200).entity(jsonObject.toString()).build();
 	  }
 	  
+	  
+	  
+	  /**
+	  * Return all source of supply informations  
+	  *
+	  * @return A RESPONSE-Object with all source of supply informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  *
+	  */
 	  @GET @Path("/getSourceOfSupply") 
 	  @Produces("application/json")
 	  public Response getSourceOfSupply() throws JSONException, ClassNotFoundException, SQLException, IOException, ParseException {
@@ -136,6 +236,28 @@ public class Rest {
 		return Response.status(200).entity(jsonObject.toString()).build();
 	  }
 	  
+	  
+	  /**
+	  * Return all intake time informations by medicine id  
+	  *
+	  * @return A RESPONSE-Object with all filtered intake time informations
+	  * 
+	  * @param medicineID
+	  * 	The medicine id
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  *
+	  */
 	  @GET
 	  @Path("/getIntakeTimeByMedicineID/{medicineID}")
 	  @Produces("application/json")
@@ -147,6 +269,28 @@ public class Rest {
 		return Response.status(200).entity(jsonObject.toString()).build();
 	  }
 	  
+	  
+	  /**
+	  * Return all intake time informations by medicine id  
+	  *
+	  * @return A ContactPerson class with all contact persons
+	  * 
+	  * @param psychologicalParentID
+	  * 	The psychological parent id (ContactPersonID)
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  *
+	  */
 	  @GET
 	  @Path("/getPsychologicalParentByPsychologicalParentID/{psychologicalParentID}")
 	  @Produces("application/json")
@@ -158,6 +302,27 @@ public class Rest {
 	  }
 	  
 	  
+	  /**
+	  * Return all intake time informations by intake time id  
+	  *
+	  * @return A RESPONSE-Object with all contact intake time informations filtered by intakeTimeID
+	  * 
+	  * @param intakeTimeID
+	  * 	The intakeTime ID 
+	  *  
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  *
+	  */
 	  @GET
 	  @Path("/getIntakeTimeByIntakeTimeID/{intakeTimeID}")
 	  @Produces("application/json")
@@ -170,6 +335,27 @@ public class Rest {
 	  }
 	  
 	  
+	  /**
+	  * Return all medicine informations by medicine id  
+	  *
+	  * @return A Medicine-Object with all medicine informations filtered by medicineID
+	  * 
+	  * @param medicineID
+	  * 	The medicine id
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  *
+	  */	  
 	  @GET
 	  @Path("/getMedicineInformationByMedicineID/{medicineID}")
 	  @Produces("application/json")
@@ -178,7 +364,29 @@ public class Rest {
 
 		return  dbstatement.getMedicineInformationByMedicineID(medicineID);
 	  }
+
 	  
+	  /**
+	  * Return all source of supply informations by source of supply id  
+	  *
+	  * @return A SourceOfSupply-Object with all source of supply informations filtered by source of supply id
+	  * 
+	  * @param sourceOfSupplyID
+	  * 	The source of supply id 
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  *
+	  */
 	  @GET
 	  @Path("/getSourceOfSupplyBySourceOfSupplyID/{sourceOfSupplyID}")
 	  @Produces("application/json")
@@ -187,8 +395,29 @@ public class Rest {
 
 		return  dbstatement.getSourceOfSupplyBySourceOfSupplyID(sourceOfSupplyID);
 	  }
+
 	  
 	  
+	  /**
+	  * Return all intake time informations 
+	  * 
+	  * @return A RESPONSE-Object with all intake time informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  */
 	  @GET
 	  @Path("/getIntakeTimeInformation")
 	  @Produces("application/json")
@@ -202,6 +431,245 @@ public class Rest {
 		jsonObject.put("numberIntakeTimes", listIntakeTime.size());
 		return Response.status(200).entity(jsonObject.toString()).build();
 	  }
+	  
+	  /*
+	   * -------------------------------------END--GET FUNCTIONS--END------------------------------------------------------------------------------
+	   */
+	  
+	  /*
+	   * -------------------------------------START--SET AND EDIT FUNCTIONS--START--------------------------------------------------------------------------
+	   */
+	  
+	  /**
+	  * Saves the notification status 
+	  * 
+	  * @return String with a notification status
+	  * 
+	  * @param intakeTimeID
+	  * 	The intake time id
+	  * 
+	  * @param notificationStatus
+	  * 	The notification status
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  *
+	  */
+	  @GET
+	  @Path("/setNotificationStatus/{intakeTimeID}/{notificationStatus}")
+	  @Produces("application/json")
+	  public String setNotificationStatus(@PathParam("intakeTimeID") int intakeTimeID, @PathParam("notificationStatus") int notificationStatus) throws JSONException, ClassNotFoundException, SQLException, IOException {
+		  	jsonObject = new JSONObject();
+		  	dbstatement = new DBStatements();
+		  	
+			dbstatement.setNotificationStatus(intakeTimeID, notificationStatus);
+			return "set";
+	  }
+
+	  /**
+	  * Saves the intake status  
+	  * 
+	  * @return String with a notification status
+	  * 
+	  * @param intakeTimeID
+	  * 	The intake time id 
+	  * 
+	  * @param intakeStatus
+	  * 	The intake status
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  *
+	  */
+	  @GET
+	  @Path("/setIntakeStatus/{intakeTimeID}/{intakeStatus}")
+	  @Produces("application/json")
+	  public String setIntakeStatus(@PathParam("intakeTimeID") int intakeTimeID, @PathParam("intakeStatus") int intakeStatus) throws JSONException, ClassNotFoundException, SQLException, IOException {
+		  	jsonObject = new JSONObject();
+		  	dbstatement = new DBStatements();
+		  	
+			dbstatement.setIntakeStatus(intakeTimeID, intakeStatus);
+			return "set";
+	  }
+	   
+	
+	  /**
+	  * Saves edited medicine informations   
+	  * 
+	  * @param objEditMedicineInformation
+	  * 	The object with all edited medicine informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  *
+	  */
+	  @POST @Path("/editMedicineInformation")
+	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  public void editMedicineInformation(Object objEditMedicineInformation) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
+		  dbstatement = new DBStatements();
+			ObjectMapper mapper = new ObjectMapper();
+			  	
+			String jsonInString = mapper.writeValueAsString(objEditMedicineInformation);
+			Medicine medicine = mapper.readValue(jsonInString, Medicine.class);
+
+			dbstatement.editMedicine(medicine);
+		
+	  }
+
+	  /**
+	  * Saves edited source of supply informations   
+	  * 
+	  * @param objEditSourceOfSupply
+	  * 	The object with all edited source of supply informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  *
+	  */
+	  @POST @Path("/editSourceOfSupply")
+	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  public void editSourceOfSupply(Object objEditSourceOfSupply) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
+		  	dbstatement = new DBStatements();
+			ObjectMapper mapper = new ObjectMapper();
+			  	
+			String jsonInString = mapper.writeValueAsString(objEditSourceOfSupply);
+			SourceOfSupply sourceOfSupply = mapper.readValue(jsonInString, SourceOfSupply.class);
+
+			DBStatements.editSourceOfSupply(sourceOfSupply);
+		
+	  }
+
+	  
+	  /**
+	  * Saves edited intake time informations   
+	  * 
+	  * @param objIntakeTimeInformation
+	  * 	The object with all intake time informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  *
+	  */
+	  @POST @Path("/editIntakeTime")
+	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  public void editIntakeTime(Object objIntakeTimeInformation) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
+	  	jsonObject = new JSONObject();
+	  	dbstatement = new DBStatements();
+
+	  	JSONArray arr = new JSONArray(objIntakeTimeInformation.toString());
+	  	IntakeTime intakeTime = null;
+	  	
+		for (int i=0; i<arr.length(); i++){
+			intakeTime = new IntakeTime();
+			org.codehaus.jettison.json.JSONObject jsonObjIntakeTimeInformation = arr.getJSONObject(i);
+			intakeTime.setIntakeTimeUnix(jsonObjIntakeTimeInformation.getInt("intakeTime"));
+			intakeTime.setIntakeTimeID(jsonObjIntakeTimeInformation.getInt("intakeTimeID"));
+			intakeTime.setPillQuantity(jsonObjIntakeTimeInformation.getInt("pillQuantity"));
+		}
+
+		dbstatement.editIntakeTime(intakeTime);
+	  }
+
+	  /**
+	  * Saves edit psychological parent (contact person) informations    
+	  * 
+	  * @param objEditPsychologicalParent
+	  * 	The object with edited psychological parent informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  *
+	  */
+	  @POST @Path("/editPsychologicalParent")
+	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	  public void editPsychologicalParent(Object objEditPsychologicalParent) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
+
+	    dbstatement = new DBStatements();
+		ObjectMapper mapper = new ObjectMapper();
+		  	
+		String jsonInString = mapper.writeValueAsString(objEditPsychologicalParent);
+		ContactPerson contactPerson = mapper.readValue(jsonInString, ContactPerson.class);
+
+		dbstatement.editPsychologicalParent(contactPerson);
+	  }
+	  
+	  /*
+	   * -------------------------------------END--SET AND EDIT FUNCTIONS--END------------------------------------------------------------------------------
+	   */	 
+	  
+	  /*
+	   * -------------------------------------START--DELETE FUNCTIONS--START-----------------------------------------------------------------------
+	   */		  
 	  
 	  
 	  @DELETE @Path("/deletePsychologicalPerson/{psychologicalParentID}")
@@ -237,14 +705,14 @@ public class Rest {
 		    dbstatement.deleteIntakeTimeInformation(intakeTimeID);
 	  }
 	    
-	  /*  @POST @Path("/createMedicineInformation")
-	    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	    public void create(Object objMedicineInformation) {
-	       System.out.println(objMedicineInformation.toString());
-	    }
-	  */
 	  
+	  /*
+	   * -------------------------------------END--DELETE FUNCTIONS--END------------------------------------------------------------------------------
+	   */	
+	  
+	  /*
+	   * -------------------------------------START--CREATE FUNCTIONS--START---------------------------------------------------------------------------
+	   */	
 	  @POST @Path("/createMedicineInformation")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -273,94 +741,6 @@ public class Rest {
 			dbstatement.createMedicine(medicine);
 		}	
 	  }
-	  
-	  @POST @Path("/editMedicineInformation")
-	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	  public void editMedicineInformation(Object objEditMedicineInformation) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
-		  dbstatement = new DBStatements();
-			ObjectMapper mapper = new ObjectMapper();
-			  	
-			String jsonInString = mapper.writeValueAsString(objEditMedicineInformation);
-			Medicine medicine = mapper.readValue(jsonInString, Medicine.class);
-
-			dbstatement.editMedicine(medicine);
-		
-	  }
-	  
-	  @POST @Path("/editSourceOfSupply")
-	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	  public void editSourceOfSupply(Object objEditSourceOfSupply) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
-		  	dbstatement = new DBStatements();
-			ObjectMapper mapper = new ObjectMapper();
-			  	
-			String jsonInString = mapper.writeValueAsString(objEditSourceOfSupply);
-			SourceOfSupply sourceOfSupply = mapper.readValue(jsonInString, SourceOfSupply.class);
-
-			DBStatements.editSourceOfSupply(sourceOfSupply);
-		
-	  }
-	 
-	  @POST @Path("/editIntakeTime")
-	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	  public void editIntakeTime(Object objIntakeTimeInformation) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
-	  	jsonObject = new JSONObject();
-	  	dbstatement = new DBStatements();
-
-	  	JSONArray arr = new JSONArray(objIntakeTimeInformation.toString());
-	  	IntakeTime intakeTime = null;
-	  	
-		for (int i=0; i<arr.length(); i++){
-			intakeTime = new IntakeTime();
-			org.codehaus.jettison.json.JSONObject jsonObjIntakeTimeInformation = arr.getJSONObject(i);
-			intakeTime.setIntakeTimeUnix(jsonObjIntakeTimeInformation.getInt("intakeTime"));
-			intakeTime.setIntakeTimeID(jsonObjIntakeTimeInformation.getInt("intakeTimeID"));
-			intakeTime.setPillQuantity(jsonObjIntakeTimeInformation.getInt("pillQuantity"));
-		}
-
-		dbstatement.editIntakeTime(intakeTime);
-	  }
-	  
-	  @POST @Path("/editPsychologicalParent")
-	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	  public void editPsychologicalParent(Object objEditPsychologicalParent) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
-
-	    dbstatement = new DBStatements();
-		ObjectMapper mapper = new ObjectMapper();
-		  	
-		String jsonInString = mapper.writeValueAsString(objEditPsychologicalParent);
-		ContactPerson contactPerson = mapper.readValue(jsonInString, ContactPerson.class);
-
-		dbstatement.editPsychologicalParent(contactPerson);
-	  }
-	  
-	  
-	public static void main(String[] args) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
-		
-	
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-
-		
-
-		
-		/*for(int i = 0; i<jsonObject.getJSONArray("intakeTime").length();i++){
-			System.out.println();	
-		  	
-			intakeTime = new IntakeTime();
-			objSingleIntkaeTime = jsonObject.getJSONArray("intakeTime").getJSONArray(i).getJSONObject(0);
-			/*intakeTime.setIntakeTimeUnix(objSingleIntkaeTime.getInt("unixTimeStamp"));
-			intakeTime.setPillQuantity(objSingleIntkaeTime.getInt("pillQuantity"));
-			listIntakeTimes.add(intakeTime);
-		  	*/
-			/*System.out.println(objSingleIntkaeTime.get("medicineID"));
-		}*/
-	}
-
-	
 	  
 	  @POST
 	  @Path("/createIntakeTimeInformation")
@@ -393,7 +773,7 @@ public class Rest {
   		dbstatement.createIntakeTimeInformation(listIntakeTimes, medicineID);
 	  }
 	  
-	  
+
 	  @POST
 	  @Path("/createContactPerson")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -446,6 +826,8 @@ public class Rest {
 	  }
 	  
 	  
+	  
+	  
 	  @POST @Path("/saveVisualSettings")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -467,21 +849,7 @@ public class Rest {
   		dbstatement.saveVisualSettings(notificationSettings);
 	  }
 	  
-	  
-	  
-	  public static Timestamp convertStringToTimestamp(String str_date) {
-		    try {
-		      DateFormat formatter;
-		      formatter = new SimpleDateFormat("");
-		       // you can change format of date
-		      Date date = formatter.parse(str_date);
-		      java.sql.Timestamp timeStampDate = new Timestamp(date.getTime());
-
-		      return timeStampDate;
-		    } catch (ParseException e) {
-		      System.out.println("Exception :" + e);
-		      return null;
-		    }
-		  }
-	  
+	  /*
+	   * -------------------------------------END--CREATE FUNCTIONS--END---------------------------------------------------------------------------
+	   */	
 }
