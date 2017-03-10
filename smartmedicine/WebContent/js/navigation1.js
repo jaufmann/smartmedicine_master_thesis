@@ -37,8 +37,10 @@ $(document).ready(function() {
 	});
 	
 	$("#btnManageOptionSelection").click(function(event){
-		  localStorage.setItem("destination", "manageOptionSelection");	
-	      window.location = ' manageOptionSelection.html';
+		window.localStorage.clear();  
+		localStorage.setItem("destination", "manageOptionSelection");
+		
+	    window.location = ' manageOptionSelection.html';
 	});
 	
 	$("#btnDeleteIntakeTimeSortMedicine").click(function(event){

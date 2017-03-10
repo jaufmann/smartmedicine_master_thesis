@@ -63,7 +63,6 @@ $(document).ready(function() {
 		else if(destination == "intakeTimeVacation"){
 			loadIntakeTimeVacationInformationTable();
 		} else if(destination == "manageMedicine"){
-			console.log(jQuery.isEmptyObject(getMedicineInformation()));
 			if(jQuery.isEmptyObject(getMedicineInformation())==true){
 				$("#btnMedicineOverview").attr('disabled','disabled');
 				$("#btnEditMedicine").attr('disabled','disabled');
@@ -72,6 +71,12 @@ $(document).ready(function() {
 				$("#btnMedicineOverview").removeAttr('disabled');
 				$("#btnEditMedicine").removeAttr('disabled');
 				$("#btnDeleteMedicine").removeAttr('disabled');
+			}
+		} else if(destination == "manageOptionSelection"){
+			if(jQuery.isEmptyObject(getMedicineInformation())==true){
+				$("#btnManageIntakeTime").attr('disabled','disabled');
+			}  else {
+				$("#btnManageIntakeTime").removeAttr('disabled');
 			}
 		}
 		
@@ -282,6 +287,31 @@ $(document).ready(function() {
 				$('#txtSavetyStock').attr('disabled', false);
 			}
 			
+		    console.log(localStorage.getItem("sendOrder"));
+		    
+			console.log(localStorage.getItem("sourceType"));
+			
+			if(localStorage.getItem("sourceType") == "drugStore"){
+				$('#btnSourceTypeDrugStore').click();
+			} else if(localStorage.getItem("sourceType") == "doctor"){
+				$('#btnSourceTypeDoctor').click();
+			} else {
+				$('#btnSourceTypeMisc').click();
+				
+			}
+		   
+		    if(localStorage.getItem("sendOrder") != ""){
+		    	
+		    	if(localStorage.getItem("sendOrder") == "true"){
+					$('#btnSendOrderYes').click();
+				} else {
+					$('#btnSendOrderNo').click();
+				}
+		    } else {
+		    	$('#btnSendOrderNo').click();
+		    }	
+			
+			
 			$("#txtNote").val(localStorage.getItem("note"));
 			$("#txtStock").val(localStorage.getItem("stock"));
 			$("#txtSavetyStock").val(localStorage.getItem("savetyStock"));
@@ -299,7 +329,6 @@ $(document).ready(function() {
 			$("<tr><td><img class='transparent headerNavigation' src='img/pills-blue.png'><font style='color:2875bd' class='transparent'><b>Allgemein</b></font></h4></td>" +
 			  "<td><img class='transparent headerNavigation'  src='img/Information_icon.png'><font style='color:2875bd' class='transparent'><b>Info</b></font></td>" +
 			  "<td><img class='headerNavigation'  src='img/clock.png'><font style='color:2875bd'><b>Zeitpunkt</b></font></h4></td></tr>").appendTo("table[id='tblHeaderOverview']");
-			
 			
 			
 			if(localStorage.getItem("iteration")!=null){
@@ -376,6 +405,33 @@ $(document).ready(function() {
 			});
 		  return listActiveMedicineBoxes;
 	};
+
+	
+	$('#btnSendOrderYes').click(function(){
+		localStorage.setItem("sendOrder", "true");
+		document.getElementById("btnSendOrderYes").style.opacity = 1;
+		document.getElementById("btnSendOrderNo").style.opacity = 0.3;
+		$('#txtSavetyStock').attr('disabled', false);
+
+		$('#btnSourceTypeDoctor').attr('disabled', false);
+		$('#btnSourceTypeDrugStore').attr('disabled', false);
+		$('#btnSourceTypeMisc').attr('disabled', false);
+	})
+	
+	$('#btnSendOrderNo').click(function(){
+		$('#txtSavetyStock').attr('disabled', true);
+		localStorage.setItem("sendOrder", "false");
+		localStorage.setItem("sourceType", "no");
+		document.getElementById("btnSendOrderNo").style.opacity = 1;
+		document.getElementById("btnSendOrderYes").style.opacity = 0.3;
+		document.getElementById("btnSourceTypeDrugStore").style.opacity = 0.3;
+		document.getElementById("btnSourceTypeDoctor").style.opacity = 0.3;
+		document.getElementById("btnSourceTypeMisc").style.opacity = 0.3;
+		$('#btnSourceTypeDoctor').attr('disabled', true);
+		$('#btnSourceTypeDrugStore').attr('disabled', true);
+		$('#btnSourceTypeMisc').attr('disabled', true);
+	})
+	
 	
 	function loadIntakeTimeVacationInformationTable() {
 		  $.ajax({
@@ -636,6 +692,30 @@ $(document).ready(function() {
 		return arrIntakeTimes;
 	}
 	
+	
+	$('#btnSourceTypeDoctor').click(function(){
+		localStorage.setItem("sourceType", "doctor");
+		document.getElementById("btnSourceTypeDoctor").style.opacity = 1;
+		document.getElementById("btnSourceTypeDrugStore").style.opacity = 0.3;
+		document.getElementById("btnSourceTypeMisc").style.opacity = 0.3;
+	})
+	
+	$('#btnSourceTypeDrugStore').click(function(){
+		localStorage.setItem("sourceType", "drugStore");
+		document.getElementById("btnSourceTypeDrugStore").style.opacity = 1;
+		document.getElementById("btnSourceTypeDoctor").style.opacity = 0.3;
+		document.getElementById("btnSourceTypeMisc").style.opacity = 0.3;
+	})
+	
+	$('#btnSourceTypeMisc').click(function(){
+		localStorage.setItem("sourceType", "misc");
+		document.getElementById("btnSourceTypeDrugStore").style.opacity = 0.3;
+		document.getElementById("btnSourceTypeDoctor").style.opacity = 0.3;
+		document.getElementById("btnSourceTypeMisc").style.opacity = 1;
+	})
+	
+	
+	
 	/**
 	 * addIntakeTime.html functions
 	 */
@@ -735,6 +815,13 @@ $(document).ready(function() {
 		objMedicineInformation.savetyStock = localStorage.getItem("savetyStock");
 		objMedicineInformation.contactType = localStorage.getItem("contactType");
 		objMedicineInformation.boxID = localStorage.getItem("boxID");
+		objMedicineInformation.sourceType = localStorage.getItem("sourceType");
+		
+		if(localStorage.getItem("sendOrder") == "true"){
+			objMedicineInformation.sendOrder = true;
+		} else {
+			objMedicineInformation.sendOrder = false;
+		}
 		
 		
 	    jsonObjMedicineInformation = JSON.stringify(objMedicineInformation);
@@ -945,12 +1032,19 @@ $(document).ready(function() {
 	 */
 		
 	$("#btnSaveMedicineInformation").click(function(){
-		console.log("gespeicher"+localStorage.get("boxID"));
 		objMedicineInformation.medicineName = localStorage.getItem("medicineName");
 		objMedicineInformation.disease = localStorage.getItem("disease");
 		objMedicineInformation.note = localStorage.getItem("note");
 		objMedicineInformation.stock = localStorage.getItem("stock");
 		objMedicineInformation.boxID = localStorage.getItem("boxID");
+		objMedicineInformation.sourceType = localStorage.getItem("sourceType");
+		
+		if(localStorage.getItem("sendOrder") == "true"){
+			objMedicineInformation.sendOrder = true;
+		} else {
+			objMedicineInformation.sendOrder = false;
+		}
+		
 
 	    jsonObjMedicineInformation = JSON.stringify(objMedicineInformation);
 		
@@ -1084,18 +1178,12 @@ $(document).ready(function() {
 		$('#divContactPerson').hide();
 	})
 	
-	$( "#txtStock" ).keyup(function() {
-			if($(this).val()!=""){
-				$('#txtSavetyStock').attr('disabled', false);
-			} else {
-				$('#txtSavetyStock').attr('disabled', true);
-			}
-	});
 	
 	$('#btnAddMedicineForwardSecond').click(function(){
 		
 		var isStockCorrect = true;
-		
+		var isNoteCorrect = true;
+		var isSendOrder = true;
 		
 		if($("#txtStock").val()!=""){
 			isStockCorrect = true;
@@ -1106,6 +1194,27 @@ $(document).ready(function() {
 			$('#savetyStock').append("<img class='imgAttention' src='img/attention_icon.png'>");
 		}
 		
+		
+		if($("#txtNote").val()!=""){
+			isNoteCorrect = true;
+			$('#note').empty();
+		} else {
+			isNoteCorrect = false;
+			$('#note').empty();
+			$('#note').append("<img class='imgAttention' src='img/attention_icon.png'>");
+		}
+		
+		
+		if(localStorage.getItem("sendOrder") == "true" && $('#txtSavetyStock').val() == ""){
+			isSendOrder = true;
+			$('#sendOrder').empty();
+			$('#sendOrder').append("<img class='imgAttention' src='img/attention_icon.png'>");
+		} else {
+			$('#sendOrder').empty(); 
+			isSendOrder = false;
+		}
+		
+
 		if(isStockCorrect == true){
 			localStorage.setItem("note", $("#txtNote").val());
 			localStorage.setItem("stock", $("#txtStock").val());
@@ -1608,6 +1717,20 @@ $(document).ready(function() {
 		
 		// this part will be triggered, when the destination is the second add medicine information page
 		else {
+
+			if(newObjMedicineInformation.sourceType == "misc"){
+				$('#btnSourceTypeMisc').click();
+			} else if(newObjMedicineInformation.sourceType == "doctor"){
+				$('#btnSourceTypeDoctor').click();
+			} else {
+				$('#btnSourceTypeDrugStore').click();
+			}
+			
+			if(newObjMedicineInformation.sendOrder == true){
+				$('#btnSendOrderYes').click();
+			} else {
+				$('#btnSendOrderNo').click();
+			}
 			if(localStorage.getItem("stock")==null && localStorage.getItem("savetyStock")==null && localStorage.getItem("note")==null){
 				$('#txtNote').val(newObjMedicineInformation.note);
 				$('#txtStock').val(newObjMedicineInformation.stock);
@@ -1656,6 +1779,8 @@ $(document).ready(function() {
 		objEditMedicineInformation.id = localStorage.getItem("medicineID");
 		objEditMedicineInformation.boxID = localStorage.getItem("boxID");
 		objEditMedicineInformation.oldBoxID = localStorage.getItem("oldBoxID");
+		objEditMedicineInformation.sourceType = localStorage.getItem("sourceType");
+		objEditMedicineInformation.sendOrder = localStorage.getItem("sendOrder");
 		saveEditMedicineInformation();
 	}
 	
@@ -1675,6 +1800,8 @@ $(document).ready(function() {
 			    	objMedicineInformation.contactType = data.contactType;
 			    	objMedicineInformation.note = data.note;
 			    	objMedicineInformation.boxID = data.boxID;
+			    	objMedicineInformation.sendOrder = data.sendOrder;
+			    	objMedicineInformation.sourceType = data.sourceType;
 			    },
 			    url: host+':'+port+'/smartmedicine/rest/medicineinformation/getMedicineInformationByMedicineID/'+localStorage.getItem("medicineID")
 			});

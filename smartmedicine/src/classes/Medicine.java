@@ -13,6 +13,8 @@ public class Medicine {
 	private String contactType;
 	private int boxID;
 	private int oldBoxID;
+	private String sourceType;
+	private boolean sendOrder;
 
 	public int getId() {
 		return medicineID;
@@ -98,6 +100,22 @@ public class Medicine {
 
 	public void setOldBoxID(int oldBoxID) {
 		this.oldBoxID = oldBoxID;
+	}
+
+	public String getSourceType() {
+		return sourceType;
+	}
+
+	public void setSourceType(String sourceType) {
+		this.sourceType = sourceType;
+	}
+
+	public boolean isSendOrder() {
+		return sendOrder;
+	}
+
+	public void setSendOrder(boolean sendOrder) {
+		this.sendOrder = sendOrder;
 	}
 
 }

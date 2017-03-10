@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.json.JSONException;
+
 import classes.ContactPerson;
 import classes.IntakeTime;
 import classes.Medicine;
@@ -26,25 +28,36 @@ public class DBStatements {
 	
 	private static DBConnection dbconnection = null;
 		
+	
+	  /**
+	  * This method returns all medicine informations from the database   
+	  * 
+	  * @return
+	  * 	All medicine informations in a arraylist
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  *
+	  */
 	public ArrayList<Medicine> getMedicineInformation() throws ClassNotFoundException, SQLException, IOException{
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		Medicine medicine = null;
-		/*String query = " SELECT medicine.medicineID, GROUP_CONCAT(DISTINCT intaketime.intakeTimeID) AS intakeTimeID, "
-				+ 	   " medicine.note, stock, medicineName, disease "
-				+ 	   " FROM intaketime INNER JOIN medicine "
-				+      " WHERE intaketime.medicineID = medicine.medicineID "
-				+      " GROUP BY medicine.medicineID, medicine.note ";
-		*/
-		
-		String query = " SELECT medicineID, note, stock, medicineName, disease "
+
+		String query = " SELECT medicineID, note, stock, medicineName, disease, sourceType, sendOrder "
 				+ 	   " FROM medicine "
 				+      " GROUP BY medicineID ";
 		ArrayList<Medicine> listMedicine = new ArrayList<Medicine>();
 		
 		try{
-			con = dbconnection.getConnection();
+			con = DBConnection.getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			while(rs.next()){
@@ -53,21 +66,9 @@ public class DBStatements {
 				medicine.setStock(rs.getInt("stock"));
 				medicine.setMedicineName(rs.getString("medicineName"));
 				medicine.setNote(rs.getString("note"));
-				
-				/*
-				//convert sql output to string arraylist
-				ArrayList<String> listIntakeTimeIDs = new ArrayList<String>(Arrays.asList(rs.getString("intakeTimeID").split(",")));
-				//convert arraylist to integer
-				ArrayList<Integer> newList = new ArrayList<Integer>(listIntakeTimeIDs.size()) ;
-				for (String myInt : listIntakeTimeIDs) 
-	            { 
-	              newList.add(Integer.valueOf(myInt)); 
-	            }
-				
-				medicine.setListIntakeTimeIDs(newList);
-				*/
-				
 				medicine.setDisease(rs.getString("disease"));
+				medicine.setSourceType(rs.getString("sourceType"));
+				medicine.setSendOrder(rs.getBoolean("sendOrder"));
 				listMedicine.add(medicine);
 			}
 		}finally{
@@ -78,6 +79,26 @@ public class DBStatements {
 		return listMedicine;		
 	}
 	
+
+	  /**
+	  * This method returns intake time informations filtered by medicine id from the database  
+	  * 
+	  * @param medicineID
+	  * 	The medicine id
+	  * 
+	  * @return
+	  * 	All intake time informations in a arraylist
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  *
+	  */
 	public ArrayList<IntakeTime> getIntakeTimeByMedicineID(int medicineID) throws SQLException, ClassNotFoundException, IOException{
 		Connection con = null;
 		Statement stmt = null;
@@ -87,7 +108,7 @@ public class DBStatements {
 		ArrayList<IntakeTime> listIntaketimes = new ArrayList<IntakeTime>();
 		
 		try{
-			con = dbconnection.getConnection();
+			con = DBConnection.getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			while(rs.next()){
@@ -108,7 +129,26 @@ public class DBStatements {
 		return listIntaketimes;		
 	}
 	
-	
+
+	  /**
+	  * This method returns all intake time informations from the database  
+	  * 
+	  * @return
+	  * 	All intake time informations in a arraylist
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  *
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  * 
+	  */
 	public ArrayList<IntakeTime> getIntakeTimeInformation() throws ClassNotFoundException, SQLException, ParseException, IOException{
 		Connection con = null;
 		Statement stmt = null;
@@ -138,17 +178,35 @@ public class DBStatements {
 		return listIntaketimes;		
 	}
 	
-	
+
+	  /**
+	  * This method returns all notification informations from the database  
+	  * 
+	  * @return
+	  * 	A NotificationSetting-Object with all notification settings
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  *
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  * 
+	  */
 	public NotificationSetting getNotificationConfiguration() throws ClassNotFoundException, SQLException, ParseException, IOException{
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		IntakeTime intaketime = null;
 		String query = "SELECT * FROM notificationconfiguration";
 		NotificationSetting notificationConfiguration = new NotificationSetting();
 		
 		try{
-			con = dbconnection.getConnection();
+			con = DBConnection.getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			while(rs.next()){
@@ -167,12 +225,22 @@ public class DBStatements {
 		return notificationConfiguration;		
 	}
 
+	/**
+	* This method deletes medicine informations in the database  
+	* 
+	* @param medicineID
+	* 	The medicine id
+	* 
+	* @throws SQLException 
+	* 	An exception that provides information on a database access error or other errors.
+	* 
+	*/
 	public void deleteMedicineInformation(int medicineID) throws SQLException {
 		    Connection con = null;
 	        Statement stmt = null;
 	        try
 	        {
-	        	con = dbconnection.getConnection();
+	        	con = DBConnection.getConnection();
 	             
 	            stmt = con.createStatement();
 	            stmt.execute("DELETE FROM medicine WHERE medicineID ="+medicineID);
@@ -188,14 +256,21 @@ public class DBStatements {
 	            }
 	        }
 	 }
+	
 
+	/**
+	* This method is used to delete a intake time by a given intakeTimeID
+	* 
+	* @param intakeTimeID
+	* 	The intake time id
+	* 
+	*/
 	public void deleteIntakeTimeInformation(int intakeTimeID) {
 		 Connection con = null;
 	        Statement stmt = null;
 	        try
 	        {
-	        	con = dbconnection.getConnection();
-	             
+	        	con = DBConnection.getConnection();
 	            stmt = con.createStatement();
 	            stmt.execute("DELETE FROM intaketime WHERE intakeTimeID ="+intakeTimeID);
 	        } 
@@ -212,16 +287,26 @@ public class DBStatements {
 	}	 
 	
 
+	/**
+	* This method creates medicine informations in the database
+	* 
+	* @param medicine
+	* 	The Medicine Class with all medicine informations
+	* 
+	* @throws IOException 
+	* 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	* 
+	*/
 	public static void createMedicine(Medicine medicine) throws IOException {
 		 	Connection conn = null;
 			PreparedStatement pstmtMedicine = null;
 			
 			try{					 
-				  conn = dbconnection.getConnection();
+				  conn = DBConnection.getConnection();
 				 
 		    	  String sqlProduct = " insert into medicine (medicineName, disease, sendNotification, contactType, "
-		    	  		+ " note, stock, savetyStock, boxID)"
-					        + " values (?, ?, ?, ?, ?, ?, ?, ?)";
+		    	  		+ " note, stock, savetyStock, boxID, sourceType, sendOrder)"
+					        + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		    	  
 		    	  pstmtMedicine = conn.prepareStatement(sqlProduct);
 		    	  pstmtMedicine.setString(1, medicine.getMedicineName());
@@ -232,6 +317,8 @@ public class DBStatements {
 		    	  pstmtMedicine.setInt(6, medicine.getStock());
 		    	  pstmtMedicine.setInt(7, medicine.getSavetyStock());
 		    	  pstmtMedicine.setInt(8, medicine.getBoxID());
+		    	  pstmtMedicine.setString(9, medicine.getSourceType());
+		    	  pstmtMedicine.setBoolean(10, medicine.isSendOrder());
 			      
 		    	  pstmtMedicine.executeUpdate();
 			 } catch(Exception e){
@@ -247,7 +334,17 @@ public class DBStatements {
 		 }
 
 	
-	
+
+	  /**
+	  * This method creates all intake time informatios in the database
+	  * 
+	  * @param ListIntakeTime
+	  * 	A list with all intake time informations
+	  * 
+	  * @param medicineID
+	  * 	The medicine id
+	  * 
+	  */
 	public void createIntakeTimeInformation(ArrayList<IntakeTime> ListIntakeTime, int medicineID) {
 	 	Connection conn = null;
 		PreparedStatement pstmtProduct = null;
@@ -268,8 +365,7 @@ public class DBStatements {
 		    	  while(rs.next()){
 					medicineID = rs.getInt("medicineID");	
 		    	  }
-	    	  }
-	    	  
+	    	  }	  
 	    	  
 		      for (IntakeTime outputIntakeTime: ListIntakeTime) {
 			      pstmtProduct = conn.prepareStatement(sqlProduct);
@@ -281,7 +377,6 @@ public class DBStatements {
 			      pstmtProduct.addBatch();
 			      pstmtProduct.executeBatch();
 		    	}
-		     
 		      
 		 } catch(Exception e){
 			 
@@ -295,6 +390,26 @@ public class DBStatements {
 	       }
 	}
 
+	  /**
+	  * This method return all intake time informations by intake time from the database
+	  * 
+	  * @param intakeTimeID
+	  * 	The intake time id
+	  * 
+	  * @return
+	  * 	A arraylist with all intake time informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * 
+	  */
 	public ArrayList<IntakeTime> getIntakeTimeByIntakeTimeID(int intakeTimeID) throws ClassNotFoundException, SQLException, IOException {
 		Connection con = null;
 		Statement stmt = null;
@@ -305,7 +420,7 @@ public class DBStatements {
 		ArrayList<IntakeTime> listIntaketimes = new ArrayList<IntakeTime>();
 		
 		try{
-			con = dbconnection.getConnection();
+			con = DBConnection.getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			while(rs.next()){
@@ -324,12 +439,20 @@ public class DBStatements {
 		return listIntaketimes;		
 	}
 
+	
+	  /**
+	  * This method is used to save the edited intake time informations in the database
+	  * 
+	  * @param intakeTime
+	  * 	The IntakTime-Object with all intake time informations
+	  * 
+	  */
 	public void editIntakeTime(IntakeTime intakeTime) {
 		Connection conn = null;
 		PreparedStatement pstmtProduct = null;
 
 		try{					 
-			  conn = dbconnection.getConnection();
+			  conn = DBConnection.getConnection();
 			 
 	    	  String sqlProduct = " UPDATE intaketime SET intakeTime = ?, pillQuantity = ? WHERE intakeTimeID = ?";
 	    	  
@@ -351,12 +474,19 @@ public class DBStatements {
 		
 	}
 
+	  /**
+	  * This method is used to save the visual settings in the database
+	  * 
+	  * @param notificationSettings
+	  * 	The notificationSettings-Object with notification informations
+	  * 
+	  */
 	public void saveVisualSettings(NotificationSetting notificationSettings) {
 		Connection conn = null;
 		PreparedStatement pstmtProduct = null;
 
 		try{					 
-			  conn = dbconnection.getConnection();
+			  conn = DBConnection.getConnection();
 			 
 	    	  String sqlProduct = " UPDATE notificationconfiguration SET useLight = ?, lightColor = ? ";
 	    	  
@@ -378,19 +508,25 @@ public class DBStatements {
 	}
 	
 	
+	  /**
+	  * This method is used to save the visual settings in the database
+	  * 
+	  * @param notificationSettings
+	  * 	The notificationSettings-Object with notification informations
+	  * 
+	  */
 	public void saveAccousticalSettings(NotificationSetting notificationSettings) {
 		Connection conn = null;
 		PreparedStatement pstmtProduct = null;
 
 		try{					 
-			  conn = dbconnection.getConnection();
+			  conn = DBConnection.getConnection();
 			 
 	    	  String sqlProduct = " UPDATE notificationconfiguration SET useSpeaker = ?, notificationSoundName = ?";
 	    	  
 		      pstmtProduct = conn.prepareStatement(sqlProduct);
 		      pstmtProduct.setBoolean(1, notificationSettings.isUseSpeaker());
 		      pstmtProduct.setString(2, notificationSettings.getNotificationSoundName());
-		      System.out.println("hier"+notificationSettings.isUseSpeaker());
 		      pstmtProduct.executeUpdate();
 		 } catch(Exception e){
 			 
@@ -402,9 +538,27 @@ public class DBStatements {
 	                e.printStackTrace();
 	            }
 	        }
-		
 	}
 
+	  /**
+	  * This method is used to get the medicine informations by the medicine id
+	  * 
+	  * @param medicineID
+	  * 	The Medicine-Object with all medicine informations
+	  * 
+	  * @return 
+	  * 	A Medicine-Object with all medicine informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  */
 	public Medicine getMedicineInformationByMedicineID(int medicineID) throws ClassNotFoundException, SQLException, IOException {
 			Connection con = null;
 			Statement stmt = null;
@@ -416,7 +570,7 @@ public class DBStatements {
 					+      " GROUP BY medicineID ";
 			
 			try{
-				con = dbconnection.getConnection();
+				con = DBConnection.getConnection();
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(query);
 				while(rs.next()){
@@ -430,6 +584,8 @@ public class DBStatements {
 					medicine.setSavetyStock(rs.getInt("savetystock"));
 					medicine.setContactType(rs.getString("contactType"));
 					medicine.setBoxID(rs.getInt("boxID"));
+					medicine.setSourceType(rs.getString("sourceType"));
+					medicine.setSendOrder(rs.getBoolean("sendOrder"));
 				}
 			}finally{
 				if(rs != null) rs.close();
@@ -440,6 +596,13 @@ public class DBStatements {
 		}
 
 	
+	  /**
+	  * This method is used to create contact a person
+	  * 
+	  * @param contactPerson
+	  * 	The ContactPerson-Object with all contact person informations
+	  * 
+	  */
 	public void createContactPerson(ContactPerson contactPerson) {
 		Connection conn = null;
 		PreparedStatement pstmtContactPerson = null;
@@ -458,8 +621,6 @@ public class DBStatements {
 		      pstmtContactPerson.setString(5, contactPerson.getContactType());
 		      pstmtContactPerson.setBoolean(6, contactPerson.isRecieveNotification());
 		      
-		      
-
 		      pstmtContactPerson.executeUpdate();
 		 } catch(Exception e){
 			 
@@ -473,8 +634,23 @@ public class DBStatements {
 	        }
 	}
 
+	  /**
+	  * This method is used to get all contact persons from the database
+	  * 
+	  * @return 
+	  * 	A Arraylist with all contact person informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  */
 	public ArrayList<ContactPerson> getContactPerson() throws SQLException, ClassNotFoundException, IOException {
-		// TODO Auto-generated method stub
 		ContactPerson contactPerson = null;
 		
 		Connection con = null;
@@ -488,7 +664,6 @@ public class DBStatements {
 		try{
 			con = DBConnection.getConnection();
 			pstmt = con.prepareStatement(sqlContactPerson);
-			
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()){
@@ -512,12 +687,19 @@ public class DBStatements {
 		return listContactPerson;
 	}
 
+	  /**
+	  * This method is used to delete a specific contact person the contact person id
+	  * 
+	  * @param psychologicalParentID (contactPersonID)
+	  * 	The contact person id
+	  * 
+	  */
 	public void deletePsychologicalParent(int psychologicalParentID) {
 		Connection con = null;
         Statement stmt = null;
         try
         {
-        	con = dbconnection.getConnection();
+        	con = DBConnection.getConnection();
              
             stmt = con.createStatement();
             stmt.execute("DELETE FROM psychologicalparent WHERE psychologicalParentID ="+psychologicalParentID);
@@ -535,6 +717,25 @@ public class DBStatements {
 		
 	}
 
+	  /**
+	  * This method is used to get a specific contact persons from the database by the psychologicalParentID
+	  * 
+	  * @param psychologicalParentID
+	  * 	A psychologicalParentID (contactpersonid) 
+	  * 
+	  * @return 
+	  * 	A ContactPerson-Object with all informations of the contact person
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  */
 	public ContactPerson getPsychologicalParentByPsychologicalParentID(int psychologicalParentID) throws ClassNotFoundException, SQLException, IOException {
 		Connection con = null;
 		Statement stmt = null;
@@ -545,7 +746,7 @@ public class DBStatements {
 				+ 	   " WHERE psychologicalParentID = "+psychologicalParentID+"";
 		
 		try{
-			con = dbconnection.getConnection();
+			con = DBConnection.getConnection();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			while(rs.next()){
@@ -556,9 +757,6 @@ public class DBStatements {
 				contactPerson.setId(rs.getInt("psychologicalParentID"));
 				contactPerson.setRecieveNotification(rs.getBoolean("recieveNotification"));
 				contactPerson.setContactType(rs.getString("contactType"));
-				
-				
-				
 			}
 		}finally{
 			if(rs != null) rs.close();
@@ -568,14 +766,21 @@ public class DBStatements {
 		return contactPerson;	
 	}
 
+
+	  /**
+	  * This method is used to save the edited contact person informations
+	  * 
+	  * @param contactPerson 
+	  * 	A ContactPerson-Object with all contact person informations
+	  * 
+	  */
 	public void editPsychologicalParent(ContactPerson contactPerson) {
 		Connection conn = null;
 		PreparedStatement pstmtProduct = null;
 
 		try{					 
 			  conn = DBConnection.getConnection();
-			 
-			  
+			 	  
 	    	  String sqlProduct = " UPDATE psychologicalparent SET name = ?, surname = ?, email = ?, sex = ?, contactType = ?, recieveNotification = ? WHERE psychologicalParentID = ?";
 	    	  
 		      pstmtProduct = conn.prepareStatement(sqlProduct);
@@ -598,10 +803,16 @@ public class DBStatements {
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            }
-	        }
-		
+	        }	
 	}
-
+	
+	  /**
+	  * This method is used to save all edited medicine informations 
+	  * 
+	  * @param medicine
+	  * 	A Medicine-Object with all medicine informations
+	  * 
+	  */
 	public void editMedicine(Medicine medicine) {
 		Connection conn = null;
 		PreparedStatement pstmtEditMedicine = null;
@@ -618,7 +829,7 @@ public class DBStatements {
 	    	  pstmtSwitchBoxID.executeUpdate();
 			  
 	    	  String sqlEditMedcine = " UPDATE medicine SET medicineName = ?, disease = ?, sendNotification = ?, "
-	    	  		+ "contactType = ?, note = ?, stock = ?, savetyStock = ?, boxID = ? WHERE medicineID = ?";
+	    	  		+ "contactType = ?, note = ?, stock = ?, savetyStock = ?, boxID = ?, sourceType = ?, sendOrder = ? WHERE medicineID = ?";
 	    	  
 	    	  pstmtEditMedicine = conn.prepareStatement(sqlEditMedcine);
 	    	  pstmtEditMedicine.setString(1, medicine.getMedicineName());
@@ -629,8 +840,11 @@ public class DBStatements {
 	    	  pstmtEditMedicine.setString(5, medicine.getNote());
 	    	  pstmtEditMedicine.setInt(6, medicine.getStock());
 	    	  pstmtEditMedicine.setInt(7, medicine.getSavetyStock());
-	    	  pstmtEditMedicine.setInt(9, medicine.getId());
+
 	    	  pstmtEditMedicine.setInt(8, medicine.getBoxID());
+	    	  pstmtEditMedicine.setString(9, medicine.getSourceType());
+	    	  pstmtEditMedicine.setBoolean(10, medicine.isSendOrder());
+	    	  pstmtEditMedicine.setInt(11, medicine.getId());
 	    	  pstmtEditMedicine.executeUpdate();
 	    	  
 		 } catch(Exception e){
@@ -647,7 +861,29 @@ public class DBStatements {
 		
 	}
 	
-	
+
+	  /**
+	  * This method is used to get all intake time informations for the manual dispense 
+	  * 
+	  * @param startDateUnix
+	  * 	The start date in a unix timestamp
+	  * 
+	  * @param endDateUnix
+	  * 	The end date in a unix timestamp
+	  * 
+	  * @return 
+	  * 	A Arraylist with all intake time informations 
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  */
 	public ArrayList<IntakeTime> getIntakeTimeForVacation(int startDateUnix, int endDateUnix) throws ClassNotFoundException, SQLException, IOException{
 		Connection con = null;
 		Statement stmt = null;
@@ -677,6 +913,16 @@ public class DBStatements {
 		return listIntakeTime;	
 	}
 
+	  /**
+	  * This method is used to set the notification status
+	  * 
+	  * @param intakeTimeID
+	  * 	The intake time id
+	  * 
+	  * @param notificationStatus
+	  * 	The notifications status (triggered or not triggered)
+	  * 
+	  */
 	public void setNotificationStatus(int intakeTimeID, int notificationStatus) {
 		Connection conn = null;
 		PreparedStatement pstmtEditMedicine = null;
@@ -704,14 +950,23 @@ public class DBStatements {
 	        }
 	}
 
+	  /**
+	  * This method is used to set the intake status 
+	  * 
+	  * @param intakeTimeID
+	  * 	The intake time id
+	  * 
+	  * @param intakeStatus
+	  * 	The notifications status (medicine taken or not taken)
+	  * 
+	  */
 	public void setIntakeStatus(int intakeTimeID, int intakeStatus) {
 		Connection conn = null;
 		PreparedStatement pstmtEditMedicine = null;
 
 		try{					 
 			  conn = DBConnection.getConnection();
-			 
-			  
+						  
 	    	  String sqlEditMedcine = " UPDATE intaketime SET intakeStatus = ? WHERE intakeTimeID = ?";
 	    	  
 	    	  pstmtEditMedicine = conn.prepareStatement(sqlEditMedcine);
@@ -743,7 +998,7 @@ public class DBStatements {
 			ArrayList<Integer> listActiveMedicineBoxes = new ArrayList<Integer>();
 			
 			try{
-				con = dbconnection.getConnection();
+				con = DBConnection.getConnection();
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(query);
 				while(rs.next()){
@@ -759,6 +1014,13 @@ public class DBStatements {
 		}
 
 
+	  /**
+	  * This method is used to create a source of supply 
+	  * 
+	  * @param sourceOfSupply
+	  * 	The SourceOfSupply-Object with all source of supply informations
+	  * 
+	  */
 	public void createSourceOfSupply(SourceOfSupply sourceOfSupply) {
 		Connection conn = null;
 		PreparedStatement pstmtSourceOfSupply = null;
@@ -789,8 +1051,24 @@ public class DBStatements {
 		
 	}
 
+
+	  /**
+	  * This method is used to get all sourc of supply informations from the database
+	  * 
+	  * @return 
+	  * 	A Arraylist with all source of supply informations
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  */
 	public ArrayList<SourceOfSupply> getSourceOfSupply() throws ClassNotFoundException, SQLException, IOException {
-		// TODO Auto-generated method stub
 				SourceOfSupply sourceOfSupply= null;
 				
 				Connection con = null;
@@ -825,13 +1103,19 @@ public class DBStatements {
 				return listSourceOfSupply;
 	}
 
+	  /**
+	  * This method is used to delete a specific source of supply by the source of supply id
+	  * 
+	  * @param sourceOfSupplyID
+	  * 	The source of supply id
+	  * 
+	  */
 	public void deleteSourceOfSupply(int sourceOfSupplyID) {
 		Connection con = null;
         Statement stmt = null;
         try
         {
         	con = DBConnection.getConnection();
-             
             stmt = con.createStatement();
             stmt.execute("DELETE FROM sourceofsupply WHERE id ="+sourceOfSupplyID);
         } 
@@ -847,6 +1131,25 @@ public class DBStatements {
         }
 	}
 
+	  /**
+	  * This method is used to get all source of supply informations from the database
+	  * 
+	  * @return SourceOfSupply
+	  * 	The SourceOfSupply-Object with all source of supply informations
+	  * 
+	  * @param sourceOfSupplyID
+	  * 	The source of supply id
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  */
+	
 	public SourceOfSupply getSourceOfSupplyBySourceOfSupplyID(int sourceOfSupplyID) throws ClassNotFoundException, SQLException, IOException {
 		Connection con = null;
 		Statement stmt = null;
@@ -876,6 +1179,13 @@ public class DBStatements {
 	}
 
 
+	  /**
+	  * This method is used to save the edited source of supply informations
+	  * 
+	  * @param sourceOfSupply
+	  * 	The sourceOfSupply-Object with all source of supply informations
+	  * 
+	  */
 	public static void editSourceOfSupply(SourceOfSupply sourceOfSupply) {
 		Connection conn = null;
 		PreparedStatement pstmtEditSourceOfSupply= null;
@@ -894,7 +1204,6 @@ public class DBStatements {
 	    	 pstmtEditSourceOfSupply.setBoolean(5, sourceOfSupply.isRecieveMail());
 	     	 pstmtEditSourceOfSupply.setInt(6, sourceOfSupply.getId());
 	     	 pstmtEditSourceOfSupply.executeUpdate();
-			  
 	    	  
 		 } catch(Exception e){
 			 

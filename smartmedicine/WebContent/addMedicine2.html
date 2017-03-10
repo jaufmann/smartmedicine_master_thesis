@@ -63,30 +63,43 @@ float:left;width:100%">
 
     <div class="divContainer" id="divContainer"> 
     
-
-
-	
-	
-    <!-- input fields -->         
-    <table>
-    <tr>
-    	<td width="100%"><font>Notiz:</b></font> <input class='form-control' type="text"  id="txtNote"/> </td>
-    </tr>
-    <tr>
-    	<td>&nbsp;</td>
-    </tr>
-    <tr>
-    	<td width="100%"><a id="savetyStock"></a><font>Bestand:</font> <input class='form-control'  type="number" min="1" id="txtStock"/></td>
-    	<td width="100"></td>
-    </tr>
-        <tr>
-    	<td>&nbsp;</td>
-    </tr>
-    <tr>
-    	<td width="100%"><font>Automatische Nachlieferung ab:</b></font> <input class='form-control' type="number" min="1"  id="txtSavetyStock"/> </td>
-    </tr>
-    </table>
-    <br/>
+    	<table width="100%">
+	    <tr>
+	    	<td width="100%" ><a id="note"></a>&nbsp;<font>Notiz:</font></td>
+	    </tr>
+	    
+	    <tr>
+	   	 <td colspan="4"> <input class='form-control' type="text"  id="txtNote"/>  </td>
+	   	</tr>
+	    <tr>
+			<td>&nbsp;</td>
+		</tr>
+	    <tr>
+	    	<td width="100%" ><a id="savetyStock"></a>&nbsp;<font>Bestand:</font> </td>
+	    	<td width="100%" colspan="3" align="right"><font>Nachbestellen?</font> </td>
+	    </tr>
+	    
+	    <tr width="100%">
+	      <td colspan="2"> <input class='form-control'  type="number" min="1" id="txtStock"/></td>
+	      <td><button id="btnSendOrderYes" class='btn btn-primary '><img class="interval" src="img/JA_logo.png"></img></button></td>
+	      <td><button id="btnSendOrderNo" class=' btn btn-primary '><img class="interval" src="img/NEIN_logo.png" ></img></button></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		
+		<tr>
+	    	<td width="100%" ><a id="sendOrder"></a>&nbsp;<font>Sicherheitsbestand:</font> </td>
+	    	<td width="100%" align="right" colspan="3"><font>Bezugsquelle</font> </td>
+	    </tr>
+	    
+		<tr>
+			 <td><input class='form-control' type="number" min="1"  id="txtSavetyStock"/></td>
+			 <td><button id="btnSourceTypeDrugStore" class='btn btn-primary '><img class="interval" src="img/art_apotheke_logo.png"></img></button> </td>
+		  	 <td><button id="btnSourceTypeDoctor" class='btn btn-primary'><img class="interval" src="img/art_arzt_logo.png"></img></button> </td>
+		   	 <td><button id="btnSourceTypeMisc" class='btn btn-primary '><img class="interval" src="img/art_sonstige_logo.png"></img></button> </td>	
+		</tr>
+	    </table>   
 
   </div>
   

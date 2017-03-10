@@ -101,7 +101,7 @@ public class Rest {
 	  @GET
 	  @Path("/getIntakeTimeByStartAndEndDate/{startDateUnix}/{endDateUnix}")
 	  @Produces("application/json")
-	  public Response getIntakeTimeByStartAndEndDatre(@PathParam("startDateUnix") int startDateUnix, @PathParam("endDateUnix") int endDateUnix) throws JSONException, ClassNotFoundException, SQLException, IOException {
+	  public Response getIntakeTimeByStartAndEndDate(@PathParam("startDateUnix") int startDateUnix, @PathParam("endDateUnix") int endDateUnix) throws JSONException, ClassNotFoundException, SQLException, IOException {
 		  	jsonObject = new JSONObject();
 		  	dbstatement = new DBStatements();
 		  	
@@ -113,7 +113,7 @@ public class Rest {
 	  /**
 	  * Return all medicine box informations 
 	  *
-	  * @return A RESPONSE-Object with all the medicine box informations
+	  * @return A RESPONSE-Object with all active medicine boxes
 	  * 
 	  * @throws IOException 
 	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
@@ -271,9 +271,9 @@ public class Rest {
 	  
 	  
 	  /**
-	  * Return all intake time informations by medicine id  
+	  * Return the contact person by contact person id
 	  *
-	  * @return A ContactPerson class with all contact persons
+	  * @return A ContactPerson-Object with the contact person
 	  * 
 	  * @param psychologicalParentID
 	  * 	The psychological parent id (ContactPersonID)
@@ -305,7 +305,7 @@ public class Rest {
 	  /**
 	  * Return all intake time informations by intake time id  
 	  *
-	  * @return A RESPONSE-Object with all contact intake time informations filtered by intakeTimeID
+	  * @return A RESPONSE-Object with all intake time informations filtered by intakeTimeID
 	  * 
 	  * @param intakeTimeID
 	  * 	The intakeTime ID 
@@ -531,6 +531,9 @@ public class Rest {
 	  * 
 	  * @throws ParseException
 	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  * 
+	  * @throws org.codehaus.jettison.json.JSONException
+	  * 	The JSONException is thrown by the JSON.org classes then things are amiss.
 	  *
 	  */
 	  @POST @Path("/editMedicineInformation")
@@ -544,7 +547,6 @@ public class Rest {
 			Medicine medicine = mapper.readValue(jsonInString, Medicine.class);
 
 			dbstatement.editMedicine(medicine);
-		
 	  }
 
 	  /**
@@ -567,6 +569,10 @@ public class Rest {
 	  * 
 	  * @throws ParseException
 	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  * 
+	  * @throws org.codehaus.jettison.json.JSONException
+	  * 	The JSONException is thrown by the JSON.org classes then things are amiss.
+	  *
 	  *
 	  */
 	  @POST @Path("/editSourceOfSupply")
@@ -604,6 +610,10 @@ public class Rest {
 	  * 
 	  * @throws ParseException
 	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  * 
+	  * @throws org.codehaus.jettison.json.JSONException
+	  * 	The JSONException is thrown by the JSON.org classes then things are amiss.
+	  *
 	  *
 	  */
 	  @POST @Path("/editIntakeTime")
@@ -648,6 +658,10 @@ public class Rest {
 	  * @throws ParseException
 	  * 	Signals that an error has been reached unexpectedly while parsing.
 	  *
+	  *
+	  * @throws org.codehaus.jettison.json.JSONException
+	  * 	The JSONException is thrown by the JSON.org classes then things are amiss.
+	  *
 	  */
 	  @POST @Path("/editPsychologicalParent")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -671,7 +685,19 @@ public class Rest {
 	   * -------------------------------------START--DELETE FUNCTIONS--START-----------------------------------------------------------------------
 	   */		  
 	  
-	  
+	  /**
+	  * delete psychological parent (contact person)    
+	  * 
+	  * @param psychologicalParentID (contactPersonID)
+	  * 	The psychologicalParentID
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  */	  
 	  @DELETE @Path("/deletePsychologicalPerson/{psychologicalParentID}")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  public void deletePsychologicalPerson(@PathParam("psychologicalParentID") int psychologicalParentID) throws JSONException, SQLException {
@@ -679,7 +705,21 @@ public class Rest {
 			
 		    dbstatement.deletePsychologicalParent(psychologicalParentID);
 	  }
+
 	  
+	  /**
+	  * delete source of supply    
+	  * 
+	  * @param sourceOfSupplyID 
+	  * 	The sourceOfSupplyID
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  */
 	  @DELETE @Path("/deleteSourceOfSupply/{sourceOfSupplyID}")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  public void deleteSourceOfSupply(@PathParam("sourceOfSupplyID") int sourceOfSupplyID) throws JSONException, SQLException {
@@ -687,7 +727,20 @@ public class Rest {
 			
 		    dbstatement.deleteSourceOfSupply(sourceOfSupplyID);
 	  }
-	  
+
+	  /**
+	  * delete medicine information    
+	  * 
+	  * @param medicineID 
+	  * 	The medicineID
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  */
 	  @DELETE @Path("/deleteMedicineInformation/{medicineID}")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  public void deleteMedicineInformation(@PathParam("medicineID") int medicineID) throws JSONException, SQLException {
@@ -696,7 +749,20 @@ public class Rest {
 		    dbstatement.deleteMedicineInformation(medicineID);
 	  }
 	  
-	  
+
+	  /**
+	  * delete intake time information    
+	  * 
+	  * @param intakeTimeID 
+	  * 	The intakeTimeID
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  */
 	  @DELETE @Path("/deleteIntakeTimeInformation/{intakeTimeID}")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  public void deleteIntakeTimeInformation(@PathParam("intakeTimeID") int intakeTimeID) throws JSONException, SQLException {
@@ -713,6 +779,32 @@ public class Rest {
 	  /*
 	   * -------------------------------------START--CREATE FUNCTIONS--START---------------------------------------------------------------------------
 	   */	
+	 
+	  /**
+	  * creates create medicine information    
+	  * 
+	  * @param objMedicineInformation
+	  * 	The object with the medicine informations
+	  *  
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  * 
+	  * @throws org.codehaus.jettison.json.JSONException
+	  * 	The JSONException is thrown by the JSON.org classes then things are amiss.
+	  *
+	  */
 	  @POST @Path("/createMedicineInformation")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -737,19 +829,44 @@ public class Rest {
 			medicine.setSavetyStock(jsonMedicineObject.getInt("savetyStock"));
 			medicine.setContactType(jsonMedicineObject.getString("contactType"));
 			medicine.setBoxID(jsonMedicineObject.getInt("boxID"));
+			medicine.setSourceType(jsonMedicineObject.getString("sourceType"));
+			medicine.setSendOrder(jsonMedicineObject.getBoolean("sendOrder"));
 			
-			dbstatement.createMedicine(medicine);
+			DBStatements.createMedicine(medicine);
 		}	
 	  }
 	  
+	  /**
+	  * creates intake time informations    
+	  * 
+	  * @param objIntakeTimeInformation
+	  * 	The object with the intake time informations
+	  *  
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  *
+	  * @throws org.codehaus.jettison.json.JSONException
+	  * 	The JSONException is thrown by the JSON.org classes then things are amiss.
+	  */	  
 	  @POST
 	  @Path("/createIntakeTimeInformation")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  public void createIntakeTimeInformation(Object objIntakeTimeInformation) throws JSONException, ClassNotFoundException, SQLException, ParseException, IOException, org.codehaus.jettison.json.JSONException {
 			dbstatement = new DBStatements();
-		  
-			//String n = "{'intakeTime':[{'medicineID':49,'unixTimeStamp':1484870400,'pillQuantity':3}, {'medicineID':49,'unixTimeStamp':1484956800,'pillQuantity':3}, {'medicineID':49,'unixTimeStamp':1485043200,'pillQuantity':3}, {'medicineID':49,'unixTimeStamp':1485129600,'pillQuantity':3}]}";		  
+		  		  
 			JSONObject objSingleIntkaeTime = new JSONObject(); 
 			String formatedJSONString = objIntakeTimeInformation.toString().replaceAll("medicineID=", "\"medicineID\":").replaceAll("intakeTimes=", "\"intakeTimes\":");
 
@@ -774,6 +891,22 @@ public class Rest {
 	  }
 	  
 
+	  /**
+	  * creates contact person    
+	  * 
+	  * @param objCreateContactPerson
+	  * 	The object with the contact person informations
+	  *  
+	  * @throws JsonGenerationException 
+	  * 	JsonGenerationException indicates an incorrect JSON is being generated.
+	  * 
+	  * @throws JsonMappingException 
+	  * 	Checked exception used to signal fatal problems with mapping of content.
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  */
 	  @POST
 	  @Path("/createContactPerson")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -788,6 +921,23 @@ public class Rest {
   		dbstatement.createContactPerson(contactPerson);
 	  }
 	  
+
+	  /**
+	  * creates source of supply    
+	  * 
+	  * @param objSourceOfSupply
+	  * 	The object with the source of supply informations
+	  *  
+	  * @throws JsonGenerationException 
+	  * 	JsonGenerationException indicates an incorrect JSON is being generated.
+	  * 
+	  * @throws JsonMappingException 
+	  * 	Checked exception used to signal fatal problems with mapping of content.
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  *
+	  */
 	  @POST
 	  @Path("/createSourceOfSupply")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -803,7 +953,31 @@ public class Rest {
 	  }
 	  
 	  
-	  
+	  /**
+	  * Saves accoustical settings    
+	  * 
+	  * @param objAccousticalSettings
+	  * 	The object with the accoustical settings
+	  *  
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  * 
+	  * @throws org.codehaus.jettison.json.JSONException
+	  * 	The JSONException is thrown by the JSON.org classes then things are amiss.
+	  * 
+	  */
 	  @POST @Path("/saveAccousticalSettings")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
@@ -827,7 +1001,31 @@ public class Rest {
 	  
 	  
 	  
-	  
+	  /**
+	  * Saves visual settings    
+	  * 
+	  * @param objVisualSettings
+	  * 	The object with the visual settings
+	  *  
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  * 
+	  * @throws ParseException
+	  * 	Signals that an error has been reached unexpectedly while parsing.
+	  *
+	  * @throws org.codehaus.jettison.json.JSONException
+	  * 	The JSONException is thrown by the JSON.org classes then things are amiss.
+	  *
+	  */
 	  @POST @Path("/saveVisualSettings")
 	  @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	  @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })

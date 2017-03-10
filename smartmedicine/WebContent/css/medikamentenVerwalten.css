@@ -30,6 +30,11 @@
 	input[type="number"] {
     	font-size:150%;
 	}	
+		div.divContainer {
+	  	width:98%;
+	  	margin: auto;
+	  	height:350; 	 	
+	}
 }
 
 
@@ -39,6 +44,10 @@
 		min-height:90%;
 		height:150px;
 	}
+
+
+
+
 }
 
 img.sectionImage {
@@ -69,12 +78,6 @@ div.header{
 	margin: auto;
 }
 
-div.divContainer {
-  	width:98%;
-  	margin: auto;
-  	height:46.5%; 	
-  	
-}
 
 table.tableContainer{
 	width:100%;

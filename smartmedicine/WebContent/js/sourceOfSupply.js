@@ -44,8 +44,8 @@ $(document).ready(function(){
 			$('#btnDoNotRevieceMail').click();
 		} else if(destination == "manageSourceOfSupply"){
 			if(getSourceOfSupply().length==0){
-				$('#btnContactPersonOverview').prop("disabled", true);
-				$('#btnEditPsychologicalParent').prop("disabled", true);
+				$('#btnSourceOfSupplyOverview').prop("disabled", true);
+				$('#btnEditSourceOfSupply').prop("disabled", true);
 				$('#btnDeleteSourceOfSupply').prop("disabled", true);
 			}
 		} else if(destination == "editInputFields"){
@@ -380,9 +380,9 @@ $(document).ready(function(){
 	        data: JSON.stringify(objSourceOfSupply),
 	        success: function(data, textStatus, jqXHR){
 	        	$('#btnShowSourceOfSupplyStatusModal').trigger("click");
-	        	/*setTimeout(function () {
+	        	setTimeout(function () {
 	        		$('#btnCloseSourceOfSupplyStatusModal').trigger("click");
-	            }, 2000);*/
+	            }, 2000);
 	        },
 	        error: function(jqXHR, textStatus, errorThrown){
 	            alert('Fehler beim Speichern der Bezugsquelle aufgetreten: ' + textStatus);

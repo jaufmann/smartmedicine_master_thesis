@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="database.DBConnection" project="smartmedicine" 
     file="/smartmedicine/src/database/DBConnection.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="898" y="763"/>    
+    <position height="-1" width="-1" x="734" y="739"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -74,19 +74,27 @@
     </display>  
   </class>  
   <association id="9">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="10" name="dbstatement"/>      
-      <multiplicity id="11" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="10" name="dbconnection">        
+        <position height="0" width="0" x="-164" y="-24"/>      
+      </attribute>      
+      <multiplicity id="11" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-164" y="-24"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="12">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="13" name="dbconnection"/>      
-      <multiplicity id="14" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="13" name="dbstatement">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="14" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
