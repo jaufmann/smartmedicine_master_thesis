@@ -39,7 +39,12 @@ then
   while ((k=k+1) < numberIntakeTimes) {
      intakeTimeUnixTimeStamp= Long::parseLong(transform("JSONPATH","$.intaketime["+k+"].intakeTime", intakeTimeInformation ))
      notifikationTriggered = Boolean::parseBoolean(transform("JSONPATH","$.intaketime["+k+"].notificationTriggered", intakeTimeInformation))
-     
+
+     var pillQuantity = Integer::parseInt(transform("JSONPATH","$.intaketime["+k+"].pillQuantity", intakeTimeInformation))
+
+
+     println(pillQuantity)
+
      var medicineID = Integer::parseInt(transform("JSONPATH","$.intaketime["+k+"].medicineID", intakeTimeInformation ))
      var intakeTimeID = Integer::parseInt(transform("JSONPATH","$.intaketime["+k+"].intakeTimeID", intakeTimeInformation )
      
@@ -54,7 +59,7 @@ then
 
      if(intakeTimeUnixTimeStamp<currentTimeUnixTimeStamp && notifikationTriggered != true) {
 	
-	listMedicineInformations.add(0, "{\"medicineID\":"+medicineID+", \"intakeTimeID\":"+intakeTimeID+",\"medicineName\":\""+medicineName+"\",\"note\":\""+note+"\",\"boxID\":"+boxID+",\"intakeTime\":"+intakeTimeUnixTimeStamp+"}")
+	listMedicineInformations.add(0, "{\"medicineID\":"+medicineID+", \"intakeTimeID\":"+intakeTimeID+",\"medicineName\":\""+medicineName+"\",\"note\":\""+note+"\",\"boxID\":"+boxID+",\"intakeTime\":"+intakeTimeUnixTimeStamp+",\"pillQuantity\":"+pillQuantity+"}")
 	listTriggeredMedicineNames.add(0, medicineName)
 	listTriggeredMedicineIDs.add(0, medicineID)
 
@@ -91,7 +96,7 @@ when
 	Item boxNotFound received command 
 then
 	executeCommandLine("/opt/openhab/configurations/scripts/tts.sh@@Die Medikamentenennahmebox konnte nichtt gefunden werden@@", 2000)
-end
+send
 
 rule "Check the status of the main medicine chamber"
 when
@@ -101,12 +106,38 @@ then
 end
 
 
-rule "Dispense medicine of box 1"
+rule "Dispense medicine of box 1 "
 when
 	Item dispenseMedicineBox1 received command 
 then
+	
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo.py")
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/led_1_off.py")
+
+	var int k = -1
+     	var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByBoxID/1") 
+	var sourceOfSupplyInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getSourceOfSupply") 
+
+	var numberSourceOfSupplies = Integer::parseInt(transform("JSONPATH","$.numberSourceOfSupplies", sourceOfSupplyInformation ))
+
+
+     	var sendOrder = Boolean::parseBoolean(transform("JSONPATH","$.sendOrder", medicineInformation))
+	var savetyStock = Integer::parseInt(transform("JSONPATH","$.savetyStock", medicineInformation))
+	var stock= Integer::parseInt(transform("JSONPATH","$.stock", medicineInformation))
+
+	var medicineName = transform("JSONPATH","$.medicineName ", medicineInformation)
+
+	
+	if(sendOrder == true && stock<=savetyStock){
+		while ((k=k+1) < numberSourceOfSupplies) {
+		     	var email = transform("JSONPATH","$.sourceOfSupply["+k+"].email", sourceOfSupplyInformation )
+			var recieveMail = Boolean::parseBoolean(transform("JSONPATH","$.sourceOfSupply["+k+"].recieveMail", sourceOfSupplyInformation ))
+			
+			if(recieveMail == true){
+				sendMail(email, "Medikament \""+medicineName+"\" versenden", "Bitte das Medikament \""+medicineName+"\" versenden an XXX")
+			}
+		}
+	}
 end
 
 rule "Check the status for the dispense box (1)"
@@ -123,6 +154,33 @@ when
 then
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo2.py")
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/led_2_off.py")
+
+	var int k = -1
+     	var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByBoxID/2") 
+	var sourceOfSupplyInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getSourceOfSupply") 
+
+	var numberSourceOfSupplies = Integer::parseInt(transform("JSONPATH","$.numberSourceOfSupplies", sourceOfSupplyInformation ))
+
+
+     	var sendOrder = Boolean::parseBoolean(transform("JSONPATH","$.sendOrder", medicineInformation))
+	var savetyStock = Integer::parseInt(transform("JSONPATH","$.savetyStock", medicineInformation))
+	var stock= Integer::parseInt(transform("JSONPATH","$.stock", medicineInformation))
+
+	var medicineName = transform("JSONPATH","$.medicineName ", medicineInformation)
+
+	
+	if(sendOrder == true && stock<=savetyStock){
+		while ((k=k+1) < numberSourceOfSupplies) {
+		     	var email = transform("JSONPATH","$.sourceOfSupply["+k+"].email", sourceOfSupplyInformation )
+			var recieveMail = Boolean::parseBoolean(transform("JSONPATH","$.sourceOfSupply["+k+"].recieveMail", sourceOfSupplyInformation ))
+			
+			if(recieveMail == true){
+				sendMail(email, "Medikament \""+medicineName+"\" versenden", "Bitte das Medikament \""+medicineName+"\" versenden an XXX")
+			}
+		}
+	}
+
+
 end
 
 rule "Check the status for the dispense box (2)"
@@ -139,6 +197,33 @@ when
 then
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo3.py")
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/led_3_off.py")
+
+	var int k = -1
+     	var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByBoxID/3") 
+	var sourceOfSupplyInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getSourceOfSupply") 
+
+	var numberSourceOfSupplies = Integer::parseInt(transform("JSONPATH","$.numberSourceOfSupplies", sourceOfSupplyInformation ))
+
+
+     	var sendOrder = Boolean::parseBoolean(transform("JSONPATH","$.sendOrder", medicineInformation))
+	var savetyStock = Integer::parseInt(transform("JSONPATH","$.savetyStock", medicineInformation))
+	var stock= Integer::parseInt(transform("JSONPATH","$.stock", medicineInformation))
+
+	var medicineName = transform("JSONPATH","$.medicineName ", medicineInformation)
+
+	
+	if(sendOrder == true && stock<=savetyStock){
+		while ((k=k+1) < numberSourceOfSupplies) {
+		     	var email = transform("JSONPATH","$.sourceOfSupply["+k+"].email", sourceOfSupplyInformation )
+			var recieveMail = Boolean::parseBoolean(transform("JSONPATH","$.sourceOfSupply["+k+"].recieveMail", sourceOfSupplyInformation ))
+			
+			if(recieveMail == true){
+				sendMail(email, "Medikament \""+medicineName+"\" versenden", "Bitte das Medikament \""+medicineName+"\" versenden an XXX")
+			}
+		}
+	}
+
+	
 end
 
 rule "Check the status for the dispense box (2)"
@@ -321,7 +406,7 @@ then
 	}
 end
 
-rule "Test notification sound"
+rule "Test notification sound "
 when
     Item AccousticalTest received command 
 then

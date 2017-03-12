@@ -47,6 +47,9 @@ function getTriggeredMedicine()
     	var triggeredMedicine = JSON.parse(data);
     	listMedicineDispensed=[];
     	listBoxTriggered=[];
+    	listMedicineIDs = [];
+    	var objMedicineIDs = new Object();
+    	
     	var hours = 0;
     	var minutes = 0;
     	
@@ -71,10 +74,14 @@ function getTriggeredMedicine()
     	for (var i = 0; i < triggeredMedicine.triggeredMedicine.length; i++) {
     		var intakeTime = new Date(triggeredMedicine.triggeredMedicine[i].intakeTime*1000);
     		listBoxTriggered.push(triggeredMedicine.triggeredMedicine[i].boxID);
+    		objMedicineIDs.medicineID = triggeredMedicine.triggeredMedicine[i].medicineID;
+    		objMedicineIDs.boxID = triggeredMedicine.triggeredMedicine[i].boxID;
+    		listMedicineIDs.push(objMedicineIDs);
+    		
     		$("#trMedicineName").append("" +
     				"<td><b><font>"+triggeredMedicine.triggeredMedicine[i].medicineName+"</b></font></td>");
     		
-    		$("#trButtonNavigation").append("<td><button type='button' class='btn btn-success btn-lg' id='dispenseMedicineBox"+(i+1)+"' value='"+triggeredMedicine.triggeredMedicine[i].boxID+"' name="+triggeredMedicine.triggeredMedicine[i].intakeTimeID+">Ausgeben</button>"
+    		$("#trButtonNavigation").append("<td><button type='button' class='btn btn-success btn-lg' id='dispenseMedicineBox"+(i+1)+"' value='"+triggeredMedicine.triggeredMedicine[i].boxID+"|"+triggeredMedicine.triggeredMedicine[i].pillQuantity+"' name="+triggeredMedicine.triggeredMedicine[i].intakeTimeID+">Ausgeben</button>"
            	+	 "<button type='button' class='btn btn-secondary btn-lg'  id='btnNoteInformationBox"+(i+1)+"'  value='"+triggeredMedicine.triggeredMedicine[i].boxID+"'>Info</button></td>");
     		 		
     		$("#trMedicineIcon").append("<td><img width='100' height='100' src='img/pill_blue.png'></td>");
@@ -93,19 +100,25 @@ function getTriggeredMedicine()
     		
     		$("#trIntakeTime").append("<td><b>Einnahme:</b> "+hours+":"+minutes+" Uhr</b></td>");
     		
-    		
     		$("#dispenseMedicineBox"+(i+1)).click(function(){
-    			if($(this).val()==1) {
+    			var value = $(this).val();
+    			var pillQuantity = value.substring(parseInt(value.indexOf("|"))+1, value.length);
+    			var boxID = value.substring(0, value.indexOf("|"));
+    			
+    			if(boxID==1){
+    				setNewQuantity(boxID, pillQuantity);
     				dispenseMedicineBox1();
     				$(this).prop('disabled', true);
     				listMedicineDispensed.push($(this).attr("name"));
     				closeModal(listMedicineDispensed);
-    			} else if($(this).val()==2){
+    			}  else if(boxID==2){
+    				setNewQuantity(boxID, pillQuantity);
     				dispenseMedicineBox2();
     				$(this).prop('disabled', true);
     				listMedicineDispensed.push($(this).attr("name"));
     				closeModal(listMedicineDispensed);
-    			} else if ($(this).val()==3){
+    			} else if (boxID==3){
+    				setNewQuantity(boxID, pillQuantity);
     				dispenseMedicineBox3();
     				$(this).prop('disabled', true);
     				listMedicineDispensed.push($(this).attr("name"));
@@ -330,6 +343,17 @@ function turnOffNotification( )
     });
 }
 
+
+function setNewQuantity(boxID, pillQuantity){
+	  $.ajax({
+		    dataType: 'json',
+		    async:false,
+		    success: function(data) {
+
+			   },
+		    url: host+':'+port+'/smartmedicine/rest/medicineinformation/setNewStockAmount/'+boxID+'/'+pillQuantity
+		});
+}
 
 function setIntakeStatus(){
 		  $.ajax({

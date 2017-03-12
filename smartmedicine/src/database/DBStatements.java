@@ -168,6 +168,7 @@ public class DBStatements {
 				intaketime.setIntakeTime(rs.getString("intakeTime"));
 				intaketime.setNotificationTriggered(rs.getBoolean("NotificationStatus"));
 				intaketime.setIntakeTriggered(rs.getBoolean("intakeStatus"));
+				intaketime.setPillQuantity(rs.getInt("pillQuantity"));
 				listIntaketimes.add(intaketime);
 			}
 		}finally{
@@ -1215,6 +1216,82 @@ public class DBStatements {
 	                e.printStackTrace();
 	            }
 	        }
+	}
+
+
+	public void setNewStockAmount(int dispenseAmount, int boxID) {
+		Connection conn = null;
+		PreparedStatement pstmtStock = null; 
+		PreparedStatement pstmtNewStock = null; 
+		ResultSet rs = null;
 		
+		int stock = 0;	
+
+		try{					 
+			  conn = DBConnection.getConnection();
+			 
+		      String sqlLastMedicineID = "SELECT stock from medicine WHERE boxID = ?";
+		      pstmtStock = conn.prepareStatement(sqlLastMedicineID);
+		      pstmtStock.setInt(1, boxID);
+		      rs = pstmtStock.executeQuery();
+		    	 
+		      while(rs.next()){
+					stock = (rs.getInt("stock"))-dispenseAmount;	
+		       }	  
+		      
+		      String sqlSetNewStock = " UPDATE medicine SET stock = ? WHERE boxID = ?";
+		    	 
+		      pstmtNewStock = conn.prepareStatement(sqlSetNewStock);
+		      pstmtNewStock.setInt(1, stock);
+		      pstmtNewStock.setInt(2, boxID);
+		      pstmtNewStock.executeUpdate();
+	    	 
+		 } catch(Exception e){
+			 
+		 }  finally {
+	            try {   
+	            	pstmtStock.close();
+	            	pstmtNewStock.close();
+	                conn.close();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	       }
+	}
+
+
+	public Medicine getMedicineInformationByBoxID(int boxID) throws ClassNotFoundException, SQLException, IOException {
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		Medicine medicine = null;
+		String query = " SELECT * "
+				+ 	   " FROM medicine "
+				+ 	   " WHERE boxID = "+boxID+"";
+		
+		try{
+			con = DBConnection.getConnection();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			while(rs.next()){
+				medicine = new Medicine();
+				medicine.setId(rs.getInt("medicineID"));
+				medicine.setStock(rs.getInt("stock"));
+				medicine.setMedicineName(rs.getString("medicineName"));
+				medicine.setNote(rs.getString("note"));
+				medicine.setDisease(rs.getString("disease"));
+				medicine.setSendNotification(rs.getBoolean("sendNotification"));
+				medicine.setSavetyStock(rs.getInt("savetystock"));
+				medicine.setContactType(rs.getString("contactType"));
+				medicine.setBoxID(rs.getInt("boxID"));
+				medicine.setSourceType(rs.getString("sourceType"));
+				medicine.setSendOrder(rs.getBoolean("sendOrder"));
+			}
+		}finally{
+			if(rs != null) rs.close();
+			if(stmt != null)stmt.close();			
+			if(con !=null)con.close();
+		}	
+		return medicine;		
 	}
 }

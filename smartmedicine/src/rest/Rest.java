@@ -73,6 +73,21 @@ public class Rest {
 		return Response.status(200).entity(jsonObject.toString()).build();
 	  }
 	  
+	  
+	  
+	  
+	  
+	  @GET
+	  @Path("/getMedicineInformationByBoxID/{boxID}")
+	  @Produces("application/json")
+	  public Medicine getMedicineInformationByBoxID(@PathParam("boxID") int boxID) throws JSONException, ClassNotFoundException, SQLException, IOException  {
+	  	jsonObject = new JSONObject();
+	  	dbstatement = new DBStatements();
+		return dbstatement.getMedicineInformationByBoxID(boxID);
+	  }
+	  
+	  
+	  
 
 	  /**
 	  * Return all intake times from the start and end date 
@@ -233,6 +248,8 @@ public class Rest {
 		jsonObject = new JSONObject();
 	  	
 		jsonObject.put("sourceOfSupply", dbstatement.getSourceOfSupply());
+		jsonObject.put("numberSourceOfSupplies", dbstatement.getSourceOfSupply().size());
+		
 		return Response.status(200).entity(jsonObject.toString()).build();
 	  }
 	  
@@ -439,6 +456,42 @@ public class Rest {
 	  /*
 	   * -------------------------------------START--SET AND EDIT FUNCTIONS--START--------------------------------------------------------------------------
 	   */
+
+	  /**
+	  * Saves the notification status 
+	  * 
+	  * @return String with a notification status
+	  * 
+	  * @param intakeTimeID
+	  * 	The intake time id
+	  * 
+	  * @param notificationStatus
+	  * 	The notification status
+	  * 
+	  * @throws IOException 
+	  * 	Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+	  * 
+	  * @throws SQLException 
+	  * 	An exception that provides information on a database access error or other errors.
+	  * 
+	  * @throws ClassNotFoundException 
+	  * 	No definition for the class with the specified name could be found.
+	  * 
+	  * @throws JSONException 
+	  * 	JsonException indicates that some exception happened during JSON processing.
+	  *
+	  */
+	  @GET
+	  @Path("/setNewStockAmount/{boxID}/{dispenseAmount}")
+	  @Produces("application/json")
+	  public void setNewStockAmount(@PathParam("dispenseAmount") int dispenseAmount, @PathParam("boxID") int boxID) throws JSONException, ClassNotFoundException, SQLException, IOException {
+		  	jsonObject = new JSONObject();
+		  	dbstatement = new DBStatements();
+		  	
+			dbstatement.setNewStockAmount(dispenseAmount, boxID);
+	  }
+
+	  
 	  
 	  /**
 	  * Saves the notification status 
