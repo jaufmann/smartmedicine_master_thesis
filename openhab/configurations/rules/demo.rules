@@ -18,13 +18,10 @@ var ArrayList<String> listTriggeredMedicineNames = newArrayList()
 var ArrayList<Integer> listTriggeredMedicineIDs = newArrayList()
 
 
-rule "Test JSONPath"
+rule "Check intake time"
 when 
    Time cron "0/20 * * * * ? "   // every minute
 then
-  //sendMail("wjaufmann166@gmail.com", "This is the email subject", "This is the email body")
-
-
   //get all intaketime information to check, if the intake time is overdue
   var intakeTimeInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getIntakeTimeInformation")
   var int numberIntakeTimes = Integer::parseInt(transform("JSONPATH","$.numberIntakeTimes", intakeTimeInformation ))
@@ -328,14 +325,6 @@ rule "Test notification sound"
 when
     Item AccousticalTest received command 
 then
-
-    //if(testNotificationSound==OFF){
-   //	createTimer(now.plusSeconds(5)) [|    
-   //    		sendCommand(playStatus,OFF)
-//		sendCommand(notificationTriggered, OFF)
- //  	]
- //  }
-
    if (receivedCommand=="notification1") { 
 	while(playStatus.state==ON){
    		executeCommandLine("mpg321@@/opt/openhab/sounds/notification_1.mp3")

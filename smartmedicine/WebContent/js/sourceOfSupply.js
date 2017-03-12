@@ -379,7 +379,7 @@ $(document).ready(function(){
 	        dataType: "json",
 	        data: JSON.stringify(objSourceOfSupply),
 	        success: function(data, textStatus, jqXHR){
-	        	$('#btnShowSourceOfSupplyStatusModal').trigger("click");
+	        	$('#btnShowSourceOfSupplySaveModal').trigger("click");
 	        	setTimeout(function () {
 	        		$('#btnCloseSourceOfSupplyStatusModal').trigger("click");
 	            }, 2000);
@@ -400,7 +400,7 @@ $(document).ready(function(){
 	        dataType: "json",
 	        data: JSON.stringify(objSourceOfSupply),
 	        success: function(data, textStatus, jqXHR){
-	        	$('#btnShowSourceOfSupplyStatusModal').trigger("click");
+	        	$('#btnShowSourceOfSupplySaveModal').trigger("click");
 	        	setTimeout(function () {
 	        		$('#btnCloseSourceOfSupplyStatusModal').trigger("click");
 	            }, 2000);

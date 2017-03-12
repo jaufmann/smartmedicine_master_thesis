@@ -3,24 +3,17 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<title>Smart MediCine</title>
 	
-	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-
-	<link href="css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/medikamentenVerwalten.css">
-    
-    <!-- Javascript -->
-     <script src="js/jquery/jquery-1.12.4.js"></script>
-     <script src="js/datatable/jquery.dataTables.min.js"></script>
-     <script src="js/datatable/dataTables.bootstrap4.min.js"></script>		
-	<script src="js/sourceOfSupply.js" type="text/javascript"></script> 	
-		<script type = "text/javascript" src="js/navigation1.js" /></script>
-		
-		    <style type="text/css">
-    
-
-
-
-    </style>
+	    <!-- Bootstrap Core CSS -->
+	    <link rel="stylesheet" href="css/medikamentenVerwalten.css">
+	    <link rel="stylesheet" href="css/addMedicine.css">
+	    <link href="css/bootstrap.min.css" rel="stylesheet">
+	    
+	    
+	      
+		<script src="js/jquery/jquery-1.12.4.js"></script>
+	    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+	    <script type = "text/javascript" src="js/navigation1.js" /></script>		
+	    <script src="js/sourceOfSupply.js" type="text/javascript"></script> 	
 </head>
 <body>
 <div class="smartMedicineLogo"></div><br>
@@ -82,8 +75,32 @@
 	
 	<!-- div with the shadown spacer image -->
 	<div style="background-image: url(../smartmedicine/img/space_footer.png);background-repeat:repeat-x;
-		float:left;width:100%">
+		float:left;width:100%" >
 			&nbsp;
+	</div>
+	
+	
+			  <!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="btnShowSourceOfSupplySaveModal" style="visibility:hidden">
+	  Launch demo modal
+	</button>
+
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	     
+	        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"> Status des Speichervorgangs</h4>
+	      </div>
+	      <div class="modal-body" align="center">
+	         <font style="color:green"><b>Bezugsquelle erfolgreich gespeichert</b></font>
+	        
+	         <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCloseSourceOfSupplyStatusModal" style="visibility:hidden">Close</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 		
 
