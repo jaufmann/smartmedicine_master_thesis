@@ -2,6 +2,7 @@
 
 $(document).ready(function() {
 	var objEditMedicineInformation = new Object();
+	var objContactPerson = new Object();
 	
 	/* addIntakeTime variables */
 	var objSingleIntakeTime = new Object();
@@ -42,6 +43,8 @@ $(document).ready(function() {
 	})
 	
 	$('#bootstrap-table').ready(function() {
+			
+		
 		
 		//$('#divHeader').append("<img width='300' src='img/SmartMedicineLogo.png'><hr>");
 		console.log(host);
@@ -56,9 +59,17 @@ $(document).ready(function() {
 			loadMedicineOverviewIntakeTime();
 		} else if(destination == "editIntakeTime"){
 			loadEditIntakeTimeOverviewTable_2();
+		} else if(destination == "managePsychologicalParent"){
+			if(jQuery.isEmptyObject(getContactPerson())==true){
+				$("#btnContactPersonOverview").attr('disabled','disabled');
+				$("#btnEditPsychologicalParent").attr('disabled','disabled');
+				$("#btnDeleteContactPerson").attr('disabled','disabled');
+			}  else {
+				$("#btnContactPersonOverview").removeAttr('disabled');
+				$("#btnEditPsychologicalParent").removeAttr('disabled');
+				$("#btnDeleteContactPerson").removeAttr('disabled');
+			}
 		}
-		
-		
 		
 		else if(destination == "intakeTimeVacation"){
 			loadIntakeTimeVacationInformationTable();
@@ -1244,7 +1255,9 @@ $(document).ready(function() {
 	        dataType: "json",
 	        data: JSON.stringify(objEditMedicineInformation),
 	        success: function(data, textStatus, jqXHR){
-	        	
+	        	if(objEditMedicineInformation.stock>=objEditMedicineInformation.savetyStock){
+	        		turnOffStockNotificationLED(objEditMedicineInformation.boxID);
+	        	}
 	        	$('#btnOpenEditMedicineModal').trigger("click"); 
 	        	
 	        	setTimeout(function () {
@@ -1256,6 +1269,25 @@ $(document).ready(function() {
 	        error: function(jqXHR, textStatus, errorThrown){
 	            console.log('Problem adding medicine information: ' + textStatus+ " "+jqXHR+" "+errorThrown);
 	        }
+	    });
+	}
+	
+	function turnOffStockNotificationLED(ledID)
+	{
+	    var request = $.ajax
+	    ({
+	        type       : "GET",
+	        url        : host+':'+port+'/CMD?ledNumber='+ledID
+	    });
+
+	    request.done( function(data) 
+	    { 
+	    	
+	    });
+
+	    request.fail( function(jqXHR, textStatus ) 
+	    { 
+	        console.log( "Failure: " + textStatus );
 	    });
 	}
 	
@@ -1616,13 +1648,15 @@ $(document).ready(function() {
 			localStorage.setItem("oldBoxID", boxID);
 			
 			$("#btnBox"+boxID).addClass("btn btn-danger");
+		
 			$("#btnBox"+boxID).empty();	
 			$("#btnBox"+boxID).append("<img class='interval' src='img/box"+boxID+"_belegt.png'></img></button>");
+			
+			$("#btnBox"+boxID).click();
 			
 
 			for(i=1;i<=3;i++){
 				if(boxID!=i){
-					$("#btnBox"+i).click();
 					$("#btnBox"+i).addClass("btn btn-primary");
 					$("#btnBox"+i).empty();
 					$("#btnBox"+i).append("<img class='interval' src='img/box"+i+".png'></img></button>");
@@ -1970,22 +2004,26 @@ $(document).ready(function() {
 			    async:false,
 			    success: function(data) {
 			    	
-			    	for(var i=0;i<data.psychologicalParent.length;i++){
-			    	  console.log(data.psychologicalParent[i].id);
-			    		$("<tr><td><font>"+data.psychologicalParent[i].surname+"</font></td>"  
-			    		+ "<td><font>"+data.psychologicalParent[i].name+"</font></td>" 
-			    		+ "<td align='center'><button value="+data.psychologicalParent[i].id+" id='deletePsychologicalParent"+i+"' type='button' class='btn btn-custom btn-danger'>" +
-			    		"<img class='btnClass' src='img/delete_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
-			    		
-			    		$("#deletePsychologicalParent"+i).unbind('click').click(function () {
-			    			init_value = ($(this).val());
-			    			deletePsychologicalPerson(init_value);
-				    		
-				    		window.location ='deleteContactPerson.html';
-			    		});
-			    		
-
-			    	}    
+			    	if(data.psychologicalParent.length!=0){
+			    		for(var i=0;i<data.psychologicalParent.length;i++){
+					    	  console.log(data.psychologicalParent[i].id);
+					    		$("<tr><td><font>"+data.psychologicalParent[i].surname+"</font></td>"  
+					    		+ "<td><font>"+data.psychologicalParent[i].name+"</font></td>" 
+					    		+ "<td align='center'><button value="+data.psychologicalParent[i].id+" id='deletePsychologicalParent"+i+"' type='button' class='btn btn-custom btn-danger'>" +
+					    		"<img class='btnClass' src='img/delete_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
+					    		
+					    		$("#deletePsychologicalParent"+i).unbind('click').click(function () {
+					    			init_value = ($(this).val());
+					    			deletePsychologicalPerson(init_value);
+						    		
+						    		window.location ='deleteContactPerson.html';
+					    		});
+					    	}    
+			    	} else {
+			    		localStorage.setItem("destination", "managePsychologicalParent");
+			    		window.location ='managePsychologicalParent.html';
+			    	}
+			    	
 				   },
 			    url: host+':'+port+'/smartmedicine/rest/medicineinformation/getContactPerson'
 			});
@@ -2454,5 +2492,23 @@ $(document).ready(function() {
 			});
 		  return newObjIntakeTime;
 	};
+	
+	
+	function getContactPerson() {
+		  var listContactPerson = [];
+		  $.ajax({
+			    dataType: 'json',
+			    async:false,
+			    success: function(data) {
+			    		for(var i=0;i<data.psychologicalParent.length;i++){
+			    			objContactPerson = new Object();
+			    			objContactPerson.surname = data.psychologicalParent[i].surname;
+			    			listContactPerson.push(objContactPerson);
+			    		}	
+				   },
+			    url: host+':'+port+'/smartmedicine/rest/medicineinformation/getContactPerson'
+			})
+		  return listContactPerson;
+	}
 });
  

@@ -94,6 +94,7 @@ $(document).ready(function() {
 	});
 	
 	$("#btnManagePsychologicalParent").click(function(event){
+		  localStorage.setItem("destination","managePsychologicalParent");
 	      window.location = 'managePsychologicalParent.html';
 	});
 	
