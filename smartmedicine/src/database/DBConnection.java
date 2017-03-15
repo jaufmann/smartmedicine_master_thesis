@@ -14,9 +14,9 @@ public class DBConnection {
 	   Properties prop = new Properties();
        InputStream input = null;
 
-       input = new FileInputStream("/opt/openhab/webapps/config/smartmedicine.properties");
+       //input = new FileInputStream("/opt/openhab/webapps/config/smartmedicine.properties");
       
-       //input = new FileInputStream("smartmedicine.properties");
+       input = new FileInputStream("smartmedicine.properties");
    	
 	   prop.load(input);
 
