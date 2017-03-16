@@ -357,7 +357,12 @@ $(document).ready(function() {
 			
 			if(localStorage.getItem("iteration")!=null){
 				$('#txtIteration').val(localStorage.getItem("iteration"));
+			}
+			
+			if(localStorage.getItem("pillQuantity")!=null){
+				$('#txtPillQuantity').val(localStorage.getItem("pillQuantity"));
 			}  
+			
 			
 			if(localStorage.getItem("startDate")!=null){
 				$('#txtStartDate').val(localStorage.getItem("startDate"));
@@ -380,6 +385,7 @@ $(document).ready(function() {
 				localStorage.setItem("iteration", $('#txtIteration').val());
 				localStorage.setItem("startDate", $('#txtStartDate').val());
 				localStorage.setItem("alarm", $('#alarm').val());
+				localStorage.setItem("pillQuantity", $('#txtPillQuantity').val());
 				localStorage.setItem("destination", "addMedicine2");
 				window.location = 'addMedicine2.html';
 			})	
@@ -685,24 +691,46 @@ $(document).ready(function() {
 	function getIntakeTimesInputValues(pillQuantity, selectedDate, iteration){
 		var jsonObjSingleIntakeTime = "";
 		if(clickedInterval=="weekly"){
-			for(var i=0;i<iteration;i++){
+			
+			objSingleIntakeTime = new Object();
+			objSingleIntakeTime.unixTimeStamp = (selectedDate.getTime()/1000);
+			objSingleIntakeTime.pillQuantity = pillQuantity;
+			jsonObjSingleIntakeTime = JSON.stringify(objSingleIntakeTime);
+			arrIntakeTimes.push(jsonObjSingleIntakeTime);
+			
+			var newDate = new Date(selectedDate.getTime());
+			for(var i=1;i<=(iteration-1);i++){
 				objSingleIntakeTime = new Object();
-				objSingleIntakeTime.unixTimeStamp =(selectedDate.getTime()/1000)+((i+1)*604800);
-				//arrIntakeTimes.push((selectedDate.getTime()/1000)+((i+1)*604800));
+				newDate.setDate(selectedDate.getDate() + ((i)*7));
+				objSingleIntakeTime.unixTimeStamp =(newDate.getTime()/1000);
 				objSingleIntakeTime.pillQuantity = pillQuantity;
 				jsonObjSingleIntakeTime = JSON.stringify(objSingleIntakeTime);
 				arrIntakeTimes.push(jsonObjSingleIntakeTime);
-			}	
+			}
 		} else if(clickedInterval=="monthly"){
-			for(var i=0;i<iteration;i++){
+			objSingleIntakeTime = new Object();
+			objSingleIntakeTime.unixTimeStamp = (selectedDate.getTime()/1000);
+			objSingleIntakeTime.pillQuantity = pillQuantity;
+			jsonObjSingleIntakeTime = JSON.stringify(objSingleIntakeTime);
+			arrIntakeTimes.push(jsonObjSingleIntakeTime);
+			
+			var newDate = new Date(selectedDate.getTime());
+			for(var i=1;i<iteration;i++){
 				objSingleIntakeTime = new Object();
-				objSingleIntakeTime.unixTimeStamp = (selectedDate.getTime()/1000)+((i+1)*2629743);
+				newDate.setMonth(selectedDate.getMonth() + (i));
+				objSingleIntakeTime.unixTimeStamp =(newDate.getTime()/1000);
 				objSingleIntakeTime.pillQuantity = pillQuantity;
 				jsonObjSingleIntakeTime = JSON.stringify(objSingleIntakeTime);
 				arrIntakeTimes.push(jsonObjSingleIntakeTime);
 			}
 		} else if(clickedInterval=="daily"){
-			for(var i=0;i<iteration;i++){
+			objSingleIntakeTime = new Object();
+			objSingleIntakeTime.unixTimeStamp = (selectedDate.getTime()/1000);
+			objSingleIntakeTime.pillQuantity = pillQuantity;
+			jsonObjSingleIntakeTime = JSON.stringify(objSingleIntakeTime);
+			arrIntakeTimes.push(jsonObjSingleIntakeTime);
+			
+			for(var i=0;i<(iteration-1);i++){
 				objSingleIntakeTime = new Object();
 				objSingleIntakeTime.unixTimeStamp = (selectedDate.getTime()/1000)+((i+1)*86400);
 				objSingleIntakeTime.pillQuantity = pillQuantity;
