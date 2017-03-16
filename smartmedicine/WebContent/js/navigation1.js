@@ -81,8 +81,8 @@ $(document).ready(function() {
 	
 	
 	$("#btnManageIntakeTime").click(function(event){
-		 window.localStorage.clear(); 
-	      window.location = ' manageIntakeTime.html';
+		 localStorage.setItem("destination", "manageIntakeTime");
+	     window.location = ' manageIntakeTime.html';
 	});
 	
 	

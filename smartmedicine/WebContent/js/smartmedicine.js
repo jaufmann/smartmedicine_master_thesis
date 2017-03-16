@@ -54,7 +54,14 @@ $(document).ready(function() {
 		if(destination=="deleteMedicine"){
 			loadDeleteMedicineInformationTable();
 		} else if(destination == "deleteIntakeTimeSortMedicine"){
-			loadDeleteIntakeTimeInformationTable();
+			if(jQuery.isEmptyObject(getIntakeAllTimes())==true){
+				localStorage.setItem("destination", "manageIntakeTime");
+				 window.location = "manageIntakeTime.html";
+			} else {
+				loadDeleteIntakeTimeInformationTable();
+			}
+			
+			
 		} else if(destination == "intakeTimeOverview_2"){
 			loadMedicineOverviewIntakeTime();
 		} else if(destination == "editIntakeTime"){
@@ -88,6 +95,16 @@ $(document).ready(function() {
 				$("#btnManageIntakeTime").attr('disabled','disabled');
 			}  else {
 				$("#btnManageIntakeTime").removeAttr('disabled');
+			}
+		} else if(destination == "manageIntakeTime"){
+			if(jQuery.isEmptyObject(getIntakeAllTimes())==true){
+				$("#btnIntakeTimeOverview_2").attr('disabled','disabled');
+				$("#btnEditIntakeTime").attr('disabled','disabled');
+				$("#btnDeleteIntakeTimeSortMedicine").attr('disabled','disabled');
+			}  else {
+				$("#btnIntakeTimeOverview_2").removeAttr('disabled');
+				$("#btnEditIntakeTime").removeAttr('disabled');
+				$("#btnDeleteIntakeTimeSortMedicine").removeAttr('disabled');
 			}
 		}
 		
@@ -255,11 +272,10 @@ $(document).ready(function() {
 			}
 			if(localStorage.getItem("sendNotification")==null){
 				$('#btnNormal').click();
-				$('#btnContactTypePrivate').click();
+				localStorage.setItem("contactType", "none");
 			} else if(localStorage.getItem("sendNotification")=="true"){
 				$('#btnImportant').click();
 				var contactType = localStorage.getItem("contactType");
-				console.log(contactType);
 				if(contactType=="doctor"){
 					$('#btnContactTypeDoctor ').click();
 				} else if(contactType=="private"){
@@ -277,14 +293,14 @@ $(document).ready(function() {
 					$("#btnBox"+k).addClass("btn btn-danger");
 					$("#btnBox"+k).prop("disabled",true);
 					$("#btnBox"+k).empty();	
-					$("#btnBox"+k).append("<img class='interval' src='img/box"+k+"_belegt.png'></img></button>");
+					$("#btnBox"+k).append("<img class='interval' src='img/sockel"+k+"_belegt.png'></img></button>");
 					
 					
 				} else {
 					$("#btnBox"+k).click();
 					$("#btnBox"+k).addClass("btn btn-primary");
 					$("#btnBox"+k).empty();
-					$("#btnBox"+k).append("<img class='interval' src='img/box"+k+".png'></img></button>");
+					$("#btnBox"+k).append("<img class='interval' src='img/sockel"+k+".png'></img></button>");
 				}
 			}
 
@@ -298,21 +314,18 @@ $(document).ready(function() {
 				$('#txtSavetyStock').attr('disabled', false);
 			}
 			
-		    console.log(localStorage.getItem("sendOrder"));
-		    
-			console.log(localStorage.getItem("sourceType"));
-			
-			if(localStorage.getItem("sourceType") == "drugStore"){
-				$('#btnSourceTypeDrugStore').click();
-			} else if(localStorage.getItem("sourceType") == "doctor"){
-				$('#btnSourceTypeDoctor').click();
-			} else {
-				$('#btnSourceTypeMisc').click();
-				
+			if(localStorage.getItem("sourceType") != ""){
+				if(localStorage.getItem("sourceType") == "drugStore"){
+					$('#btnSourceTypeDrugStore').click();
+				} else if(localStorage.getItem("sourceType") == "doctor"){
+					$('#btnSourceTypeDoctor').click();
+				} else {
+					$('#btnSourceTypeMisc').click();
+				}
 			}
+				
 		   
 		    if(localStorage.getItem("sendOrder") != ""){
-		    	
 		    	if(localStorage.getItem("sendOrder") == "true"){
 					$('#btnSendOrderYes').click();
 				} else {
@@ -424,6 +437,9 @@ $(document).ready(function() {
 		document.getElementById("btnSendOrderNo").style.opacity = 0.3;
 		$('#txtSavetyStock').attr('disabled', false);
 
+		
+		$('#btnSourceTypeMisc').click();
+		
 		$('#btnSourceTypeDoctor').attr('disabled', false);
 		$('#btnSourceTypeDrugStore').attr('disabled', false);
 		$('#btnSourceTypeMisc').attr('disabled', false);
@@ -432,7 +448,7 @@ $(document).ready(function() {
 	$('#btnSendOrderNo').click(function(){
 		$('#txtSavetyStock').attr('disabled', true);
 		localStorage.setItem("sendOrder", "false");
-		localStorage.setItem("sourceType", "no");
+		localStorage.setItem("sourceType", "none");
 		document.getElementById("btnSendOrderNo").style.opacity = 1;
 		document.getElementById("btnSendOrderYes").style.opacity = 0.3;
 		document.getElementById("btnSourceTypeDrugStore").style.opacity = 0.3;
@@ -1177,24 +1193,27 @@ $(document).ready(function() {
 		localStorage.setItem("sendNotification", true);
 		document.getElementById("btnImportant").style.opacity = 1; 
 		document.getElementById("btnNormal").style.opacity = 0.3; 
+		$("btnContactTypeMisc").click(); 
+		document.getElementById("btnContactTypePrivate").style.opacity = 0.3; 
+		document.getElementById("btnContactTypeDoctor").style.opacity = 0.3; 
+		
 		$('#divContactPerson').show();
 	})
 	
 	$('#btnNormal').click(function(){
+		localStorage.setItem("contactType", "none");
 		localStorage.setItem("sendNotification", false);
-		
 		document.getElementById("btnImportant").style.opacity = 0.3; 
 		document.getElementById("btnNormal").style.opacity = 1; 
-		
 		$('#divContactPerson').hide();
 	})
 	
 	
 	$('#btnAddMedicineForwardSecond').click(function(){
-		
 		var isStockCorrect = true;
 		var isNoteCorrect = true;
 		var isSendOrder = true;
+		var isSavetyStockCorrect = true;
 		
 		if($("#txtStock").val()!=""){
 			isStockCorrect = true;
@@ -1205,7 +1224,6 @@ $(document).ready(function() {
 			$('#savetyStock').append("<img class='imgAttention' src='img/attention_icon.png'>");
 		}
 		
-		
 		if($("#txtNote").val()!=""){
 			isNoteCorrect = true;
 			$('#note').empty();
@@ -1215,18 +1233,24 @@ $(document).ready(function() {
 			$('#note').append("<img class='imgAttention' src='img/attention_icon.png'>");
 		}
 		
-		
 		if(localStorage.getItem("sendOrder") == "true" && $('#txtSavetyStock').val() == ""){
-			isSendOrder = true;
+
+			isSendOrder = false;
 			$('#sendOrder').empty();
 			$('#sendOrder').append("<img class='imgAttention' src='img/attention_icon.png'>");
 		} else {
-			$('#sendOrder').empty(); 
-			isSendOrder = false;
+			if(parseInt($('#txtSavetyStock').val()) >= parseInt($('#txtStock').val())){
+				isSavetyStockCorrect = false;
+				$('#sendOrder').empty();
+				$('#sendOrder').append("<img class='imgAttention' src='img/attention_icon.png'>");
+			} else {
+				$('#sendOrder').empty(); 
+				isSavetyStockCorrect = true;
+				isSendOrder = true;
+			}
 		}
 		
-
-		if(isStockCorrect == true){
+		if(isStockCorrect == true && isNoteCorrect == true && isSavetyStockCorrect == true){
 			localStorage.setItem("note", $("#txtNote").val());
 			localStorage.setItem("stock", $("#txtStock").val());
 			if($("#txtSavetyStock").val()==""){
@@ -1238,8 +1262,6 @@ $(document).ready(function() {
 			localStorage.setItem("destination", "addIntakeTime");
 			window.location = 'addIntakeTime.html';
 		}
-		
-		
 	})
 	
 	$('#btnCloseEditMedicineModal').click(function(){
@@ -1650,7 +1672,7 @@ $(document).ready(function() {
 			$("#btnBox"+boxID).addClass("btn btn-danger");
 		
 			$("#btnBox"+boxID).empty();	
-			$("#btnBox"+boxID).append("<img class='interval' src='img/box"+boxID+"_belegt.png'></img></button>");
+			$("#btnBox"+boxID).append("<img class='interval' src='img/sockel"+boxID+"_belegt.png'></img></button>");
 			
 			$("#btnBox"+boxID).click();
 			
@@ -1659,7 +1681,7 @@ $(document).ready(function() {
 				if(boxID!=i){
 					$("#btnBox"+i).addClass("btn btn-primary");
 					$("#btnBox"+i).empty();
-					$("#btnBox"+i).append("<img class='interval' src='img/box"+i+".png'></img></button>");
+					$("#btnBox"+i).append("<img class='interval' src='img/sockel"+i+".png'></img></button>");
 				}
 				
 				
@@ -1877,6 +1899,17 @@ $(document).ready(function() {
 			    	var intakeMissed = loadMedicineIntakeTimeInformation().intakeMissed;
 			    	var intakeNotTriggered = loadMedicineIntakeTimeInformation().intakeNotTriggered;
 			    	var sendNotification = "";
+			    	var contactType = "";
+			    	
+			    	if(data.contactType=="misc"){
+			    		contactType = "Sonstige";
+			    	} else if(data.contactType=="doctor"){
+			    		contactType = "Arzt";
+			    	} else if(data.contactType=="private"){
+			    		contactType = "Privat";
+			    	} else {
+			    		contactType = "Nicht hinterlegt";
+			    	}
 			    	
 			    	
 			    	if(data.sendNotification==true){
@@ -1895,7 +1928,7 @@ $(document).ready(function() {
 			    	 $('#tdIntakeTimes').append(intakeTimes);
 			    	 $('#tdPertinence').append(sendNotification);
 			    	 $('#tdSavetyStock').append(data.savetyStock);
-			    	 $('#tdContactType').append(data.contactType);
+			    	 $('#tdContactType').append(contactType);
 			    	  
 			    	 
 				   },
@@ -2509,6 +2542,23 @@ $(document).ready(function() {
 			    url: host+':'+port+'/smartmedicine/rest/medicineinformation/getContactPerson'
 			})
 		  return listContactPerson;
+	}
+	
+	function getIntakeAllTimes() {
+		  var listIntakeTime = [];
+		  var objAllIntakeTimes = new Object();
+		  $.ajax({
+			    dataType: 'json',
+			    async:false,
+			    success: function(data) {
+			    		for(var i=0;i<data.intaketime.length;i++){
+			    			objAllIntakeTimes = new Object();
+			    			listIntakeTime.push(objAllIntakeTimes);
+			    		}	
+				   },
+			    url: host+':'+port+'/smartmedicine/rest/medicineinformation/getIntakeTimeInformation'
+			})
+		  return listIntakeTime;
 	}
 });
  
