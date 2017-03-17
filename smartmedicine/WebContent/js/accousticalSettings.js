@@ -31,15 +31,15 @@ $(document).ready(function(){
      
      function mouseOutNot1(x) {
     	    $("#tdNameNot1").css("visibility", "hidden");
-			document.getElementById("aNotification1").style.opacity = 0.3; 
+			document.getElementById("aNotification1").style.opacity = 0.5; 
 	 }
  	 function mouseOutNot2(x) {
  			$("#tdNameNot2").css("visibility", "hidden");
-			document.getElementById("aNotification2").style.opacity = 0.3; 
+			document.getElementById("aNotification2").style.opacity = 0.5; 
 	 }
  	 function mouseOutNot3(x) {
  			$("#tdNameNot3").css("visibility", "hidden");
-			document.getElementById("aNotification3").style.opacity = 0.3; 
+			document.getElementById("aNotification3").style.opacity = 0.5; 
 	 }
  	 
  	 
@@ -82,8 +82,8 @@ $(document).ready(function(){
 		
     		
 			document.getElementById("aNotification1").style.opacity = 1; 
-			document.getElementById("aNotification2").style.opacity = 0.3; 
-			document.getElementById("aNotification3").style.opacity = 0.3; 
+			document.getElementById("aNotification2").style.opacity = 0.5; 
+			document.getElementById("aNotification3").style.opacity = 0.5; 
 			$("#aNotification1").empty();
 			$("#aNotification1").append("<img src='img/icon-audio.png' width='70' height='80'>");
 			
@@ -128,8 +128,8 @@ $(document).ready(function(){
 		 	$("#tdNameNot1").append("<font size='4'>SMS</font>");
 		 	
 			document.getElementById("aNotification2").style.opacity = 1; 
-			document.getElementById("aNotification3").style.opacity = 0.3; 
-			document.getElementById("aNotification1").style.opacity = 0.3; 
+			document.getElementById("aNotification3").style.opacity = 0.5; 
+			document.getElementById("aNotification1").style.opacity = 0.5; 
 			$("#aNotification2").empty();
 			$("#aNotification2").append("<img src='img/icon-audio.png' width='70' height='80'>");
 			
@@ -145,8 +145,8 @@ $(document).ready(function(){
 		  	localStorage.setItem("playStatus", "OFF");
 		  	testNotificationSound();
 			document.getElementById("aNotification3").style.opacity = 1; 
-			document.getElementById("aNotification2").style.opacity = 0.3; 
-			document.getElementById("aNotification1").style.opacity = 0.3; 
+			document.getElementById("aNotification2").style.opacity = 0.5; 
+			document.getElementById("aNotification1").style.opacity = 0.5; 
 			
 		    localStorage.setItem('notificationSound', "notification3");
 		 	$("#tdNameNot1").css("visibility", "hidden");
@@ -180,8 +180,8 @@ $(document).ready(function(){
 		 	$("#tdNameNot1").append("<font size='4'>SMS</font>");
 		 	
 			document.getElementById("aNotification3").style.opacity = 1; 
-			document.getElementById("aNotification2").style.opacity = 0.3; 
-			document.getElementById("aNotification1").style.opacity = 0.3; 
+			document.getElementById("aNotification2").style.opacity = 0.5; 
+			document.getElementById("aNotification1").style.opacity = 0.5; 
 			$("#aNotification3").empty();
 			$("#aNotification3").append("<img src='img/icon-audio.png' width='70' height='80'>");
 			

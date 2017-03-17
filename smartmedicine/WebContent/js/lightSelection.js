@@ -93,9 +93,9 @@ if a violette bulb is clicked than the other bulbs will be not visible this is a
 $("#aViolette").click(function(){  
 	localStorage.setItem('selectedLight', "violette");
 
-    document.getElementById("aBlue").style.opacity = 0.3;
-    document.getElementById("aGreen").style.opacity = 0.3;
-    document.getElementById("aRed").style.opacity = 0.3;
+    document.getElementById("aBlue").style.opacity = 0.5;
+    document.getElementById("aGreen").style.opacity = 0.5;
+    document.getElementById("aRed").style.opacity = 0.5;
     
 	$("#aViolette").empty();
 	$("#aViolette").append( "<img class='myImage' src='img/violette_3.png' width='130' height='130'/>" );
@@ -130,9 +130,9 @@ $("#aViolette").click(function(){
 $("#aRed").click(function(){  
 	localStorage.setItem('selectedLight', "red");
 	
-    document.getElementById("aBlue").style.opacity = 0.3;
-    document.getElementById("aGreen").style.opacity = 0.3;
-    document.getElementById("aViolette").style.opacity = 0.3;
+    document.getElementById("aBlue").style.opacity = 0.5;
+    document.getElementById("aGreen").style.opacity = 0.5;
+    document.getElementById("aViolette").style.opacity = 0.5;
     
 	$("#aViolette").empty();
 	$("#aViolette").append( "<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='130' height='130'/>" );
@@ -165,9 +165,9 @@ $("#aRed").click(function(){
 
 $("#aGreen").click(function(){
 	localStorage.setItem('selectedLight', "green");
-    document.getElementById("aRed").style.opacity = 0.3;    
-    document.getElementById("aBlue").style.opacity = 0.3;
-    document.getElementById("aViolette").style.opacity = 0.3;
+    document.getElementById("aRed").style.opacity = 0.5;    
+    document.getElementById("aBlue").style.opacity = 0.5;
+    document.getElementById("aViolette").style.opacity = 0.5;
     
 	$("#aViolette").empty();
 	$("#aViolette").append( "<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='130' height='130'/>" );
@@ -200,9 +200,9 @@ $("#aGreen").click(function(){
 
 $("#aBlue").click(function(){
 	localStorage.setItem('selectedLight', "blue");
-    document.getElementById("aRed").style.opacity = 0.3;    
-    document.getElementById("aGreen").style.opacity = 0.3;
-    document.getElementById("aViolette").style.opacity = 0.3;
+    document.getElementById("aRed").style.opacity = 0.5;    
+    document.getElementById("aGreen").style.opacity = 0.5;
+    document.getElementById("aViolette").style.opacity = 0.5;
     
 	$("#aViolette").empty();
 	$("#aViolette").append( "<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='130' height='130'/>" );
@@ -241,7 +241,7 @@ function bigImg(x) {
 }
 
 function normalImg(x) {
-	document.getElementById("aRed").style.opacity = 0.3;
+	document.getElementById("aRed").style.opacity = 0.5;
 	$("#tdRed").empty();
 }
 
@@ -252,7 +252,7 @@ function blueHover(x) {
 }
 
 function blueNormal(x) {
-	document.getElementById("aBlue").style.opacity = 0.3;
+	document.getElementById("aBlue").style.opacity = 0.5;
 	$("#tdBlue").empty();
 }
 
@@ -263,7 +263,7 @@ function greenHover(x) {
 }
 
 function greenNormal(x) {
-	document.getElementById("aGreen").style.opacity = 0.3;	
+	document.getElementById("aGreen").style.opacity = 0.5;	
 	$("#tdGreen").empty();
 }
 
@@ -275,7 +275,7 @@ function violetteHover(x) {
 
 function violetteNormal(x) {
 	$("#tdViolette").empty();
-	document.getElementById("aViolette").style.opacity = 0.3;	
+	document.getElementById("aViolette").style.opacity = 0.5;	
 }
 
 function loadVisualSettings() {

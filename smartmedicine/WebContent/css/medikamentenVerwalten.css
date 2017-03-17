@@ -4,6 +4,7 @@
 	font{
 		margin:auto;
 		font-size:150%;
+		font-weight: bold;
 	}
 
 	div.smartMedicineLogo {
@@ -30,14 +31,58 @@
 	input[type="number"] {
     	font-size:150%;
 	}	
-		div.divContainer {
+	
+	div.divContainer {
 	  	width:98%;
 	  	margin: auto;
 	  	height:350; 	 	
 	}
+	
+	divContainerSettings {
+	  	width:98%;
+	  	margin: auto;
+	  	height:300; 	 	
+	}
 }
 
-
+@media only screen  and (max-width : 1024px) {
+	div.divContainer {
+	  	width:98%;
+	  	margin: auto;
+	  	height:310; 	 	
+	}
+	
+	divContainerSettings {
+	  	width:98%;
+	  	margin: auto;
+	  	height:300; 	 	
+	}
+	
+	divContainerContactPerson{
+		width:98%;
+	  	margin: auto;
+	  	height:310; 
+	}
+	
+	font{
+		margin:auto;
+		font-weight: bold;
+		font-size:150%;
+	}
+	
+		input[type="email"] {
+    	font-size:150%;
+	}
+	
+	input[type="text"] {
+    	font-size:150%;
+	}	
+	
+	input[type="number"] {
+    	font-size:150%;
+	}	
+		
+}
 @media only screen  and (min-height : 400px) {
 	
 	tr.head{

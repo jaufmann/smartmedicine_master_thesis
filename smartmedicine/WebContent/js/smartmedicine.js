@@ -190,6 +190,8 @@ $(document).ready(function() {
 		else if(destination=="addOnlyIntakeTime"){
 			$("#divMainHeader").append("<img src='img/Termine_hinzufügen_1_logo_.png'>");
 			$('#divStatus').empty();
+			$('#txtCurrentStock').val(getMedicineInformationByMedicineID().stock);
+			
 			
 			var pickerStartDate = $startDate.pickadate('picker');
         	var date = new Date();
@@ -342,6 +344,7 @@ $(document).ready(function() {
 		} else if(destination=="addIntakeTime"){
 			$("#divMainHeader").append("<img src='img/medikament_hinzufügen_logo_1.png'>");
 			$('#divStatus').append("<img width='500px' height='50px' src='img/status_termine.png'>");
+			$('#txtCurrentStock').val(localStorage.getItem("stock"));
 			
 			var pickerStartDate = $startDate.pickadate('picker');
         	var date = new Date();
