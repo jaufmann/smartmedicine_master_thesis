@@ -27,7 +27,7 @@
 		</div>
 
 	<!-- input fields for adding new source of supply -->
-	<div class="divContainer" id="divContainer">          
+	<div class="divContainerSourceOfSupply" id="divContainerSourceOfSupply">          
 	
 		<!-- table with the main input fields -->
 		<table width="100%">
@@ -35,8 +35,14 @@
 	    		<td width="100%" colspan="4"><a id="aErroIconNameField"></a>&nbsp;<font>Name:</font><input class='form-control'  type="text" id="txtName" /> </td>
 	    	</tr>
 	    	<tr>
+	    		<td>&nbsp;</td>
+	    	</tr>
+	    	<tr>
 	    		<td width="100%" colspan="4"><a id="aErroIconAddressField"></a>&nbsp;<font>Adresse:</font> <input class='form-control' type="text"  id="txtAddress"/></td>
 	    		<td width="100"></td>
+	    	</tr>
+	    	<tr>
+	    		<td>&nbsp;</td>
 	    	</tr>
 	    	<tr>
 	    		<td width="100%" ><a id="aErroIconEmailField"></a>&nbsp;<font>E-Mail:</font> </td>
@@ -62,8 +68,6 @@
 		    	</td>
 		    </tr>
 		  </table>
-
-
 	
 	</div>
 	
@@ -73,8 +77,7 @@
 			&nbsp;
 	</div>
 	
-	
-			  <!-- Button trigger modal -->
+				  <!-- Button trigger modal -->
 	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="btnShowSourceOfSupplySaveModal" style="visibility:hidden">
 	  Launch demo modal
 	</button>
@@ -86,27 +89,31 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	     
-	        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"> Status des Speichervorgangs</h4>
+	        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"><font class="statusModalTitle"><b> Status des Speichervorgangs</b></font></h4>
 	      </div>
 	      <div class="modal-body" align="center">
-	         <font style="color:green"><b>Bezugsquelle erfolgreich gespeichert</b></font>
+	         <font class="statusModalSuccess"><b>Bezugsquelle erfolgreich gespeichert</b></font>
 	        
 	         <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCloseSourceOfSupplyStatusModal" style="visibility:hidden">Close</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
-		
-
-	    
-	     <div id="fussbereich">
-    		<!-- table with the navigation button -->
+	
+	    		<!-- table with the navigation button -->
 	    <table width="100%">
 	    	<tr>
 	    		<td align="left"><button id="btnSourceOfSupply" class='btn btn-lg btn-primary'><font class="white">zurück</font></button></td>
 	    		<td align="right"><button id="btnSaveSourceOfSupply" class='btn btn-lg btn-success'><font class="white">speichern</font></button></td>	
 		    </tr>
 	    </table> 
-    </div>   	 
+	
+
+		
+
+	    
+	  
+
+      	 
 	</body>
 </html>

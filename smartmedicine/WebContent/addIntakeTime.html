@@ -76,7 +76,7 @@ float:left;width:100%">
             
     <table>
     <tr>
-    	<td ><a id="aMedicineQuantity"></a>&nbsp;<font>Medikamentenanzahl:</font><input class='form-control' type="number" min="1" id="txtPillQuantity" > </td>
+    	<td ><a id="aMedicineQuantity"></a>&nbsp;<font>Ausgabeanzahl:</font><input class='form-control' type="number" min="1" id="txtPillQuantity" > </td>
     	<td><font>Bestand:</font><input class='form-control' type="number" min="1" id="txtCurrentStock"  disabled style=" text-align: center;"> </td>
     </tr>
         <tr>
@@ -98,7 +98,7 @@ float:left;width:100%">
 
     <br>
     
-    <table width="100%" id="tblRepeatIntakeTime">
+    <table width="100%" id="tblRepeatIntakeTime" >
     <tr>
     <td> <font>Wiederholtermin:</font> </td>
     </tr>
@@ -109,7 +109,7 @@ float:left;width:100%">
     	<button id="btnMonthly" class='btn btn-primary '><img class="interval" src="img/monat_logo_2.png" ></img></button>
     	<button id="btnNoInterval" class='btn btn-primary '><img class="interval" src="img/kein_logo_2.png"></img></button>
     </td>
-    <td>
+    <td width="35%">
     <input type="number"  min="1" class='form-control'  id="txtIteration"/>
     
     </td> 	
@@ -131,10 +131,10 @@ float:left;width:100%">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"> Informationen gespeichert</h4>
+        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"> <font style="statusModalTitle">Informationen gespeichert</font></h4>
       </div>
       <div class="modal-body" align="center">   
-           <font style="size:40"> Weitere Termine eintragen?</font>
+           <font style="font-size:150%"> Weitere Termine eintragen?</font>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" id="btnYes">Ja</button>

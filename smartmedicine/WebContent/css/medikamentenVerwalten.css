@@ -7,6 +7,18 @@
 		font-weight: bold;
 	}
 
+	divContainerContactPerson{
+		width:98%;
+	  	margin: auto;
+	  	height:2180; 
+	}
+	
+	div.divContainerOverview{
+		width:96%;
+		margin:auto;
+	  	height:313; 
+	}
+	
 	div.smartMedicineLogo {
 		margin: auto;
 	    width: 100%;
@@ -38,10 +50,27 @@
 	  	height:350; 	 	
 	}
 	
+	div.divContainerSourceOfSupply{
+		width:96%;
+	  	margin: auto;
+	  	height:350; 	
+	}
+	
 	divContainerSettings {
 	  	width:98%;
 	  	margin: auto;
 	  	height:300; 	 	
+	}
+	
+	
+	.btnClass{
+		width:40;
+		height:40;
+	}
+	
+	.custom {
+    	width: 33px !important;
+    	height: 35px !important;
 	}
 }
 
@@ -49,25 +78,48 @@
 	div.divContainer {
 	  	width:98%;
 	  	margin: auto;
-	  	height:310; 	 	
+	  	height:260; 	 	
 	}
 	
-	divContainerSettings {
+	div.divContainerMedicineInformation{
+		width:98%;
+	  	margin: auto;
+	  	height:310; 	
+	}
+	
+	div.divContainerSourceOfSupply{
+		width:96%;
+	  	margin: auto;
+	  	height:290; 	
+	}
+	
+	div.divContainerSettings {
 	  	width:98%;
 	  	margin: auto;
-	  	height:300; 	 	
+	  	height:288; 	 	
 	}
 	
-	divContainerContactPerson{
+	div.divContainerContactPerson{
+		width:98%;
+	  	margin: auto;
+	  	height:320; 
+	}
+	div.divContainerContactPersonInformation{
 		width:98%;
 	  	margin: auto;
 	  	height:310; 
 	}
 	
+	div.divContainerOverview{
+		width:96%;
+		margin:auto;
+	  	height:313; 
+	}
+	
 	font{
 		margin:auto;
 		font-weight: bold;
-		font-size:150%;
+		font-size:106%;
 	}
 	
 		input[type="email"] {
@@ -81,13 +133,36 @@
 	input[type="number"] {
     	font-size:150%;
 	}	
-		
+	
+	
+	.btnClass{
+		width:29;
+		height:29;
+	}
+	
+	.custom {
+    	width: 18px !important;
+    	height: 18px !important;
+	}	
 }
+
+
+font.statusModalTitle{
+	font-weight: bold; 
+	font-size:110%
+}
+
+font.statusModalSuccess{
+	color:green; 
+	font-size:150%
+}
+
+
 @media only screen  and (min-height : 400px) {
 	
 	tr.head{
 		min-height:90%;
-		height:150px;
+		height:144px;
 	}
 
 
@@ -134,11 +209,6 @@ table.tableContainerMain{
 	height:100%; 
 }
 
-.custom {
-    width: 33px !important;
-    height: 35px !important;
-}
-
 
 button.size{
 	width:100%;
@@ -174,10 +244,6 @@ button.rot{
 	background-color:#D9534F;
 }
 
-button.btnClass{
-	width:50px;
-	height:50px;
-}
 
 
 font.white{

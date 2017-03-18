@@ -211,7 +211,7 @@ $(document).ready(function(){
 		   		$("<tr><td><font>"+name+"</font></td>" 
 		   		+ "<td><font>"+sourceType+"</font></td>" 
 		   		+ "<td><button id='btnDeleteSourceOfSupply"+i+"' value="+id+" type='button' class='btn btn-custom btn-danger'>" 
-		   		+ "<img src='img/delete_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
+		   		+ "<img class='btnClass' src='img/delete_icon.png'/></button></td></tr>").appendTo("table[id='example']");
 				    		
 		   		$('#btnDeleteSourceOfSupply'+i).click(function(){
 		   			var sourceOfSupplyID = $(this).val();
@@ -240,7 +240,7 @@ $(document).ready(function(){
 		   		$("<tr><td><font>"+name+"</font></td>" 
 		   		+ "<td><font>"+sourceType+"</font></td>" 
 		   		+ "<td><button id='btnSourceOfSupplyInformation"+i+"' value="+id+" type='button' class='btn btn-custom btn-success'>" 
-		   		+ "<img src='img/zoom_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
+		   		+ "<img class='btnClass' src='img/zoom_icon.png' /></button></td></tr>").appendTo("table[id='example']");
 				    		
 		   		$('#btnSourceOfSupplyInformation'+i).click(function(){
 		   			var sourceOfSupplyID = $(this).val();
@@ -269,7 +269,7 @@ $(document).ready(function(){
 		   		$("<tr><td><font>"+name+"</font></td>" 
 		   		+ "<td><font>"+sourceType+"</font></td>" 
 		   		+ "<td><button id='btnEditSourceOfSupply"+i+"' value="+id+" type='button' class='btn btn-custom btn-warning'>" 
-		   		+ "<img src='img/edit_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
+		   		+ "<img class='btnClass' src='img/edit_icon.png' /></button></td></tr>").appendTo("table[id='example']");
 				    		
 		   		$('#btnEditSourceOfSupply'+i).click(function(){
 		   			var sourceOfSupplyID = $(this).val();

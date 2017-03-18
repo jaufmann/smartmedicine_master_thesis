@@ -221,6 +221,10 @@ $(document).ready(function() {
 		} else if(destination=="intakeTimeOverview"){
 			loadDeleteIntakeTimeTable();
 		} else if(destination=="editIntakeItem"){
+			
+			$('#txtCurrentStock').val(getMedicineInformationByMedicineID().stock);
+
+			
 			$("#divMainHeader").append("<img src='img/Termine_bearbeiten_1_logo.png'>");
 			$('#divStatus').empty();
 			var pickerStartDate = $startDate.pickadate('picker');
@@ -1498,7 +1502,7 @@ $(document).ready(function() {
 			    		
 			    		$("<tr><td><font>"+date+"</font></td>" 
 			    		+ "<td><font>"+time+"</font></td>" 
-			    		+ "<td align='center'><button value="+data.intaketime[i].intakeTimeID+" id='editIntakeTime"+i+"' type='button' class='btn btn-custom btn-warning'><img src='img/edit_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
+			    		+ "<td align='center'><button value="+data.intaketime[i].intakeTimeID+" id='editIntakeTime"+i+"' type='button' class='btn btn-custom btn-warning'><img class='btnClass' src='img/edit_icon.png'/></button></td></tr>").appendTo("table[id='example']");
 			    		
 			    		$("#editIntakeTime"+i).unbind('click').click(function () {
 				    		init_value = ($(this).val());
@@ -1536,7 +1540,7 @@ $(document).ready(function() {
 				    		$("<tr><td><font>"+date+"</font></td>" 
 				    		+ "<td><font>"+time+"</font></td>" 
 				    		+ "<td align='center'><button value="+data.intaketime[i].intakeTimeID+" id='deleteIntakeTime"+i+"' type='button' class='btn btn-custom btn-danger'>" +
-				    				"<img src='img/delete_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
+				    				"<img src='img/delete_icon.png' class='btnClass'/></button></td></tr>").appendTo("table[id='example']");
 				    		
 				    		$("#deleteIntakeTime"+i).unbind('click').click(function () {
 					    		init_value = ($(this).val());
@@ -1595,7 +1599,7 @@ $(document).ready(function() {
 			    		$("<tr><td><font>"+data.medicine[i].medicineName+"</font></td>"  
 			            + "<td><font>"+data.medicine[i].disease+"</font></td>"
 			            + "<td align='center'><button value="+data.medicine[i].id+" id='medicineInformation"+i+"' type='button' class='btn btn-custom btn-success'>" +
-	    				"<img src='img/zoom_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
+	    				"<img class='btnClass' src='img/zoom_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
 					    
 			    		$("#intakeTime"+i).unbind('click').click(function () {
 				    		init_value = ($(this).val());
@@ -1994,7 +1998,7 @@ $(document).ready(function() {
 				    		
 				    		$("<tr><td><font>"+data.medicine[i].medicineName+"</font></td>"  
 				    		+ "<td><font>"+data.medicine[i].disease+"</font></td>"  
-				    		+ "<td align='center'><button value="+data.medicine[i].id+" id='deleteMedicine"+i+"' type='button' class='btn btn-custom btn-danger'><img class='btnClass' src='img/delete_icon.png' width='40' heigth='40'/></button></td>").appendTo("table[id='example']");
+				    		+ "<td align='center'><button value="+data.medicine[i].id+" id='deleteMedicine"+i+"' type='button' class='btn btn-custom btn-danger'><img class='btnClass' src='img/delete_icon.png' /></button></td>").appendTo("table[id='example']");
 						    
 				    		$("#intakeTime"+i).unbind('click').click(function () {
 					    		init_value = ($(this).val());
@@ -2105,7 +2109,7 @@ $(document).ready(function() {
 			    		$("<tr><td><font>"+data.psychologicalParent[i].surname+"</font></td>"  
 			    		+ "<td><font>"+data.psychologicalParent[i].name+"</font></td>" 
 			    		+ "<td align='center'><button value="+data.psychologicalParent[i].id+" id='editPsychologicalParent"+i+"' type='button' class='btn btn-custom btn-warning'>" +
-			    		"<img class='btnClass' src='img/edit_icon.png' width='40' heigth='40'/></button></td></tr>").appendTo("table[id='example']");
+			    		"<img class='btnClass' src='img/edit_icon.png'/></button></td></tr>").appendTo("table[id='example']");
 			    		
 			    		$("#editPsychologicalParent"+i).unbind('click').click(function () {
 			    			init_value = ($(this).val());
@@ -2338,7 +2342,7 @@ $(document).ready(function() {
 			    		$("<tr><td><font>"+data.medicine[i].medicineName+"</font></td>"  
 			    		+ "<td><font>"+data.medicine[i].disease+"</font></td>"
 			    		+ "<td align='center'><button value="+data.medicine[i].id+" id='editMedicine"+i+"' type='button' class='btn btn-custom btn-warning'>" +
-			    				"<img class='btnClass' src='img/edit_icon.png' width='40' heigth='40'/></button></td>").appendTo("table[id='example']");
+			    				"<img class='btnClass' src='img/edit_icon.png'/></button></td>").appendTo("table[id='example']");
 					    
 			    		$("#intakeTime"+i).unbind('click').click(function () {
 				    		init_value = ($(this).val());
