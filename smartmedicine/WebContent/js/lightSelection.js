@@ -98,16 +98,16 @@ $("#aViolette").click(function(){
     document.getElementById("aRed").style.opacity = 0.5;
     
 	$("#aViolette").empty();
-	$("#aViolette").append( "<img class='myImage' src='img/violette_3.png' width='130' height='130'/>" );
+	$("#aViolette").append( "<img class='myImage' src='img/violette_3.png' width='115' height='115'/>" );
 	
 	$("#aRed").empty();
-	$("#aRed").append( "<img onmouseover='bigImg(this)' name='red' onmouseout='normalImg(this)' class='myImage' src='img/red_3.png' width='130' height='130'/>" );
+	$("#aRed").append( "<img onmouseover='bigImg(this)' name='red' onmouseout='normalImg(this)' class='myImage' src='img/red_3.png' width='115' height='115'/>" );
 	
 	$("#aBlue").empty();
-	$("#aBlue").append( "<img id='aBlue' name='red' onmouseover='blueHover(this)' onmouseout='blueNormal(this)' class='myImage' src='img/blue_3.png' width='130' height='130'/>" );
+	$("#aBlue").append( "<img id='aBlue' name='red' onmouseover='blueHover(this)' onmouseout='blueNormal(this)' class='myImage' src='img/blue_3.png' width='115' height='115'/>" );
 	
 	$("#aGreen").empty();
-	$("#aGreen").append("<a id='aGreen'><img id='aGreen' onmouseover='greenHover(this)' onmouseout='greenNormal(this)' class='myImage' src='img/green_3.png' width='130' height='130'/>");
+	$("#aGreen").append("<a id='aGreen'><img id='aGreen' onmouseover='greenHover(this)' onmouseout='greenNormal(this)' class='myImage' src='img/green_3.png' width='115' height='115'/>");
 	
 	$("#tdRed").empty();
 	$("#tdBlue").empty();
@@ -135,16 +135,16 @@ $("#aRed").click(function(){
     document.getElementById("aViolette").style.opacity = 0.5;
     
 	$("#aViolette").empty();
-	$("#aViolette").append( "<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='130' height='130'/>" );
+	$("#aViolette").append( "<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='115' height='115'/>" );
     
 	$("#aRed").empty();
-	$("#aRed").append( "<img class='myImage' src='img/red_3.png' width='130' height='130'/>" );
+	$("#aRed").append( "<img class='myImage' src='img/red_3.png' width='115' height='115'/>" );
 	
 	$("#aBlue").empty();
-	$("#aBlue").append( "<img id='aBlue' name='red' onmouseover='blueHover(this)' onmouseout='blueNormal(this)' class='myImage' src='img/blue_3.png' width='130' height='130'/>" );
+	$("#aBlue").append( "<img id='aBlue' name='red' onmouseover='blueHover(this)' onmouseout='blueNormal(this)' class='myImage' src='img/blue_3.png' width='115' height='115'/>" );
 	
 	$("#aGreen").empty();
-	$("#aGreen").append("<a id='aGreen'><img id='aGreen' onmouseover='greenHover(this)' onmouseout='greenNormal(this)' class='myImage' src='img/green_3.png' width='130' height='130'/>");
+	$("#aGreen").append("<a id='aGreen'><img id='aGreen' onmouseover='greenHover(this)' onmouseout='greenNormal(this)' class='myImage' src='img/green_3.png' width='115' height='115'/>");
 	
 	$("#tdRed").empty();
 	$("#tdBlue").empty();
@@ -170,16 +170,16 @@ $("#aGreen").click(function(){
     document.getElementById("aViolette").style.opacity = 0.5;
     
 	$("#aViolette").empty();
-	$("#aViolette").append( "<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='130' height='130'/>" );
+	$("#aViolette").append( "<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='115' height='115'/>" );
     
 	$("#aRed").empty();
-	$("#aRed").append( "<img onmouseover='bigImg(this)' name='red' onmouseout='normalImg(this)' class='myImage' src='img/red_3.png' width='130' height='130'/>" );
+	$("#aRed").append( "<img onmouseover='bigImg(this)' name='red' onmouseout='normalImg(this)' class='myImage' src='img/red_3.png' width='115' height='115'/>" );
 	
 	$("#aBlue").empty();
-	$("#aBlue").append( "<img id='aBlue' name='red' onmouseover='blueHover(this)' onmouseout='blueNormal(this)' class='myImage' src='img/blue_3.png' width='130' height='130'/>" );
+	$("#aBlue").append( "<img id='aBlue' name='red' onmouseover='blueHover(this)' onmouseout='blueNormal(this)' class='myImage' src='img/blue_3.png' width='115' height='115'/>" );
 
 	$("#aGreen").empty();
-	$("#aGreen").append("<a id='aGreen'><img id='aGreen' class='myImage' src='img/green_3.png' width='130' height='130'/>");
+	$("#aGreen").append("<a id='aGreen'><img id='aGreen' class='myImage' src='img/green_3.png' width='115' height='115'/>");
 	
 	$("#tdRed").empty();
 	$("#tdBlue").empty();
@@ -205,16 +205,16 @@ $("#aBlue").click(function(){
     document.getElementById("aViolette").style.opacity = 0.5;
     
 	$("#aViolette").empty();
-	$("#aViolette").append( "<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='130' height='130'/>" );
+	$("#aViolette").append( "<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='115' height='115'/>" );
     
 	$("#aRed").empty();
-	$("#aRed").append( "<img onmouseover='bigImg(this)' onmouseout='normalImg(this)' class='myImage' src='img/red_3.png' width='130' height='130'/>" );
+	$("#aRed").append( "<img onmouseover='bigImg(this)' onmouseout='normalImg(this)' class='myImage' src='img/red_3.png' width='115' height='115'/>" );
 	
 	$("#aBlue").empty();
-	$("#aBlue").append( "<img class='myImage' src='img/blue_3.png' width='130' height='130'/>" );
+	$("#aBlue").append( "<img class='myImage' src='img/blue_3.png' width='115' height='115'/>" );
 	
 	$("#aGreen").empty();
-	$("#aGreen").append("<a id='aGreen'><img id='aGreen' onmouseover='greenHover(this)' onmouseout='greenNormal(this)' class='myImage' src='img/green_3.png' width='130' height='130'/>");
+	$("#aGreen").append("<a id='aGreen'><img id='aGreen' onmouseover='greenHover(this)' onmouseout='greenNormal(this)' class='myImage' src='img/green_3.png' width='115' height='115'/>");
 	
 	$("#tdRed").empty();
 	$("#tdBlue").empty();
@@ -398,15 +398,15 @@ $('#btnCloseModal').click(function(){
 
 function setIcons(){
 	$('#aViolette').empty();
-	$('#aViolette').append("<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='130' height='130'/>");
+	$('#aViolette').append("<img onmouseover='violetteHover(this)' id='aViolette' onmouseout='violetteNormal(this)' class='myImage' src='img/violette_3.png' width='115' height='115'/>");
   	
 	$('#aRed').empty();
-	$('#aRed').append("<img onmouseover='bigImg(this)' id='aRed' onmouseout='normalImg(this)' class='myImage' src='img/red_3.png' width='130' height='130'/>");
+	$('#aRed').append("<img onmouseover='bigImg(this)' id='aRed' onmouseout='normalImg(this)' class='myImage' src='img/red_3.png' width='115' height='115'/>");
   	
 	$('#aBlue').empty();
-	$('#aBlue').append("<img id='aBlue'  onmouseover='blueHover(this)' onmouseout='blueNormal(this)'  class='myImage' src='img/blue_3.png' width='130' height='130'/>");
+	$('#aBlue').append("<img id='aBlue'  onmouseover='blueHover(this)' onmouseout='blueNormal(this)'  class='myImage' src='img/blue_3.png' width='115' height='115'/>");
   
 	$('#aGreen').empty();
-	$('#aGreen').append("<img id='aGreen' onmouseover='greenHover(this)' onmouseout='greenNormal(this)' class='myImage' src='img/green_3.png' width='130' height='125'/>");
+	$('#aGreen').append("<img id='aGreen' onmouseover='greenHover(this)' onmouseout='greenNormal(this)' class='myImage' src='img/green_3.png' width='115' height='115'/>");
  
 }

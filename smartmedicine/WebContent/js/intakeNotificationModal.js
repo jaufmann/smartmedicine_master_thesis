@@ -14,26 +14,166 @@ var listMedicineDispensed = new Array();
 
 var host = "http://"+window.location.hostname;
 var port = "8080";
+var arrTriggereredMedicine = [];
 
 	
 $(document).ready(function() {	
 	setInterval(function(){ 
 		getNotificationTriggeredState();
 	    console.log(lightState); 
+	    
 	    if(lightState=="ON" && notificationTriggered==false){
-	    	
-	    	
+	    		
 	    	getTriggeredMedicine();
+	    	
+	    	showIntakeStatusModal(0);
+	    	$("#btnNotificationStatus").click();
 	    	notificationTriggered=true;
 	    } else if(lightState=="OFF" && notificationTriggered==true){
-	    	$('#btnCloseNotificationModal').click(); 
+	    	$('#test').hide(); 
 	    	notificationTriggered=false;
 	    }
 	}, 5000);
-	
 });
 
+function showIntakeStatusModal (){
+	console.log(arrTriggereredMedicine);
+	
+	$("#spanMedicineName").empty(); 
+	$("#spanNote").empty(); 
+	$("#spanIntakeTime").empty(); 
+	
+	$("#divBtnInformation").empty(); 
+	$("#divBtnDispense").empty(); 
+	
+	var hours = 0;
+	var minutes = 0;
+	var intakeTime = new Date(arrTriggereredMedicine[0].intakeTime);
+	
+	if(intakeTime.getHours()<10){
+		hours = 0+""+intakeTime.getHours();
+	} else {
+		hours = intakeTime.getHours();
+	}
+	
+	if(intakeTime.getMinutes()<10){
+		minutes = 0+""+intakeTime.getMinutes();
+	} else {
+		minutes = intakeTime.getMinutes();
+	}
+	
+	
+	$("#spanMedicineName").append("<font>"+arrTriggereredMedicine[0].medicineName+"</font>");
+	$("#spanNote").append("<font>"+arrTriggereredMedicine[0].note+"</font>");
+	$("#spanIntakeTime").append("<font>Einnahme: "+hours+":"+minutes+"</font>");
+	
+	$("#divBtnInformation").append("<button id='btnNoteInformation' value='"+arrTriggereredMedicine[0].boxID+"' type='button' class='btn btn-primary btn-block'><font>Information</font></button>");
+	$("#divBtnDispense").append("<button id='btnDispense' value='"+arrTriggereredMedicine[0].boxID+"|"+arrTriggereredMedicine[0].pillQuantity+"' " +
+			" type='button' class='btn btn-success btn-block'><font>Ausgeben</font></button>");
+	
+	
+	$("#btnDispense").click(function(){
+		var value = $(this).val();
+		var pillQuantity = value.substring(parseInt(value.indexOf("|"))+1, value.length);
+		var boxID = value.substring(0, value.indexOf("|"));
+		dispenseMedicineBox(boxID);
+		setNewQuantity(boxID, pillQuantity);
+		setIntakeStatus(arrTriggereredMedicine[0].intakeTimeID);
+		
+		arrTriggereredMedicine.splice(0, 1);
+		
+		if(arrTriggereredMedicine!=0){
+			setTimeout(
+				    function() {
+				    	showIntakeStatusModal();
+			}, 2000);
+		} else {
+			$('#test').modal('hide');
+		}
 
+		
+			
+
+
+		
+		
+		/*if(boxID==1){
+			setNewQuantity(boxID, pillQuantity);
+			dispenseMedicineBox1();
+			$(this).prop('disabled', true);
+			listMedicineDispensed.push($(this).attr("name"));
+			closeModal(listMedicineDispensed);
+		}  else if(boxID==2){
+			setNewQuantity(boxID, pillQuantity);
+			dispenseMedicineBox2();
+			$(this).prop('disabled', true);
+			listMedicineDispensed.push($(this).attr("name"));
+			closeModal(listMedicineDispensed);
+		} else if (boxID==3){
+			setNewQuantity(boxID, pillQuantity);
+			dispenseMedicineBox3();
+			$(this).prop('disabled', true);
+			listMedicineDispensed.push($(this).attr("name"));
+			closeModal(listMedicineDispensed);
+		}*/
+	})
+	
+	$("#btnNoteInformation").click(function(){
+		if($(this).val()==1) {
+			playNote1();
+		} 
+		
+		if ($(this).val()==2){
+			playNote2();
+		} 
+		
+		if ($(this).val()==3){
+			playNote3();
+		} 
+	})
+	
+	
+}
+
+
+
+
+function getTriggeredMedicine()
+{
+    var request = $.ajax
+    ({
+        type       : "GET",
+        async		: false,
+        url        : host+":"+port+"/rest/items/arrTriggeredMedicine/state"
+    });
+
+    request.done( function(data) 
+    { 
+    	var triggeredMedicine = JSON.parse(data);
+    	var objTriggeredMedicine = new Object();
+    	
+    	for (var i = 0; i < triggeredMedicine.triggeredMedicine.length; i++) {
+    		objTriggeredMedicine = new Object();
+    		var intakeTime = new Date(triggeredMedicine.triggeredMedicine[i].intakeTime*1000);
+    		objTriggeredMedicine.intakeTime = intakeTime;
+    		objTriggeredMedicine.boxID = triggeredMedicine.triggeredMedicine[i].boxID;	
+    		objTriggeredMedicine.medicineName = triggeredMedicine.triggeredMedicine[i].medicineName;
+    		objTriggeredMedicine.pillQuantity = triggeredMedicine.triggeredMedicine[i].pillQuantity;
+    		objTriggeredMedicine.note = triggeredMedicine.triggeredMedicine[i].note;
+    		objTriggeredMedicine.intakeTimeID = triggeredMedicine.triggeredMedicine[i].intakeTimeID;
+    		arrTriggereredMedicine.push(objTriggeredMedicine);
+    	}
+    });
+
+    request.fail( function(jqXHR, textStatus ) 
+    { 
+        console.log( "Failure: " + textStatus );
+    }); 
+}
+
+
+
+/*
 function getTriggeredMedicine()
 {
     var request = $.ajax
@@ -45,6 +185,7 @@ function getTriggeredMedicine()
     request.done( function(data) 
     { 
     	var triggeredMedicine = JSON.parse(data);
+    	console.log(data);
     	listMedicineDispensed=[];
     	listBoxTriggered=[];
     	listMedicineIDs = [];
@@ -79,12 +220,14 @@ function getTriggeredMedicine()
     		listMedicineIDs.push(objMedicineIDs);
     		
     		$("#trMedicineName").append("" +
-    				"<td><b><font>"+triggeredMedicine.triggeredMedicine[i].medicineName+"</b></font></td>");
+    				"<b><font>"+triggeredMedicine.triggeredMedicine[i].medicineName+"</b></font>");
     		
     		$("#trButtonNavigation").append("<td><button type='button' class='btn btn-success btn-lg' id='dispenseMedicineBox"+(i+1)+"' value='"+triggeredMedicine.triggeredMedicine[i].boxID+"|"+triggeredMedicine.triggeredMedicine[i].pillQuantity+"' name="+triggeredMedicine.triggeredMedicine[i].intakeTimeID+">Ausgeben</button>"
            	+	 "<button type='button' class='btn btn-secondary btn-lg'  id='btnNoteInformationBox"+(i+1)+"'  value='"+triggeredMedicine.triggeredMedicine[i].boxID+"'>Info</button></td>");
     		 		
     		$("#trMedicineIcon").append("<td><img width='100' height='100' src='img/pill_blue.png'></td>");
+    		
+    		$("#note").append("<font>"+triggeredMedicine.triggeredMedicine[i].note+"</font>");
     		
     		if(intakeTime.getHours()<10){
     			hours = 0+""+intakeTime.getHours();
@@ -98,7 +241,7 @@ function getTriggeredMedicine()
     			minutes = intakeTime.getMinutes();
     		}
     		
-    		$("#trIntakeTime").append("<td><b>Einnahme:</b> "+hours+":"+minutes+" Uhr</b></td>");
+    		$("#trIntakeTime").append("<td><font><b>Einnahme:</b> "+hours+":"+minutes+" Uhr</b></font></td>");
     		
     		$("#dispenseMedicineBox"+(i+1)).click(function(){
     			var value = $(this).val();
@@ -150,7 +293,7 @@ function getTriggeredMedicine()
         console.log( "Failure: " + textStatus );
     }); 
 }
-
+*/
 function closeModal(listMedicineDispensed){
 	if(listMedicineDispensed.length==listBoxTriggered.length){
 		turnOffNotification();
@@ -227,12 +370,12 @@ function playNote3 ( )
 }
 
 
-function dispenseMedicineBox1( )
+function dispenseMedicineBox(boxID)
 {
     var request = $.ajax
     ({
         type       : "GET",
-        url        : host+":"+port+"/CMD?checkMainBoxStatus1=ON"
+        url        : host+":"+port+"/CMD?checkMainBoxStatus"+boxID+"=ON"
     });
 
     request.done( function(data) 
@@ -355,13 +498,13 @@ function setNewQuantity(boxID, pillQuantity){
 		});
 }
 
-function setIntakeStatus(){
+function setIntakeStatus(intakeTimeID){
 		  $.ajax({
 			    dataType: 'json',
 			    async:false,
 			    success: function(data) {
 
 				   },
-			    url: host+':'+port+'/smartmedicine/rest/medicineinformation/setIntakeStatus/'+localStorage.getItem("intakeTimeID")+'/1'
+			    url: host+':'+port+'/smartmedicine/rest/medicineinformation/setIntakeStatus/'+intakeTimeID+'/1'
 			});
 }

@@ -1,6 +1,11 @@
 @CHARSET "ISO-8859-1";
 /* Desktops and laptops ----------- */
 @media only screen  and (min-width : 1024px) {
+	.custom-class {
+        width: 100%; /* either % (e.g. 60%) or px (400px) */
+	}
+	
+	
 	font{
 		margin:auto;
 		font-size:150%;
@@ -47,7 +52,7 @@
 	div.divContainer {
 	  	width:98%;
 	  	margin: auto;
-	  	height:350; 	 	
+	  	height:310; 	 	
 	}
 	
 	div.divContainerSourceOfSupply{
@@ -96,7 +101,7 @@
 	div.divContainerSettings {
 	  	width:98%;
 	  	margin: auto;
-	  	height:288; 	 	
+	  	height:290; 	 	
 	}
 	
 	div.divContainerContactPerson{
@@ -175,7 +180,6 @@ img.sectionImage {
     margin-left: auto;
     margin-right: auto
 }
-
 
 
 

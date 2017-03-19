@@ -206,42 +206,38 @@
 
     </script>
     
-          <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" id="btnNotificationStatus" style="display: none;">
+    
+        <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test" id="btnNotificationStatus" style="visibility:hidden">
   Launch demo modal
 </button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" 
-   data-keyboard="false" 
-   href="#">
-  <div class="modal-dialog" role="document">
+
+<div class="modal fade " id="test">
+  <div class="modal-dialog " role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLongTitle"><p align="center"><b>Medikamenteneinnahmezeitpunkt</b></p></h3>
+      <div class="modal-header" align="center">
+        <h5 class="modal-title" ><font>Einnahmezeitpunkt</font></h5>
+       
         
       </div>
       <div class="modal-body" align="center">
-        Sie müssen die folgenden Medikamente einnehmen:   
-        <br>
-        <br>
-        
-        <table id="tblDispenseMedicineInformation">
-        	<tr id="trMedicineName" align="center"></tr>
-        	<tr id="trMedicineIcon" align="center"></tr>
-        	<tr id="trIntakeTime" align="center"></tr>
-        	<tr id="trButtonNavigation" align="center"></tr>
-
-        </table>
-                     
+                <span id="spanMedicineName"></span><br>
+        	    <img src="img/aspirin-icon-blue.png" width="80px"  height="100px"><br>
+				<span id="spanIntakeTime"></span><br>
+				<hr>
+				<div id="spanNote"></div>
+				
       </div>
-      <div class="modal-footer" style="visibility:hidden">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCloseNotificationModal">Close</button>
-        <button type="button" class="btn btn-primary">Ausgeben</button>
+      <div class="modal-footer">
+        <div style="float:left; width:50%" id="divBtnInformation"></div>
+        <div style="float:left; width:50%" id="divBtnDispense"></div>
       </div>
     </div>
   </div>
 </div>
+ 
+  
 </div>
       
       	   <div style="background-image: url(../smartmedicine/img/space_footer.png);background-repeat:repeat-x;

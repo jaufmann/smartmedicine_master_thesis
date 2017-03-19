@@ -81,17 +81,31 @@ $(document).ready(function() {
 		else if(destination == "intakeTimeVacation"){
 			loadIntakeTimeVacationInformationTable();
 		} else if(destination == "manageMedicine"){
-			if(jQuery.isEmptyObject(getMedicineInformation())==true){
+			
+			if(getMedicineInformation().length==3){
+				$("#tdAddMedicine").empty();
+				$("#tdAddMedicine").append("<button id='btnAddMedicine' class='size btn btn-success' ><img width='300' src='img/kein_platz_logo.png'></button>");
+				$("#btnAddMedicine").attr('disabled','disabled');
+			} else if(getMedicineInformation().length==0){
 				$("#btnMedicineOverview").attr('disabled','disabled');
 				$("#btnEditMedicine").attr('disabled','disabled');
 				$("#btnDeleteMedicine").attr('disabled','disabled');
-			}  else {
+			} else {
 				$("#btnMedicineOverview").removeAttr('disabled');
 				$("#btnEditMedicine").removeAttr('disabled');
 				$("#btnDeleteMedicine").removeAttr('disabled');
 			}
+			/*if(jQuery.isEmptyObject(getMedicineInformation())==true){
+				
+			}  else {
+			
+			}*/
 		} else if(destination == "manageOptionSelection"){
-			if(jQuery.isEmptyObject(getMedicineInformation())==true){
+			
+		
+			if(getMedicineInformation().length==0){
+				$("#tdManageIntakeTime").empty();
+				$("#tdManageIntakeTime").append("<button id='btnManageIntakeTime' class='size btn btn-primary'><img width='300' src='img/keine_termine_logo.png' /></button>");
 				$("#btnManageIntakeTime").attr('disabled','disabled');
 			}  else {
 				$("#btnManageIntakeTime").removeAttr('disabled');
@@ -355,7 +369,21 @@ $(document).ready(function() {
         	pickerStartDate.set("select", date);
         	pickerStartDate.set("min", date);
         	
-			$("#btnNoInterval").trigger("click");
+        	if(localStorage.getItem("intervalType")=="none"){
+        		$("#btnNoInterval").trigger("click");
+        		$('#txtIteration').attr('disabled', true);
+        	} else if(localStorage.getItem("intervalType")=="daily"){
+        		$("#btnDaily").trigger("click");
+        	} else if(localStorage.getItem("intervalType")=="weekly"){
+        		$("#btnWeekly").trigger("click");
+        	} else if(localStorage.getItem("intervalType")=="monthly"){
+        		$("#btnMonthly").trigger("click");
+        	} else {
+        		$("#btnNoInterval").trigger("click");
+        		$('#txtIteration').attr('disabled', true);
+        	}
+        	
+		
 			$('#tblHeaderOverview').empty();
 			$("<tr><td><img class='transparent headerNavigation' src='img/pills-blue.png'><font style='color:2875bd' class='transparent'><b>Allgemein</b></font></h4></td>" +
 			  "<td><img class='transparent headerNavigation'  src='img/Information_icon.png'><font style='color:2875bd' class='transparent'><b>Info</b></font></td>" +
@@ -384,7 +412,7 @@ $(document).ready(function() {
 				setTimeInput();
 			}
 			
-			$('#txtIteration').attr('disabled', true);
+			
 			
 			$('#tdBackAddIntakeTime').empty();
 			$("<button id='btnBackToAddMedicine' class='btn btn-lg btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
@@ -502,6 +530,7 @@ $(document).ready(function() {
 				    			console.log("medicineID: "+medicineID);
 				    			localStorage.setItem("medicineID", medicineID);
 				    			var boxID = getMedicineInformationByMedicineID().boxID;
+				    			setNewQuantity(boxID, 1);
 				    			localStorage.setItem("boxID", boxID);
 				    			dispenseMedicineBox();
 				    		})
@@ -509,6 +538,17 @@ $(document).ready(function() {
 				   },
 			    url: host+':'+port+'/smartmedicine/rest/medicineinformation/getIntakeTimeByStartAndEndDate/'+localStorage.getItem("startDateUnix")+"/"+localStorage.getItem("endDateUnix"),
 			}); 
+	}
+	
+	function setNewQuantity(boxID, pillQuantity){
+		  $.ajax({
+			    dataType: 'json',
+			    async:false,
+			    success: function(data) {
+
+				   },
+			    url: host+':'+port+'/smartmedicine/rest/medicineinformation/setNewStockAmount/'+boxID+'/'+pillQuantity
+			});
 	}
 	
 	
@@ -554,7 +594,7 @@ $(document).ready(function() {
 			    			if(data.intaketime[i].intakeTriggered==true){
 			    				intakeStatus = "Eingenommen"
 			    			} else {
-			    				intakeStatus = "Einnahme verpasset"
+			    				intakeStatus = "Einnahme verpasst"
 			    			}
 			    		} else {
 			    			notificationTrigegered = "Aussteffhend";
@@ -1053,6 +1093,7 @@ $(document).ready(function() {
 	})
 	
 	$('#btnDaily').click(function(){
+		localStorage.setItem("intervalType", "daily");
 		clickedInterval = "daily";
 		$('#txtIteration').attr('disabled', false);
 		document.getElementById("btnDaily").style.opacity = 1; 
@@ -1062,6 +1103,7 @@ $(document).ready(function() {
 	})
 	
 	$('#btnWeekly').click(function(){
+		localStorage.setItem("intervalType", "weekly");
 		clickedInterval = "weekly";
 		$('#txtIteration').attr('disabled', false);
 		document.getElementById("btnWeekly").style.opacity = 1; 
@@ -1071,6 +1113,7 @@ $(document).ready(function() {
 	})
 	
 	$('#btnMonthly').click(function(){
+		localStorage.setItem("intervalType", "monthly");
 		clickedInterval = "monthly";
 		$('#txtIteration').attr('disabled', false);
 		document.getElementById("btnMonthly").style.opacity = 1; 
@@ -1081,6 +1124,7 @@ $(document).ready(function() {
 	})
 	
 	$('#btnNoInterval').click(function(){
+		localStorage.setItem("intervalType", "none");
 		clickedInterval = "none";
 		$('#txtIteration').attr('disabled', true);
 		document.getElementById("btnNoInterval").style.opacity = 1; 
@@ -1901,6 +1945,7 @@ $(document).ready(function() {
 	
 	function getMedicineInformation() {
 		objMedicineInformation = new Object();
+		arrMedicineInformationObj = [];
 		$.ajax({
 			    dataType: 'json',
 			    async:false,
@@ -1908,7 +1953,8 @@ $(document).ready(function() {
 			    	
 			    	if(data.medicine.length!=0){
 			    		for(var i=0;i<data.medicine.length;i++){
-			    			objMedicineInformation.test = "test";
+			    			objMedicineInformation.boxID = data.medicine[i].boxID;
+			    			arrMedicineInformationObj.push(objMedicineInformation);
 				    	}		
 			    	} else {
 			    		
@@ -1917,7 +1963,7 @@ $(document).ready(function() {
 				   },
 			    url: host+':'+port+'/smartmedicine/rest/medicineinformation/getMedicineInformation'
 			});
-		return objMedicineInformation;
+		return arrMedicineInformationObj;
 	};
 	
 	
@@ -1948,9 +1994,9 @@ $(document).ready(function() {
 			    	
 			    	
 			    	if(data.sendNotification==true){
-			    		sendNotification = "Nachricht wird gesendet";
+			    		sendNotification = "wird gesendet";
 			    	} else {
-			    		sendNotification = " Nachricht wird nicht gesendet";
+			    		sendNotification = " wird nicht gesendet";
 			    	}
 			    	
 			    	 $('#tdNotificationTriggered').append(notificationTriggered);
@@ -2169,12 +2215,12 @@ $(document).ready(function() {
 			    success: function(data) {
 			    	var contactType = data.contactType;
 			    	
-			    	$('#tdSurname').append("<font>"+data.surname+"</font>");
-			    	$('#tdName').append("<font>"+data.name+"</font>");
+			    	$('#tdSurname').append(data.surname);
+			    	$('#tdName').append(data.name);
 			    	if(data.sex == "male"){
-			    		$('#tdSex').append("<font>Herr</font>");
+			    		$('#tdSex').append("Herr");
 			    	} else {
-			    		$('#tdSex').append("<font>Frau</font>");
+			    		$('#tdSex').append("Frau");
 			    	}
 			    	
 			    	if(contactType == "doctor"){
@@ -2190,11 +2236,11 @@ $(document).ready(function() {
 			    	
 			    	
 			    	
-			    	$("#tdEmail").append("<font>"+data.email+"</font>");
+			    	$("#tdEmail").append(data.email);
 			    	if(data.recieveNotification == true){
-			    		$("#tdRecieveNotification").append("<font>Wenn eine wichtige Einnahme vergessen wurde, dann wird eine E-Mail gesendet</font>");
+			    		$("#tdRecieveNotification").append("Wenn eine wichtige Einnahme vergessen wurde, dann wird eine E-Mail gesendet");
 			    	} else {
-			    		$("#tdRecieveNotification").append("<font>Wenn eine wichtige Einnahme vergessen wurde, dann wird keine E-Mail gesendet</font>");
+			    		$("#tdRecieveNotification").append("Wenn eine wichtige Einnahme vergessen wurde, dann wird keine E-Mail gesendet");
 			    	}
 			    	
 			    		

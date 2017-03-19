@@ -3,16 +3,19 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Smart MediCine</title>
     
-	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/medikamentenVerwalten.css">
     
     <!-- Javascript -->
      <script src="js/jquery/jquery-1.12.4.js"></script>
+     <script src="js/bootstrap.min.js" type="text/javascript"></script>
      <script src="js/datatable/jquery.dataTables.min.js"></script>
      <script src="js/datatable/dataTables.bootstrap4.min.js"></script>
 	<script type = "text/javascript" src="js/smartmedicine.js" /></script>
+	
 	<script type = "text/javascript" src="js/navigation1.js" /></script>
+	<script src="js/intakeNotificationModal.js"></script>
 	
 	<style type="text/css">
 		#parent
@@ -84,5 +87,34 @@ float:left;width:100%">
 
  <button id="btnIntakeTimeOverview_2" class='btn btn-lg btn-primary'><font class="white">zurück</font></button>
 	<!-- javascript -->
+	
+			 				     		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test" id="btnNotificationStatus" style="visibility:hidden" >
+  Launch demo modal
+</button>
+
+
+<div class="modal fade " id="test">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header" align="center">
+        <h5 class="modal-title" ><font>Einnahmezeitpunkt</font></h5>
+       
+        
+      </div>
+      <div class="modal-body" align="center">
+                <span id="spanMedicineName"></span><br>
+        	    <img src="img/aspirin-icon-blue.png" width="80px"  height="100px"><br>
+				<span id="spanIntakeTime"></span><br>
+				<hr>
+				<div id="spanNote"></div>
+				
+      </div>
+      <div class="modal-footer">
+        <div style="float:left; width:50%" id="divBtnInformation"></div>
+        <div style="float:left; width:50%" id="divBtnDispense"></div>
+      </div>
+    </div>
+  </div>
+</div>
 	</body>
 </html>

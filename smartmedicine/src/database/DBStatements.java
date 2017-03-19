@@ -51,7 +51,7 @@ public class DBStatements {
 		ResultSet rs = null;
 		Medicine medicine = null;
 
-		String query = " SELECT medicineID, note, stock, medicineName, disease, sourceType, sendOrder "
+		String query = " SELECT *"
 				+ 	   " FROM medicine "
 				+      " GROUP BY medicineID ";
 		ArrayList<Medicine> listMedicine = new ArrayList<Medicine>();
@@ -69,6 +69,7 @@ public class DBStatements {
 				medicine.setDisease(rs.getString("disease"));
 				medicine.setSourceType(rs.getString("sourceType"));
 				medicine.setSendOrder(rs.getBoolean("sendOrder"));
+				medicine.setBoxID(rs.getInt("boxID"));
 				listMedicine.add(medicine);
 			}
 		}finally{
@@ -1237,7 +1238,11 @@ public class DBStatements {
 		    	 
 		      while(rs.next()){
 					stock = (rs.getInt("stock"))-dispenseAmount;	
-		       }	  
+		       }
+		      
+		      if(stock<0){
+		    	  stock=0;
+		      }
 		      
 		      String sqlSetNewStock = " UPDATE medicine SET stock = ? WHERE boxID = ?";
 		    	 
