@@ -73,17 +73,14 @@ then
 
 	if(boxID==1){
 		sendCommand(intakeNoteBox1, note)
-		executeCommandLine("python@@/opt/openhab/configurations/scripts/led_1_on.py")
 	}
 
 	if(boxID==2){
 		sendCommand(intakeNoteBox2, note)
-		executeCommandLine("python@@/opt/openhab/configurations/scripts/led_2_on.py")
 	}
 	
 	if(boxID==3){
 		sendCommand(intakeNoteBox3, note)
-		executeCommandLine("python@@/opt/openhab/configurations/scripts/led_3_on.py")
 	}
      }   
   }
@@ -112,7 +109,6 @@ when
 then
 	
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo.py")
-	executeCommandLine("python@@/opt/openhab/configurations/scripts/led_1_off.py")
 
 	var int k = -1
      	var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByBoxID/1") 
@@ -129,6 +125,7 @@ then
 
 	
 	if(sendOrder == true && stock<=savetyStock){
+		executeCommandLine("python@@/opt/openhab/configurations/scripts/led_1_on.py")
 		while ((k=k+1) < numberSourceOfSupplies) {
 		     	var email = transform("JSONPATH","$.sourceOfSupply["+k+"].email", sourceOfSupplyInformation )
 			var recieveMail = Boolean::parseBoolean(transform("JSONPATH","$.sourceOfSupply["+k+"].recieveMail", sourceOfSupplyInformation ))
@@ -153,7 +150,7 @@ when
 	Item dispenseMedicineBox2 received command 
 then
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo2.py")
-	executeCommandLine("python@@/opt/openhab/configurations/scripts/led_2_off.py")
+
 
 	var int k = -1
      	var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByBoxID/2") 
@@ -170,6 +167,7 @@ then
 
 	
 	if(sendOrder == true && stock<=savetyStock){
+		executeCommandLine("python@@/opt/openhab/configurations/scripts/led_2_on.py")
 		while ((k=k+1) < numberSourceOfSupplies) {
 		     	var email = transform("JSONPATH","$.sourceOfSupply["+k+"].email", sourceOfSupplyInformation )
 			var recieveMail = Boolean::parseBoolean(transform("JSONPATH","$.sourceOfSupply["+k+"].recieveMail", sourceOfSupplyInformation ))
@@ -196,7 +194,6 @@ when
 	Item dispenseMedicineBox3 received command 
 then
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo3.py")
-	executeCommandLine("python@@/opt/openhab/configurations/scripts/led_3_off.py")
 
 	var int k = -1
      	var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByBoxID/3") 
@@ -213,6 +210,7 @@ then
 
 	
 	if(sendOrder == true && stock<=savetyStock){
+		executeCommandLine("python@@/opt/openhab/configurations/scripts/led_3_on.py")
 		while ((k=k+1) < numberSourceOfSupplies) {
 		     	var email = transform("JSONPATH","$.sourceOfSupply["+k+"].email", sourceOfSupplyInformation )
 			var recieveMail = Boolean::parseBoolean(transform("JSONPATH","$.sourceOfSupply["+k+"].recieveMail", sourceOfSupplyInformation ))
@@ -266,6 +264,15 @@ then
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/hall.py")
 end
 
+
+rule "Turn off led"
+when
+	Item ledNumber received command 
+then
+	executeCommandLine("python@@/opt/openhab/configurations/scripts/led_"+ledNumber.state+"_off.py")
+end
+
+
 rule "Trigger the notification "
 when
     Item notificationTriggered received command 
@@ -309,9 +316,7 @@ then
 				var medicineName = arrTriggeredMedicine.state
 			
 
-				executeCommandLine("python@@/opt/openhab/configurations/scripts/led_1_off.py")
-				executeCommandLine("python@@/opt/openhab/configurations/scripts/led_2_off.py")
-				executeCommandLine("python@@/opt/openhab/configurations/scripts/led_3_off.py")
+
 			
 				var int numberOfContactPersons = Integer::parseInt(transform("JSONPATH","$.numberOfContactPersons", contactPerson))
 				
