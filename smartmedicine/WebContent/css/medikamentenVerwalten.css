@@ -6,10 +6,42 @@
 	}
 	
 	
+	
+	font.fontIntakeStatusMedicineName {
+		margin:auto; 
+		font-size:150%;
+		font-weight:bold;
+	}
+	
+	font.fontIntakeStatusTitle{		
+		font-weight:bold;
+		font-size:150%; 	
+	}
+	
+	font.fontModalTitle
+	{
+		margin:auto; 
+		font-size:180%; 
+		color:#2875BD;
+		font-weight:bold;
+	}
+	
+	font.fontIntakeTime
+	{
+		margin:auto; 
+		font-size:150%;
+	}
+	
+	font.fontIntakeDescription
+	{
+		margin:auto; 
+		font-size:150%;
+	}
+	
+	
 	font{
 		margin:auto;
 		font-size:150%;
-		font-weight: bold;
 	}
 
 	divContainerContactPerson{
@@ -123,7 +155,6 @@
 	
 	font{
 		margin:auto;
-		font-weight: bold;
 		font-size:106%;
 	}
 	
@@ -149,6 +180,39 @@
     	width: 18px !important;
     	height: 18px !important;
 	}	
+	
+	font.fontIntakeStatusMedicineName {
+		margin:auto; 
+		font-size:150%;
+		font-weight:bold;
+	}
+	
+	font.fontIntakeStatusTitle{		
+		font-weight:bold;
+		font-size:150%; 	
+	}
+	
+	font.fontModalTitle
+	{
+		margin:auto; 
+		font-size:180%; 
+		color:#2875BD;
+		font-weight:bold;
+	}
+	
+	font.fontIntakeTime
+	{
+		margin:auto; 
+		font-size:150%;
+	}
+	
+	font.fontIntakeDescription
+	{
+		margin:auto; 
+		font-size:150%;
+	}
+	
+	
 }
 
 

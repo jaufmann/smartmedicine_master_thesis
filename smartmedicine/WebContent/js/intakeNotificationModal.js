@@ -63,9 +63,11 @@ function showIntakeStatusModal (){
 	}
 	
 	
-	$("#spanMedicineName").append("<font>"+arrTriggereredMedicine[0].medicineName+"</font>");
-	$("#spanNote").append("<font>"+arrTriggereredMedicine[0].note+"</font>");
-	$("#spanIntakeTime").append("<font>Einnahme: "+hours+":"+minutes+"</font>");
+	$("#spanMedicineName").append("<font class='fontIntakeStatusMedicineName'>"+arrTriggereredMedicine[0].medicineName+"</font>");
+	$("#spanNote").append("<font class='fontIntakeDescription'>"+arrTriggereredMedicine[0].note+"</font>");
+	
+	
+	$("#spanIntakeTime").append("<font class='fontIntakeStatusTitle'>Einnahme:</font> <font class='fontIntakeTime'>"+hours+":"+minutes+" Uhr</font>");
 	
 	$("#divBtnInformation").append("<button id='btnNoteInformation' value='"+arrTriggereredMedicine[0].boxID+"' type='button' class='btn btn-primary btn-block'><font>Information</font></button>");
 	$("#divBtnDispense").append("<button id='btnDispense' value='"+arrTriggereredMedicine[0].boxID+"|"+arrTriggereredMedicine[0].pillQuantity+"' " +
