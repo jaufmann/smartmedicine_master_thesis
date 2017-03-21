@@ -96,7 +96,7 @@ float:left;width:100%">
     
     	<table width="100%">
 	    <tr>
-	    	<td width="100%" ><a id="note"></a>&nbsp;<font>Notiz:</font></td>
+	    	<td width="100%" ><a id="note"></a>&nbsp;<font><b>Notiz:</b></font></td>
 	    </tr>
 	    
 	    <tr>
@@ -106,8 +106,8 @@ float:left;width:100%">
 			<td>&nbsp;</td>
 		</tr>
 	    <tr>
-	    	<td width="100%" ><a id="savetyStock"></a>&nbsp;<font>Bestand:</font> </td>
-	    	<td width="100%" colspan="3" align="right"><font>Nachbestellen?</font> </td>
+	    	<td width="100%" ><a id="savetyStock"></a>&nbsp;<font><b>Bestand:</b></font> </td>
+	    	<td width="100%" colspan="3" align="right"><font><b>Nachbestellen?</b></font> </td>
 	    </tr>
 	    
 	    <tr width="100%">
@@ -119,19 +119,24 @@ float:left;width:100%">
 			<td>&nbsp;</td>
 		</tr>
 		
-		<tr>
-	    	<td width="100%" ><a id="sendOrder"></a>&nbsp;<font>Sicherheitsbestand:</font> </td>
-	    	<td width="100%" align="right" colspan="3"><font>Bezugsquelle</font> </td>
+		<tr id="trSourceOfSupllyTitle">
+	    	<td width="100%" ><a id="sendOrder"></a>&nbsp;<font><b>Sicherheitsbestand:</b></font> </td>
+	    	<td width="100%" align="right" colspan="3"><font><b>Bezugsquelle</b></font> </td>
 	    </tr>
 	    
-		<tr>
+		<tr id="trSourceOfSuplly">
 			 <td><input class='form-control' type="number" min="1"  id="txtSavetyStock"/></td>
 			 <td><button id="btnSourceTypeDrugStore" class='btn btn-primary '><img class="interval" src="img/art_apotheke_logo.png"></img></button> </td>
 		  	 <td><button id="btnSourceTypeDoctor" class='btn btn-primary'><img class="interval" src="img/art_arzt_logo.png"></img></button> </td>
 		   	 <td><button id="btnSourceTypeMisc" class='btn btn-primary '><img class="interval" src="img/art_sonstige_logo.png"></img></button> </td>	
 		</tr>
 	    </table>   
-   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test" id="btnNotificationStatus" style="visibility:hidden" >
+    
+<!------------------------------------------START INTAKE STATUS MODAL START  --------------------------------------------------->
+  
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#test" id="btnNotificationStatus"
+style="visibility:hidden" >
   Launch demo modal
 </button>
 
@@ -140,7 +145,7 @@ float:left;width:100%">
   <div class="modal-dialog " role="document">
     <div class="modal-content">
       <div class="modal-header" align="center">
-        <h5 class="modal-title" ><font>Einnahmezeitpunkt</font></h5>
+        <h5 class="modal-title" ><font class="fontModalTitle">Einnahmezeitpunkt</font></h5>
        
         
       </div>
@@ -149,7 +154,7 @@ float:left;width:100%">
         	    <img src="img/aspirin-icon-blue.png" width="80px"  height="100px"><br>
 				<span id="spanIntakeTime"></span><br>
 				<hr>
-				<div id="spanNote"></div>
+				<div id="spanNote"> </div>
 				
       </div>
       <div class="modal-footer">
@@ -159,6 +164,9 @@ float:left;width:100%">
     </div>
   </div>
 </div>
+<!------------------------------------------END INTAKE STATUS MODAL END  --------------------------------------------------->
+
+
 
   </div>
 

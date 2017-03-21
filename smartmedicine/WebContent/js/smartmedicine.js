@@ -473,9 +473,12 @@ $(document).ready(function() {
 
 	
 	$('#btnSendOrderYes').click(function(){
+		$("#trSourceOfSuplly").show();
+		$("#trSourceOfSupllyTitle").show();
+		
 		localStorage.setItem("sendOrder", "true");
-		document.getElementById("btnSendOrderYes").style.opacity = 1;
-		document.getElementById("btnSendOrderNo").style.opacity = 0.3;
+		$("#btnSendOrderYes").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnSendOrderNo").removeClass("btn btn-success").addClass("btn btn-primary");
 		$('#txtSavetyStock').attr('disabled', false);
 
 		
@@ -487,14 +490,14 @@ $(document).ready(function() {
 	})
 	
 	$('#btnSendOrderNo').click(function(){
+		$("#trSourceOfSuplly").hide();
+		
+		$("#trSourceOfSupllyTitle").hide();
 		$('#txtSavetyStock').attr('disabled', true);
 		localStorage.setItem("sendOrder", "false");
 		localStorage.setItem("sourceType", "none");
-		document.getElementById("btnSendOrderNo").style.opacity = 1;
-		document.getElementById("btnSendOrderYes").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeDrugStore").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeDoctor").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeMisc").style.opacity = 0.3;
+		$("#btnSendOrderNo").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnSendOrderYes").removeClass("btn btn-success").addClass("btn btn-primary");
 		$('#btnSourceTypeDoctor').attr('disabled', true);
 		$('#btnSourceTypeDrugStore').attr('disabled', true);
 		$('#btnSourceTypeMisc').attr('disabled', true);
@@ -797,23 +800,23 @@ $(document).ready(function() {
 	
 	$('#btnSourceTypeDoctor').click(function(){
 		localStorage.setItem("sourceType", "doctor");
-		document.getElementById("btnSourceTypeDoctor").style.opacity = 1;
-		document.getElementById("btnSourceTypeDrugStore").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeMisc").style.opacity = 0.3;
+		$("#btnSourceTypeDoctor").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnSourceTypeDrugStore").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnSourceTypeMisc").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnSourceTypeDrugStore').click(function(){
 		localStorage.setItem("sourceType", "drugStore");
-		document.getElementById("btnSourceTypeDrugStore").style.opacity = 1;
-		document.getElementById("btnSourceTypeDoctor").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeMisc").style.opacity = 0.3;
+		$("#btnSourceTypeDrugStore").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnSourceTypeDoctor").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnSourceTypeMisc").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnSourceTypeMisc').click(function(){
 		localStorage.setItem("sourceType", "misc");
-		document.getElementById("btnSourceTypeDrugStore").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeDoctor").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeMisc").style.opacity = 1;
+		$("#btnSourceTypeDrugStore").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnSourceTypeDoctor").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnSourceTypeMisc").removeClass("btn btn-primary").addClass("btn btn-success");
 	})
 	
 	
@@ -1096,30 +1099,30 @@ $(document).ready(function() {
 		localStorage.setItem("intervalType", "daily");
 		clickedInterval = "daily";
 		$('#txtIteration').attr('disabled', false);
-		document.getElementById("btnDaily").style.opacity = 1; 
-		document.getElementById("btnWeekly").style.opacity = 0.3; 
-		document.getElementById("btnMonthly").style.opacity = 0.3; 
-		document.getElementById("btnNoInterval").style.opacity = 0.3; 
+		$("#btnDaily").removeClass("btn btn-primary").addClass("btn btn-success"); 
+		$("#btnWeekly").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnMonthly").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnNoInterval").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnWeekly').click(function(){
 		localStorage.setItem("intervalType", "weekly");
 		clickedInterval = "weekly";
 		$('#txtIteration').attr('disabled', false);
-		document.getElementById("btnWeekly").style.opacity = 1; 
-		document.getElementById("btnDaily").style.opacity = 0.3; 
-		document.getElementById("btnMonthly").style.opacity = 0.3; 
-		document.getElementById("btnNoInterval").style.opacity = 0.3; 
+		$("#btnWeekly").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnDaily").removeClass("btn btn-success").addClass("btn btn-primary"); 
+		$("#btnMonthly").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnNoInterval").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnMonthly').click(function(){
 		localStorage.setItem("intervalType", "monthly");
 		clickedInterval = "monthly";
 		$('#txtIteration').attr('disabled', false);
-		document.getElementById("btnMonthly").style.opacity = 1; 
-		document.getElementById("btnDaily").style.opacity = 0.3; 
-		document.getElementById("btnWeekly").style.opacity = 0.3; 
-		document.getElementById("btnNoInterval").style.opacity = 0.3; 
+		$("#btnMonthly").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnDaily").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnWeekly").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnNoInterval").removeClass("btn btn-success").addClass("btn btn-primary");
 		
 	})
 	
@@ -1127,10 +1130,10 @@ $(document).ready(function() {
 		localStorage.setItem("intervalType", "none");
 		clickedInterval = "none";
 		$('#txtIteration').attr('disabled', true);
-		document.getElementById("btnNoInterval").style.opacity = 1; 
-		document.getElementById("btnDaily").style.opacity = 0.3; 
-		document.getElementById("btnWeekly").style.opacity = 0.3; 
-		document.getElementById("btnMonthly").style.opacity = 0.3; 
+		$("#btnNoInterval").removeClass("btn btn-primary").addClass("btn btn-success"); 
+		$("#btnDaily").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnWeekly").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnMonthly").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	/**
@@ -1201,80 +1204,78 @@ $(document).ready(function() {
 	
 	$('#btnContactTypePrivate').click(function(){
 		localStorage.setItem("contactType", "private");
-		document.getElementById("btnContactTypePrivate").style.opacity = 1; 
-		document.getElementById("btnContactTypeDoctor").style.opacity = 0.3; 
-		document.getElementById("btnContactTypeMisc").style.opacity = 0.3; 
+		$("#btnContactTypePrivate").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnContactTypeDoctor").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnContactTypeMisc").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnBox1').click(function(){
 		localStorage.setItem("boxID", 1);
-		document.getElementById("btnBox1").style.opacity = 1; 
-		document.getElementById("btnBox2").style.opacity = 0.3; 
-		document.getElementById("btnBox3").style.opacity = 0.3; 
+		$("#btnBox1").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnBox2").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnBox3").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnBox2').click(function(){
 		localStorage.setItem("boxID", 2);
-		document.getElementById("btnBox2").style.opacity = 1; 
-		document.getElementById("btnBox1").style.opacity = 0.3; 
-		document.getElementById("btnBox3").style.opacity = 0.3; 
+		$("#btnBox2").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnBox1").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnBox3").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 		
 	$('#btnBox3').click(function(){
 		localStorage.setItem("boxID", 3);
-		document.getElementById("btnBox3").style.opacity = 1; 
-		document.getElementById("btnBox2").style.opacity = 0.3; 
-		document.getElementById("btnBox1").style.opacity = 0.3; 
+		$("#btnBox3").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnBox2").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnBox1").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	
 	$('#btnContactTypeDoctor').click(function(){
 		localStorage.setItem("contactType", "doctor");
-		document.getElementById("btnContactTypeDoctor").style.opacity = 1; 
-		document.getElementById("btnContactTypePrivate").style.opacity = 0.3; 
-		document.getElementById("btnContactTypeMisc").style.opacity = 0.3; 
+		$("#btnContactTypeDoctor").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnContactTypePrivate").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnContactTypeMisc").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnContactTypeMisc').click(function(){
 		localStorage.setItem("contactType", "misc");
-		document.getElementById("btnContactTypeMisc").style.opacity = 1; 
-		document.getElementById("btnContactTypePrivate").style.opacity = 0.3; 
-		document.getElementById("btnContactTypeDoctor").style.opacity = 0.3; 
+		$("#btnContactTypeMisc").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnContactTypePrivate").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnContactTypeDoctor").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnSendMailYes').click(function(){
 		localStorage.setItem("recieveNotification", true);
-		document.getElementById("btnSendMailYes").style.opacity = 1; 
-		document.getElementById("btnSendMailNo").style.opacity = 0.3; 
+		$("#btnSendMailYes").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnSendMailNo").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnSendMailNo').click(function(){
 		localStorage.setItem("recieveNotification", false);
-		document.getElementById("btnSendMailNo").style.opacity = 1; 
-		document.getElementById("btnSendMailYes").style.opacity = 0.3; 
+		$("#btnSendMailNo").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnSendMailYes").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnFemale').click(function(){
 		localStorage.setItem("sex", "female");
-		document.getElementById("btnFemale").style.opacity = 1; 
-		document.getElementById("btnMale").style.opacity = 0.3; 
+		$("#btnFemale").removeClass("btn btn-primary").addClass("btn btn-success"); 
+		$("#btnMale").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnMale').click(function(){
 		localStorage.setItem("sex", "male");
 		
-		document.getElementById("btnFemale").style.opacity = 0.3; 
-		document.getElementById("btnMale").style.opacity = 1; 
+		$("#btnFemale").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnMale").removeClass("btn btn-primary").addClass("btn btn-success");
 	})
 	
 	$('#btnImportant').click(function(){
 		localStorage.setItem("sendNotification", true);
-		document.getElementById("btnImportant").style.opacity = 1; 
-		document.getElementById("btnNormal").style.opacity = 0.3; 
-		$("btnContactTypeMisc").click(); 
-		document.getElementById("btnContactTypePrivate").style.opacity = 0.3; 
-		document.getElementById("btnContactTypeDoctor").style.opacity = 0.3; 
+		$("#btnImportant").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnNormal").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnContactTypeMisc").click(); 
 		
 		$('#divContactPerson').show();
 	})
@@ -1282,8 +1283,8 @@ $(document).ready(function() {
 	$('#btnNormal').click(function(){
 		localStorage.setItem("contactType", "none");
 		localStorage.setItem("sendNotification", false);
-		document.getElementById("btnImportant").style.opacity = 0.3; 
-		document.getElementById("btnNormal").style.opacity = 1; 
+		$("#btnImportant").removeClass("btn btn-success").addClass("btn btn-primary");      
+		$("#btnNormal").removeClass("btn btn-primary").addClass("btn btn-success");
 		$('#divContactPerson').hide();
 	})
 	

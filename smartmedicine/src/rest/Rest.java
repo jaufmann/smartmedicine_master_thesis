@@ -313,8 +313,7 @@ public class Rest {
 	  @Produces("application/json")
 	  public ContactPerson getPsychologicalParentByPsychologicalParentID(@PathParam("psychologicalParentID") int psychologicalParentID) throws JSONException, ClassNotFoundException, SQLException, IOException {
 	  	dbstatement = new DBStatements();
-	  	
-	  	System.out.println(psychologicalParentID);
+
 		return dbstatement.getPsychologicalParentByPsychologicalParentID(psychologicalParentID);
 	  }
 	  
@@ -866,7 +865,6 @@ public class Rest {
 	  	dbstatement = new DBStatements();
 	  	
 	  	JSONArray arr = new JSONArray(objMedicineInformation.toString());
-	  	System.out.println(objMedicineInformation);
 	  	Medicine medicine = null;
 	  	
 		for (int i=0; i<arr.length(); i++){

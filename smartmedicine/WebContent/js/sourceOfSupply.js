@@ -64,14 +64,14 @@ $(document).ready(function(){
 	 */
 	$('#btnRecieveMail').click(function(){
 		localStorage.setItem("recieveMail", true);
-		document.getElementById("btnRecieveMail").style.opacity = 1;
-		document.getElementById("btnDoNotRevieceMail").style.opacity = 0.3;
+		$("#btnRecieveMail").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnDoNotRevieceMail").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnDoNotRevieceMail').click(function(){
 		localStorage.setItem("recieveMail", false);
-		document.getElementById("btnRecieveMail").style.opacity = 0.3;
-		document.getElementById("btnDoNotRevieceMail").style.opacity = 1;
+		$("#btnDoNotRevieceMail").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnRecieveMail").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 
 	/**
@@ -80,23 +80,23 @@ $(document).ready(function(){
 	*/
 	$('#btnSourceTypeDoctor').click(function(){
 		localStorage.setItem("sourceType", "doctor");
-		document.getElementById("btnSourceTypeDoctor").style.opacity = 1;
-		document.getElementById("btnSourceTypeDrugStore").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeMisc").style.opacity = 0.3;
+		$("#btnSourceTypeDoctor").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnSourceTypeDrugStore").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnSourceTypeMisc").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnSourceTypeDrugStore').click(function(){
 		localStorage.setItem("sourceType", "drugStore");
-		document.getElementById("btnSourceTypeDrugStore").style.opacity = 1;
-		document.getElementById("btnSourceTypeDoctor").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeMisc").style.opacity = 0.3;
+		$("#btnSourceTypeDrugStore").removeClass("btn btn-primary").addClass("btn btn-success");
+		$("#btnSourceTypeDoctor").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnSourceTypeMisc").removeClass("btn btn-success").addClass("btn btn-primary");
 	})
 	
 	$('#btnSourceTypeMisc').click(function(){
 		localStorage.setItem("sourceType", "misc");
-		document.getElementById("btnSourceTypeDrugStore").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeDoctor").style.opacity = 0.3;
-		document.getElementById("btnSourceTypeMisc").style.opacity = 1;
+		$("#btnSourceTypeDrugStore").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnSourceTypeDoctor").removeClass("btn btn-success").addClass("btn btn-primary");
+		$("#btnSourceTypeMisc").removeClass("btn btn-primary").addClass("btn btn-success");
 	})
 	
 		
@@ -125,7 +125,7 @@ $(document).ready(function(){
 			$('#aErroIconAddressField').empty();
 			$('#aErroIconAddressField').append("<img class='imgAttention'width='20' height='20' src='img/attention_icon.png'>");
 		} else {
-			isSecondNameFieldCorrect = true;
+			isAddressFieldCorrect = true;
 			$('#aErroIconAddressField').empty();
 		}
 		

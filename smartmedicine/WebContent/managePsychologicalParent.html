@@ -70,9 +70,12 @@ float:left;width:100%">
 
 <button id="btnManageOptionSelection" class='btn btn-lg btn-primary'><font>zurück</font></button>
 
-   
-        <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test" id="btnNotificationStatus" style="visibility:hidden">
+    
+<!------------------------------------------START INTAKE STATUS MODAL START  --------------------------------------------------->
+  
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#test" id="btnNotificationStatus"
+style="visibility:hidden" >
   Launch demo modal
 </button>
 
@@ -81,7 +84,7 @@ float:left;width:100%">
   <div class="modal-dialog " role="document">
     <div class="modal-content">
       <div class="modal-header" align="center">
-        <h5 class="modal-title" ><font>Einnahmezeitpunkt</font></h5>
+        <h5 class="modal-title" ><font class="fontModalTitle">Einnahmezeitpunkt</font></h5>
        
         
       </div>
@@ -90,7 +93,7 @@ float:left;width:100%">
         	    <img src="img/aspirin-icon-blue.png" width="80px"  height="100px"><br>
 				<span id="spanIntakeTime"></span><br>
 				<hr>
-				<div id="spanNote"></div>
+				<div id="spanNote"> </div>
 				
       </div>
       <div class="modal-footer">
@@ -100,6 +103,9 @@ float:left;width:100%">
     </div>
   </div>
 </div>
+<!------------------------------------------END INTAKE STATUS MODAL END  --------------------------------------------------->
+
+
    
   </body>
 </html>

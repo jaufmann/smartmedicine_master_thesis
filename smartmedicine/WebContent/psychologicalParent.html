@@ -31,9 +31,9 @@ float:left;width:100%">
 	    <!-- input fields -->         
 	    <table width="100%">
 	    <tr>
-	    	<td width="100%"><a id="aFirstName"></a>&nbsp;<font>Vorname:</font></td>
+	    	<td width="100%"><a id="aFirstName"></a>&nbsp;<font><b>Vorname:</b></font></td>
 	
-	    	<td colspan="2" width="100%"><font>Geschlecht:</font></td>
+	    	<td colspan="2" width="100%"><font><b>Geschlecht:</b></font></td>
 	    </tr>
 	    <tr>
 	   	 <td> <input class='form-control'  type="text" id="txtName"/> </td>
@@ -45,20 +45,20 @@ float:left;width:100%">
 	    	</tr>
 
 	    <tr>
-	    	<td width="100%" colspan="4"><a id="aSecondName"></a>&nbsp;<font>Name:</font> <input class='form-control' type="text"  id="txtSurname"/></td>
+	    	<td width="100%" colspan="4"><a id="aSecondName"></a>&nbsp;<font><b>Name:</b></font> <input class='form-control' type="text"  id="txtSurname"/></td>
 	    	<td width="100"></td>
 	    </tr>
 	    <tr>
 	    		<td>&nbsp;</td>
 	    </tr>
 	     <tr>
-	    	<td width="100%" ><a id="aEmail"></a>&nbsp;<font>E-Mail:</font> </td>
-	    	<td width="100%" colspan="2"><font>Benachrichtigen?</font> </td>
+	    	<td width="100%" ><a id="aEmail"></a>&nbsp;<font><b>E-Mail:</b></font> </td>
+	    	<td width="100%" colspan="2"><font><b>Benachrichtigen?</b></font> </td>
 	    </tr>
 	     <tr>
 	      <td> <input class='form-control'  type="email" id="txtEmail"/></td>
-	      <td><button id="btnSendMailYes" class='btn btn-primary '><img class="interval" src="img/JA_logo.png"></img></button></td>
-	       <td><button id="btnSendMailNo" class=' btn btn-primary '><img class="interval" src="img/NEIN_logo.png" ></img></button></td>
+	      <td><button id="btnSendMailYes" ><img class="interval" src="img/JA_logo.png"></img></button></td>
+	       <td><button id="btnSendMailNo" ><img class="interval" src="img/NEIN_logo.png" ></img></button></td>
 		</tr>
 	    </table>   
 
@@ -66,13 +66,13 @@ float:left;width:100%">
 	  	 
 		    <table >
 		    <tr>
-		    <td ><font>Art</font></td>
+		    <td ><font><b>Art</b></font></td>
 		    </tr>
 		    <tr>
 		    <td width="70%">
-		    	<button id="btnContactTypePrivate" class='btn btn-primary '><img class="interval" src="img/art_privat_logo.png"></img></button>
-		    	<button id="btnContactTypeDoctor" class='btn btn-primary'><img class="interval" src="img/art_arzt_logo.png"></img></button>
-		    	<button id="btnContactTypeMisc" class='btn btn-primary '><img class="interval" src="img/art_sonstige_logo.png"></img></button>
+		    	<button id="btnContactTypePrivate"><img class="interval" src="img/art_privat_logo.png"></img></button>
+		    	<button id="btnContactTypeDoctor" ><img class="interval" src="img/art_arzt_logo.png"></img></button>
+		    	<button id="btnContactTypeMisc" ><img class="interval" src="img/art_sonstige_logo.png"></img></button>
 		    </td>
 
 		    	 
@@ -85,9 +85,12 @@ float:left;width:100%">
 	style="visibility:hidden">
 	  Launch demo modal
 	</button>
-
-        <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test" id="btnNotificationStatus" style="visibility:hidden" >
+    
+<!------------------------------------------START INTAKE STATUS MODAL START  --------------------------------------------------->
+  
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#test" id="btnNotificationStatus"
+style="visibility:hidden" >
   Launch demo modal
 </button>
 
@@ -96,7 +99,7 @@ float:left;width:100%">
   <div class="modal-dialog " role="document">
     <div class="modal-content">
       <div class="modal-header" align="center">
-        <h5 class="modal-title" ><font>Einnahmezeitpunkt</font></h5>
+        <h5 class="modal-title" ><font class="fontModalTitle">Einnahmezeitpunkt</font></h5>
        
         
       </div>
@@ -105,7 +108,7 @@ float:left;width:100%">
         	    <img src="img/aspirin-icon-blue.png" width="80px"  height="100px"><br>
 				<span id="spanIntakeTime"></span><br>
 				<hr>
-				<div id="spanNote"></div>
+				<div id="spanNote"> </div>
 				
       </div>
       <div class="modal-footer">
@@ -115,6 +118,9 @@ float:left;width:100%">
     </div>
   </div>
 </div>
+<!------------------------------------------END INTAKE STATUS MODAL END  --------------------------------------------------->
+
+
 
 
 	
@@ -122,10 +128,7 @@ float:left;width:100%">
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header">
 	     
-	        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"><font class="statusModalTitle"> Status des Speichervorgangs</font></h4>
-	      </div>
 	      <div class="modal-body" align="center">
 	         <font class="statusModalSuccess"><b>Bezugsperson erfolgreich gespeichert</b></font>
 	        

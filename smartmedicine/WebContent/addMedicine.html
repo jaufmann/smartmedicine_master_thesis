@@ -73,9 +73,9 @@ float:left;width:100%">
          
     <table >
     	    <tr>
-	    	<td width="100%"><a id="aMedicineName"></a>&nbsp;<font>Medikament:</font> </td>
+	    	<td width="100%"><a id="aMedicineName"></a>&nbsp;<font><b>Medikament:</b></font> </td>
 	
-	    	<td colspan="2" width="100%"><font>Sockel Nr.:</font></td>
+	    	<td colspan="2" width="100%"><font><b>Sockel Nr.:</b></font></td>
 	    </tr>
 	    <tr>
 	   	 <td width="100%"> <input class='form-control'  type="text" id="txtMedicineName"/> </td>
@@ -89,9 +89,9 @@ float:left;width:100%">
     
     
        <tr>
-	    	<td width="100%"><a id="aDisease"></a>&nbsp;<font>Krankheit:</font> </td>
+	    	<td width="100%"><a id="aDisease"></a>&nbsp;<font><b>Krankheit:</b></font> </td>
 	
-	    	<td colspan="5" width="100%"><a id="aSendNotification"></a>&nbsp;<font>E-Mail bei vergessen:</font></td>
+	    	<td colspan="5" width="100%"><a id="aSendNotification"></a>&nbsp;<font><b>E-Mail bei vergessen:</b></font></td>
 	    </tr>
 	    <tr>
 	   	<td><input class='form-control' type="text"  id="txtDisease"/></td>
@@ -113,7 +113,7 @@ float:left;width:100%">
 	   <div id="divContactPerson">
 	  <table >
 		    <tr>
-		    <td ><font>Welche Bezugsperson soll benachrichtigt werden?</font></td>
+		    <td ><font><b>Welche Bezugsperson soll benachrichtigt werden?</b></font></td>
 		    </tr>
 		    <tr>
 		    <td width="70%">
@@ -125,7 +125,12 @@ float:left;width:100%">
 		 </table>
 	
     </div>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test" id="btnNotificationStatus" style="visibility:hidden" >
+    
+<!------------------------------------------START INTAKE STATUS MODAL START  --------------------------------------------------->
+  
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#test" id="btnNotificationStatus"
+style="visibility:hidden" >
   Launch demo modal
 </button>
 
@@ -134,7 +139,7 @@ float:left;width:100%">
   <div class="modal-dialog " role="document">
     <div class="modal-content">
       <div class="modal-header" align="center">
-        <h5 class="modal-title" ><font>Einnahmezeitpunkt</font></h5>
+        <h5 class="modal-title" ><font class="fontModalTitle">Einnahmezeitpunkt</font></h5>
        
         
       </div>
@@ -143,7 +148,7 @@ float:left;width:100%">
         	    <img src="img/aspirin-icon-blue.png" width="80px"  height="100px"><br>
 				<span id="spanIntakeTime"></span><br>
 				<hr>
-				<div id="spanNote"></div>
+				<div id="spanNote"> </div>
 				
       </div>
       <div class="modal-footer">
@@ -153,6 +158,9 @@ float:left;width:100%">
     </div>
   </div>
 </div>
+<!------------------------------------------END INTAKE STATUS MODAL END  --------------------------------------------------->
+
+
     
     
 </div>

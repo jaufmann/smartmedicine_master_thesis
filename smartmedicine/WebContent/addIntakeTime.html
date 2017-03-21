@@ -78,14 +78,14 @@ float:left;width:100%">
             
     <table>
     <tr>
-    	<td ><a id="aMedicineQuantity"></a>&nbsp;<font>Ausgabeanzahl:</font><input class='form-control' type="number" min="1" id="txtPillQuantity" > </td>
-    	<td><font>Bestand:</font><input class='form-control' type="number" min="1" id="txtCurrentStock"  disabled style=" text-align: center;"> </td>
+    	<td ><a id="aMedicineQuantity"></a>&nbsp;<font><b>Ausgabeanzahl:</b></font><input class='form-control' type="number" min="1" id="txtPillQuantity" > </td>
+    	<td><font><b>Bestand:</b></font><input class='form-control' type="number" min="1" id="txtCurrentStock"  disabled style=" text-align: center;"> </td>
     </tr>
         <tr>
     	<td>&nbsp;</td>
     </tr>
     <tr>
-    	<td width="100%"><font>Startdatum:</font> <!-- <input class='form-control' type="date" id="txtStartDate" >-->
+    	<td width="100%"><font><b>Startdatum:</b></font> <!-- <input class='form-control' type="date" id="txtStartDate" >-->
     	    	                <input
                     id="dtStartDate"
                     class="datepicker form-control"
@@ -94,7 +94,7 @@ float:left;width:100%">
                     data-value="YYYY-MM-DD"
                    >
                     </td>
-    	<td width="100%"><font>Startzeitpunkt:</font> <input type="text" style=" text-align: center;" class='form-control' id="alarm" /></td>
+    	<td width="100%"><font><b>Startzeitpunkt:</b></font> <input type="text" style=" text-align: center;" class='form-control' id="alarm" /></td>
     </tr>
     </table>
 
@@ -102,7 +102,7 @@ float:left;width:100%">
     
     <table width="100%" id="tblRepeatIntakeTime" >
     <tr>
-    <td> <font>Wiederholtermin:</font> </td>
+    <td> <font><b>Wiederholtermin:</b></font> </td>
     </tr>
     <tr>
     <td>
@@ -121,35 +121,6 @@ float:left;width:100%">
     
     </table>
 
-		 				     		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test" id="btnNotificationStatus" style="visibility:hidden" >
-  Launch demo modal
-</button>
-
-
-<div class="modal fade " id="test">
-  <div class="modal-dialog " role="document">
-    <div class="modal-content">
-      <div class="modal-header" align="center">
-        <h5 class="modal-title" ><font>Einnahmezeitpunkt</font></h5>
-       
-        
-      </div>
-      <div class="modal-body" align="center">
-                <span id="spanMedicineName"></span><br>
-        	    <img src="img/aspirin-icon-blue.png" width="80px"  height="100px"><br>
-				<span id="spanIntakeTime"></span><br>
-				<hr>
-				<div id="spanNote"></div>
-				
-      </div>
-      <div class="modal-footer">
-        <div style="float:left; width:50%" id="divBtnInformation"></div>
-        <div style="float:left; width:50%" id="divBtnDispense"></div>
-      </div>
-    </div>
-  </div>
-</div>
-    
     <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="saveStatusModal" style="display: none;">
   Launch demo modal
@@ -173,6 +144,42 @@ float:left;width:100%">
     </div>
   </div>
 </div>
+    
+<!------------------------------------------START INTAKE STATUS MODAL START  --------------------------------------------------->
+  
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#test" id="btnNotificationStatus"
+style="visibility:hidden" >
+  Launch demo modal
+</button>
+
+
+<div class="modal fade " id="test">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header" align="center">
+        <h5 class="modal-title" ><font class="fontModalTitle">Einnahmezeitpunkt</font></h5>
+       
+        
+      </div>
+      <div class="modal-body" align="center">
+                <span id="spanMedicineName"></span><br>
+        	    <img src="img/aspirin-icon-blue.png" width="80px"  height="100px"><br>
+				<span id="spanIntakeTime"></span><br>
+				<hr>
+				<div id="spanNote"> </div>
+				
+      </div>
+      <div class="modal-footer">
+        <div style="float:left; width:50%" id="divBtnInformation"></div>
+        <div style="float:left; width:50%" id="divBtnDispense"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!------------------------------------------END INTAKE STATUS MODAL END  --------------------------------------------------->
+
+
     
  </div>
  

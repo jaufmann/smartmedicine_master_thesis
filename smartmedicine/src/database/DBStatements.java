@@ -217,7 +217,6 @@ public class DBStatements {
 				notificationConfiguration.setUseSpeaker(rs.getBoolean("useSpeaker"));
 				notificationConfiguration.setLightColor(rs.getString("lightColor"));
 				notificationConfiguration.setNotificationSoundName(rs.getString("notificationSoundName"));
-				System.out.println(rs.getString("notificationSoundName"));
 			}
 		}finally{
 			if(rs != null) rs.close();
@@ -614,7 +613,6 @@ public class DBStatements {
 			  String sqlContactPerson = " insert into psychologicalparent (name, surname, email, sex, contactType, recieveNotification)"
 				        + " values (?, ?, ?, ?, ?, ?)";
 	    	  
-			  System.out.println(contactPerson.getEmail());
 	    	  pstmtContactPerson = conn.prepareStatement(sqlContactPerson);
 	    	  pstmtContactPerson.setString(1, contactPerson.getName());
 		      pstmtContactPerson.setString(2, contactPerson.getSurname());
