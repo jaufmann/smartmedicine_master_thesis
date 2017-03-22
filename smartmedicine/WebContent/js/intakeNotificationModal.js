@@ -31,6 +31,7 @@ $(document).ready(function() {
 	    	notificationTriggered=true;
 	    } else if(lightState=="OFF" && notificationTriggered==true){
 	    	$('#test').hide(); 
+	    	location.reload();
 	    	notificationTriggered=false;
 	    }
 	}, 5000);
@@ -69,9 +70,9 @@ function showIntakeStatusModal (){
 	
 	$("#spanIntakeTime").append("<font class='fontIntakeStatusTitle'>Einnahme:</font> <font class='fontIntakeTime'>"+hours+":"+minutes+" Uhr</font>");
 	
-	$("#divBtnInformation").append("<button id='btnNoteInformation' value='"+arrTriggereredMedicine[0].boxID+"' type='button' class='btn btn-primary btn-block'><font>Information</font></button>");
+	$("#divBtnInformation").append("<button id='btnNoteInformation' value='"+arrTriggereredMedicine[0].boxID+"' type='button' class='btn btn-primary btn-block'><font class='fontButtonNavigation'><b>Information</b></font></button>");
 	$("#divBtnDispense").append("<button id='btnDispense' value='"+arrTriggereredMedicine[0].boxID+"|"+arrTriggereredMedicine[0].pillQuantity+"' " +
-			" type='button' class='btn btn-success btn-block'><font>Ausgeben</font></button>");
+			" type='button' class='btn btn-success btn-block '><font class='fontButtonNavigation'><b>Ausgeben</b></font></button>");
 	
 	
 	$("#btnDispense").click(function(){

@@ -1,11 +1,20 @@
 @CHARSET "ISO-8859-1";
 /* Desktops and laptops ----------- */
+div.box { position: absolute;   
+       height: auto;     
+       right: 9px; top: 15px;
+}       
 @media only screen  and (min-width : 1024px) {
 	.custom-class {
         width: 100%; /* either % (e.g. 60%) or px (400px) */
 	}
 	
 	
+	font.fontButtonNavigation {
+		margin:auto;
+		font-size:126%;
+		font-weight:bold;
+	}
 	
 	font.fontIntakeStatusMedicineName {
 		margin:auto; 
@@ -127,13 +136,13 @@
 	div.divContainerSourceOfSupply{
 		width:96%;
 	  	margin: auto;
-	  	height:290; 	
+	  	height:310; 	
 	}
 	
 	div.divContainerSettings {
 	  	width:98%;
 	  	margin: auto;
-	  	height:290; 	 	
+	  	height:283; 	 	
 	}
 	
 	div.divContainerContactPerson{
@@ -150,12 +159,18 @@
 	div.divContainerOverview{
 		width:96%;
 		margin:auto;
-	  	height:313; 
+	  	height:310; 
 	}
 	
 	font{
 		margin:auto;
-		font-size:106%;
+		font-size:100%;
+	}
+	
+	font.fontButtonNavigation {
+		margin:auto;
+		font-size:126%;
+		font-weight:bold;
 	}
 	
 		input[type="email"] {
@@ -231,7 +246,7 @@ font.statusModalSuccess{
 	
 	tr.head{
 		min-height:90%;
-		height:144px;
+		height:143px;
 	}
 
 

@@ -17,6 +17,7 @@
 	
 	<script type = "text/javascript" src="js/navigation1.js" /></script>
 	<script src="js/intakeNotificationModal.js"></script>	
+		
 </head>
 <body>
 <div class="smartMedicineLogo"></div><br>
@@ -71,37 +72,6 @@
 		    	</td>
 		    </tr>
 		  </table>
-	
-	</div>
-	
-	<!-- div with the shadown spacer image -->
-	<div style="background-image: url(../smartmedicine/img/space_footer.png);background-repeat:repeat-x;
-		float:left;width:100%" >
-			&nbsp;
-	</div>
-	
-				  <!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="btnShowSourceOfSupplySaveModal" style="visibility:hidden">
-	  Launch demo modal
-	</button>
-
-	
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-
-	      <div class="modal-body" align="center">
-	         <font class="statusModalSuccess"><b>Bezugsquelle erfolgreich gespeichert</b></font>
-	        
-	         <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCloseSourceOfSupplyStatusModal" style="visibility:hidden">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-		
-		
-	
     
 <!------------------------------------------START INTAKE STATUS MODAL START  --------------------------------------------------->
   
@@ -136,13 +106,44 @@ style="visibility:hidden" >
   </div>
 </div>
 <!------------------------------------------END INTAKE STATUS MODAL END  --------------------------------------------------->
+				  <!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="btnShowSourceOfSupplySaveModal" style="visibility:hidden">
+	  Launch demo modal
+	</button>
 
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+
+	      <div class="modal-body" align="center">
+	         <font class="statusModalSuccess"><b>Bezugsquelle erfolgreich gespeichert</b></font>
+	        
+	         <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCloseSourceOfSupplyStatusModal" style="visibility:hidden">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+		
+	
+	</div>
+	
+	<!-- div with the shadown spacer image -->
+	<div style="background-image: url(../smartmedicine/img/space_footer.png);background-repeat:repeat-x;
+		float:left;width:100%" >
+			&nbsp;
+	</div>
+	
+
+		
+	<br><br>
 
 	    		<!-- table with the navigation button -->
 	    <table width="100%">
 	    	<tr>
-	    		<td align="left"><button id="btnSourceOfSupply" class='btn btn-lg btn-primary'><font class="white">zurück</font></button></td>
-	    		<td align="right"><button id="btnSaveSourceOfSupply" class='btn btn-lg btn-success'><font class="white">speichern</font></button></td>	
+	    		<td align="left"><button id="btnSourceOfSupply" class='btn btn-lg btn-primary'><font class="fontButtonNavigation">zurück</font></button></td>
+	    		<td align="right"><button id="btnSaveSourceOfSupply" class='btn btn-lg btn-success'><font class="fontButtonNavigation">speichern</font></button></td>	
 		    </tr>
 	    </table> 
 

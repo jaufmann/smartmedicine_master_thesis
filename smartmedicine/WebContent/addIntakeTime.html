@@ -122,7 +122,7 @@ float:left;width:100%">
     </table>
 
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="saveStatusModal" style="display: none;">
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="saveStatusModal" data-backdrop="static" data-keyboard="false"  style="display: none;">
   Launch demo modal
 </button>
 
@@ -130,9 +130,8 @@ float:left;width:100%">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><img class="informationIcon" src="img/Information_icon.png"> <font style="statusModalTitle">Informationen gespeichert</font></h4>
+      <div class="modal-header" align="center">
+       <font class="fontModalTitle">Informationen gespeichert</font>
       </div>
       <div class="modal-body" align="center">   
            <font style="font-size:150%"> Weitere Termine eintragen?</font>
@@ -192,7 +191,7 @@ float:left;width:100%">
     <table width="100%" id="tblNavigation">
     <tr>
     	<td align="left" id="tdBackAddIntakeTime"></td>
-    	<td align="right""><button id="btnSaveIntakeTime" class='btn btn-lg btn-success'><font class="white">speichern</font></button></td>	
+    	<td align="right""><button id="btnSaveIntakeTime" class='btn btn-lg btn-success'><font class="fontButtonNavigation">speichern</font></button></td>	
     </tr>
     </table>
     
@@ -221,7 +220,7 @@ float:left;width:100%">
 
     <script type="text/javascript">
     $.extend($.fn.pickadate.defaults, {
-        monthsFull: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'July', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+        monthsFull: ['Januar', 'Februar', 'March', 'April', 'Mai', 'Juni', 'July', 'August', 'September', 'Oktober', 'November', 'Dezember'],
         weekdaysShort: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
         today: 'heute',
         clear: 'löschen',

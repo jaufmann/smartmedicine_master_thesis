@@ -44,9 +44,22 @@ $(document).ready(function(){
 			$('#btnDoNotRevieceMail').click();
 		} else if(destination == "manageSourceOfSupply"){
 			if(getSourceOfSupply().length==0){
+				
+				$("#btnSourceOfSupplyOverview").empty();
+				$("#btnSourceOfSupplyOverview").append("<img width='300' src='img/keine_bez_logo_übersicht.png'/>");
 				$('#btnSourceOfSupplyOverview').prop("disabled", true);
-				$('#btnEditSourceOfSupply').prop("disabled", true);
+				
+				
+				
+				$("#btnDeleteSourceOfSupply").empty();
+				$("#btnDeleteSourceOfSupply").append("<img width='300' src='img/keine_bez_logo_delete.png'/>");
 				$('#btnDeleteSourceOfSupply').prop("disabled", true);
+				
+				
+				$("#btnEditSourceOfSupply").empty();
+				$("#btnEditSourceOfSupply").append("<img width='300' src='img/keine_bez_logo_edit.png'/>");
+				$('#btnEditSourceOfSupply').prop("disabled", true);
+
 			}
 		} else if(destination == "editInputFields"){
 			$('#divHeader').empty();

@@ -68,8 +68,18 @@ $(document).ready(function() {
 			loadEditIntakeTimeOverviewTable_2();
 		} else if(destination == "managePsychologicalParent"){
 			if(jQuery.isEmptyObject(getContactPerson())==true){
+				
+				
+				$("#btnContactPersonOverview").empty();
+				$("#btnContactPersonOverview").append("<img width='300' src='img/keine_pers_logo_edit.png'/>");
 				$("#btnContactPersonOverview").attr('disabled','disabled');
+				
+				$("#btnEditPsychologicalParent").empty();
+				$("#btnEditPsychologicalParent").append("<img width='300' src='img/keine_pers_logo_übersicht.png'/>");
 				$("#btnEditPsychologicalParent").attr('disabled','disabled');
+				
+				$("#btnDeleteContactPerson").empty();
+				$("#btnDeleteContactPerson").append("<img width='300' src='img/keine_pers_logo_delete.png'/>");
 				$("#btnDeleteContactPerson").attr('disabled','disabled');
 			}  else {
 				$("#btnContactPersonOverview").removeAttr('disabled');
@@ -87,7 +97,20 @@ $(document).ready(function() {
 				$("#tdAddMedicine").append("<button id='btnAddMedicine' class='size btn btn-success' ><img width='300' src='img/kein_platz_logo.png'></button>");
 				$("#btnAddMedicine").attr('disabled','disabled');
 			} else if(getMedicineInformation().length==0){
+				
+				
+				$("#btnMedicineOverview").empty();
+				$("#btnMedicineOverview").append("<img width='300' src='img/keine_medi_logo_übersicht.png'/>");
+				
 				$("#btnMedicineOverview").attr('disabled','disabled');
+				
+				
+				$("#btnEditMedicine").empty();
+				$("#btnEditMedicine").append("<img width='300' src='img/keine_medi_logo_edit.png'/>");
+				
+				$("#btnDeleteMedicine").empty();
+				$("#btnDeleteMedicine").append("<img width='300' src='img/keine_medi_logo_delete.png'/>");
+
 				$("#btnEditMedicine").attr('disabled','disabled');
 				$("#btnDeleteMedicine").attr('disabled','disabled');
 			} else {
@@ -175,7 +198,7 @@ $(document).ready(function() {
 	 		loadIntakeTimeOverview2();
 	 		
 	 		$('#tdBack').empty();
-			$("<button id='btnBackMedicineOverview' class='btn btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBack']");
+			$("<button id='btnBackMedicineOverview' class='btn btn-primary'><font class='fontButtonNavigation'>zur&uuml;ck</font></button>").appendTo("td[id='tdBack']");
 			$('#btnBackMedicineOverview').click(function(){
 				localStorage.setItem("destination", "medicineOverview");
 				window.location = 'medicineOverview.html';
@@ -183,7 +206,7 @@ $(document).ready(function() {
 	 	} else if(destination=="addOnlyIntakeTimeOverview"){
 	 		
 	 		$('#tdBack').empty();
-			$("<button id='btnBackToAddIntakeTimeOverview' class='btn btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBack']");
+			$("<button id='btnBackToAddIntakeTimeOverview' class='btn btn-primary'><font class='fontButtonNavigation'>zur&uuml;ck</font></button>").appendTo("td[id='tdBack']");
 			$('#btnBackToAddIntakeTimeOverview').click(function(){
 				localStorage.setItem("destination", "addIntakeTimeOverview");
 				window.location ='addIntakeTimeOverview.html';
@@ -192,7 +215,7 @@ $(document).ready(function() {
 			loadIntakeTimeOverview2();
 	 	} else if(destination=="medicineIntakeTimeOverview"){
 	 		$('#tdBack').empty();
-			$("<button id='btnBackToMedicineOverview' class='btn btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBack']");
+			$("<button id='btnBackToMedicineOverview' class='btn btn-primary'><font class='fontButtonNavigation'>zur&uuml;ck</font></button>").appendTo("td[id='tdBack']");
 			$('#btnBackToMedicineOverview').click(function(){
 				localStorage.setItem("destination", "medicineOverview");
 				window.location='medicineOverview.html';
@@ -218,7 +241,7 @@ $(document).ready(function() {
 			$('#txtIteration').attr('disabled', true);
 			
 			$('#tdBackAddIntakeTime').empty();
-			$("<button id='btnBackToAddIntakeTimeOverview' class='btn btn-lg btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
+			$("<button id='btnBackToAddIntakeTimeOverview' class='btn btn-lg btn-primary'><font class='fontButtonNavigation'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
 			$('#btnBackToAddIntakeTimeOverview').click(function(){
 				localStorage.setItem("destination", "addIntakeTimeOverview");
 				window.location = 'addIntakeTimeOverview.html';
@@ -250,7 +273,7 @@ $(document).ready(function() {
 			pickerStartDate.set('min', date);
 
 			$('#tdBackAddIntakeTime').empty();
-			$("<button id='btnBackToEditIntakeItemOverview' class='btn btn-lg btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
+			$("<button id='btnBackToEditIntakeItemOverview' class='btn btn-lg btn-primary'><font class='fontButtonNavigation'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
 			$('#btnBackToEditIntakeItemOverview').click(function(){
 				localStorage.setItem("destination", "editIntakeTimeOverview");
 				window.location = 'editIntakeTimeOverview.html';
@@ -415,7 +438,7 @@ $(document).ready(function() {
 			
 			
 			$('#tdBackAddIntakeTime').empty();
-			$("<button id='btnBackToAddMedicine' class='btn btn-lg btn-primary'><font class='white'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
+			$("<button id='btnBackToAddMedicine' class='btn btn-lg btn-primary'><font class='fontButtonNavigation'>zur&uuml;ck</font></button>").appendTo("td[id='tdBackAddIntakeTime']");
 			$('#btnBackToAddMedicine').click(function(){
 				localStorage.setItem("iteration", $('#txtIteration').val());
 				localStorage.setItem("startDate", $('#txtStartDate').val());
@@ -1830,7 +1853,7 @@ $(document).ready(function() {
 			
 			//
 			$('#tdForwardFirstAddMedicine').empty();
-			$('#tdForwardFirstAddMedicine').append("<button id='btnAddMedicineForwardFirst' class='btn btn-lg btn-warning' value='editMedicine2'><font class='white'>weiter</font></button>");
+			$('#tdForwardFirstAddMedicine').append("<button id='btnAddMedicineForwardFirst' class='btn btn-lg btn-warning' value='editMedicine2'><font class='fontButtonNavigation'>weiter</font></button>");
 			
 			$('#btnAddMedicineForwardFirst').click(function(){
 				localStorage.setItem("destination", $(this).val());
@@ -1841,7 +1864,7 @@ $(document).ready(function() {
 			
 			//changing the original button redirect destination to the editMedicineOverview.html destination
 			$('#tdBackFirstAddMedicine').empty();
-			$('#tdBackFirstAddMedicine').append("<button id='btnBackToEditMedicineOverview' class='btn btn-lg btn-primary'><font class='white'>zurück</font></button>")
+			$('#tdBackFirstAddMedicine').append("<button id='btnBackToEditMedicineOverview' class='btn btn-lg btn-primary'><font class='fontButtonNavigation'>zurück</font></button>")
 			$('#btnBackToEditMedicineOverview').click(function(){
 				localStorage.clear();
 				localStorage.setItem("destination", "editMedicineInformationOverview");
@@ -1878,7 +1901,7 @@ $(document).ready(function() {
 			}
 			
 			$('#tdBackToFirstAddMedicine').empty();
-			$('#tdBackToFirstAddMedicine').append("<button value='backFromEditMedicine' id='btnBackToFirstAddMedicine' class='btn btn-lg btn-primary'><font class='white'>zurück</font></button>");
+			$('#tdBackToFirstAddMedicine').append("<button value='backFromEditMedicine' id='btnBackToFirstAddMedicine' class='btn btn-lg btn-primary'><font class='fontButtonNavigation'>zurück</font></button>");
 			
 			$('#btnBackToFirstAddMedicine').click(function(){
 				localStorage.setItem("destination", "editMedicine");
@@ -1890,7 +1913,7 @@ $(document).ready(function() {
 			})
 			
 			$('#tdAddMedicineForwardSecond').empty();
-			$('#tdAddMedicineForwardSecond').append("<button id='btnSaveEditMedicineInformation' class='btn btn-lg btn-success'><font class='white'>speichern</font></button>");
+			$('#tdAddMedicineForwardSecond').append("<button id='btnSaveEditMedicineInformation' class='btn btn-lg btn-success'><font class='fontButtonNavigation'>speichern</font></button>");
 			$('#btnSaveEditMedicineInformation').click(function(){
 				
 				
@@ -2056,7 +2079,9 @@ $(document).ready(function() {
 				    		
 				    		$("#deleteMedicine"+i).unbind('click').click(function () {
 					    		init_value = ($(this).val());
-					    		deleteMedicineInformation(init_value);
+					    		localStorage.setItem("medicineID", init_value);
+					    		var boxID = getMedicineInformationByMedicineID().boxID;
+					    		deleteMedicineInformation(init_value, boxID);
 					    		window.location ='deleteMedicine.html';
 				    		});
 				    	}	
@@ -2352,7 +2377,7 @@ $(document).ready(function() {
 	    });
 	}
 	
-	function deleteMedicineInformation(medicineID) {
+	function deleteMedicineInformation(medicineID, boxID) {
 		$.ajax({
 	        type: 'DELETE',
 	        async:false,
@@ -2360,7 +2385,7 @@ $(document).ready(function() {
 	        url: host+':'+port+'/smartmedicine/rest/medicineinformation/deleteMedicineInformation/'+medicineID,
 	        dataType: "json",
 	        success: function(data, textStatus, jqXHR){
-	            
+	        	turnOffStockNotificationLED(boxID);
 	        },
 	        error: function(jqXHR, textStatus, errorThrown){
 	            alert('Medicine information could be deleted');

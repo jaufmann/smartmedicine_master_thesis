@@ -173,6 +173,7 @@ $(document).ready(function() {
  */
 	
   $("#btnAddMedicine").click(function(event){
+	  localStorage.clear();
 	  localStorage.setItem("destination", "addMedicine");
 	  window.location='addMedicine.html';
   });
