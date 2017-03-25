@@ -2,10 +2,14 @@
 
 $(document).ready(function() {			
 	
-
+	
 
 	
-	
+
+	$("#btnGetDetails").click(function(event){
+		localStorage.setItem("destination", "sourceOfSupplyOverview");
+	    window.location = 'information.html';
+	});
 
 	$("#btnSourceOfSupplyOverview").click(function(event){
 		localStorage.setItem("destination", "sourceOfSupplyOverview");

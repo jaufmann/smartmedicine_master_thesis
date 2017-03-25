@@ -111,7 +111,7 @@ then
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo.py")
 
 	var int k = -1
-     	var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByBoxID/1") 
+    var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByBoxID/1") 
 	var sourceOfSupplyInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getSourceOfSupply") 
 
 	var numberSourceOfSupplies = Integer::parseInt(transform("JSONPATH","$.numberSourceOfSupplies", sourceOfSupplyInformation ))
@@ -382,8 +382,6 @@ rule "lightColor selection"
 when
     Item lightColorName received command 
 then
-
-
 	if (receivedCommand=="white") { 
 	       	sendCommand(hueColor, new HSBType(new DecimalType(0),new PercentType(0),new PercentType(0)))		
 		if(lightState==OFF){ 

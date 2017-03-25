@@ -1,6 +1,8 @@
 package database;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -25,7 +27,16 @@ import classes.SourceOfSupply;
 public class DBStatements {
 	
 
-	
+	public static void main(String[] args) throws UnknownHostException {
+		InetAddress inet = InetAddress.getByName( "localhost" );
+		System.out.println( inet.getCanonicalHostName() ); // web1.networkaholics.de
+		System.out.println( inet.getHostAddress() );       // 82.96.100.30
+		System.out.println( inet.getHostName() );          // www.tutego.com
+		System.out.println( inet.toString() );             // www.tutego.com/82.96.100.30
+
+		inet = InetAddress.getByName( "193.99.144.71" );
+		System.out.println( inet.getHostName() );          // web.heise.de
+	}
 	private static DBConnection dbconnection = null;
 		
 	
