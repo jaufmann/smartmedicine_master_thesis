@@ -297,6 +297,7 @@ $(document).ready(function() {
 		} 
 		
 		else if(destination=="addMedicine"){
+			localStorage.getItem("contactType");
 			$("#divMainHeader").append("<img src='img/medikament_hinzufügen_logo_1.png'>");
 			$('#divStatus').append("<img width='500px' height='50px' src='img/status_allgemein_hinzufügen.png'>");
 			
@@ -304,15 +305,7 @@ $(document).ready(function() {
 			$('#txtMedicineName').val(localStorage.getItem("medicineName"));
 			$('#txtDisease').val(localStorage.getItem("disease"));
 			
-			if(localStorage.getItem("boxID")!=null){
-				if(localStorage.getItem("boxID")=="1"){
-					$("#btnBox1").click();
-				} else if(localStorage.getItem("boxID")=="2"){
-					$("#btnBox2").click();
-				} else if(localStorage.getItem("boxID")=="3"){
-					$("#btnBox3").click();
-				}
-			}
+			
 			if(localStorage.getItem("sendNotification")==null){
 				$('#btnNormal').click();
 				localStorage.setItem("contactType", "none");
@@ -340,7 +333,17 @@ $(document).ready(function() {
 					
 					
 				} else {
-					$("#btnBox"+k).click();
+					if(localStorage.getItem("boxID")!=null){
+						if(localStorage.getItem("boxID")=="1"){
+							$("#btnBox1").click();
+						} else if(localStorage.getItem("boxID")=="2"){
+							$("#btnBox2").click();
+						} else if(localStorage.getItem("boxID")=="3"){
+							$("#btnBox3").click();
+						} 
+					} else {
+						$("#btnBox"+k).click();
+					}
 					$("#btnBox"+k).addClass("btn btn-primary");
 					$("#btnBox"+k).empty();
 					$("#btnBox"+k).append("<img class='interval' src='img/sockel"+k+".png'></img></button>");
@@ -504,8 +507,11 @@ $(document).ready(function() {
 		$("#btnSendOrderNo").removeClass("btn btn-success").addClass("btn btn-primary");
 		$('#txtSavetyStock').attr('disabled', false);
 
+		if(localStorage.getItem("sourceType")==null){
+			$('#btnSourceTypeMisc').click();
+		}
 		
-		$('#btnSourceTypeMisc').click();
+		
 		
 		$('#btnSourceTypeDoctor').attr('disabled', false);
 		$('#btnSourceTypeDrugStore').attr('disabled', false);
@@ -682,6 +688,9 @@ $(document).ready(function() {
 		var iteration;
 		var medicineID = "";	
 		
+		var isIntervalCorrect = true;
+		var isPillQuantityCorrect = true;
+		
 	
 		if($('#txtIteration').val()==""){
 			iteration = 1;
@@ -740,21 +749,33 @@ $(document).ready(function() {
 		
 
 		if(localStorage.getItem("destination")!="editIntakeItem"){
-			
 			if(isNaN(pillQuantity)!=true && pillQuantity!=0)
 			{
 				//arrMedicineAndIntakeTimeInformation.push(getIntakeTimesInputValues(pillQuantity, selectedDate, iteration, medicineID));
 				jsonObjIntakeTimeInformations.intakeTimes = getIntakeTimesInputValues(pillQuantity, selectedDate, 
 						iteration, medicineID, selectedTime);
 				$('#aMedicineQuantity').empty();
-				$('#saveStatusModal').click();
+				isPillQuantityCorrect = true;
 			}
 			
 			else {
+				isPillQuantityCorrect = false;
 				$('#aMedicineQuantity').empty();
 				$('#aMedicineQuantity').append("<img class='imgAttention'width='200' height='20' src='img/attention_icon.png'>");
 			}
 			
+			if(localStorage.getItem("intervalType") != "none" && $('#txtIteration').val()==""){
+				$('#aInterval').empty();
+				$('#aInterval').append("<img class='imgAttention'width='200' height='20' src='img/attention_icon.png'>");
+				isIntervalCorrect = false;
+			} else {
+				$('#aInterval').empty();
+				isIntervalCorrect  = true;
+			}
+
+			if(isPillQuantityCorrect==true && isIntervalCorrect == true){
+				$('#saveStatusModal').click();
+			}
 		}
 		
 		
@@ -1298,7 +1319,11 @@ $(document).ready(function() {
 		localStorage.setItem("sendNotification", true);
 		$("#btnImportant").removeClass("btn btn-primary").addClass("btn btn-success");
 		$("#btnNormal").removeClass("btn btn-success").addClass("btn btn-primary");
-		$("#btnContactTypeMisc").click(); 
+		
+		if(localStorage.getItem("contactType")=="none"){
+			$("#btnContactTypeMisc").click(); 
+		}
+		
 		
 		$('#divContactPerson').show();
 	})
@@ -1320,11 +1345,11 @@ $(document).ready(function() {
 		
 		if($("#txtStock").val()!=""){
 			isStockCorrect = true;
-			$('#savetyStock').empty();
+			$('#stock').empty();
 		} else {
 			isStockCorrect = false;
-			$('#savetyStock').empty();
-			$('#savetyStock').append("<img class='imgAttention' src='img/attention_icon.png'>");
+			$('#stock').empty();
+			$('#stock').append("<img class='imgAttention' src='img/attention_icon.png'>");
 		}
 		
 		if($("#txtNote").val()!=""){
@@ -1336,21 +1361,25 @@ $(document).ready(function() {
 			$('#note').append("<img class='imgAttention' src='img/attention_icon.png'>");
 		}
 		
-		if(localStorage.getItem("sendOrder") == "true" && $('#txtSavetyStock').val() == ""){
-
-			isSendOrder = false;
-			$('#sendOrder').empty();
-			$('#sendOrder').append("<img class='imgAttention' src='img/attention_icon.png'>");
-		} else {
-			if(parseInt($('#txtSavetyStock').val()) >= parseInt($('#txtStock').val())){
+		if(localStorage.getItem("sendOrder") == "true"){
+			if($('#txtSavetyStock').val() == ""){
 				isSavetyStockCorrect = false;
-				$('#sendOrder').empty();
-				$('#sendOrder').append("<img class='imgAttention' src='img/attention_icon.png'>");
-			} else {
-				$('#sendOrder').empty(); 
-				isSavetyStockCorrect = true;
-				isSendOrder = true;
+				$('#savetyStock').empty();
+				$('#savetyStock').append("<img class='imgAttention' src='img/attention_icon.png'>");
+			}	else {
+				if(parseInt($('#txtSavetyStock').val()) >= parseInt($('#txtStock').val())){
+					isSavetyStockCorrect = false;
+					$('#savetyStock').empty();
+					$('#savetyStock').append("<img class='imgAttention' src='img/attention_icon.png'>");
+				} else {
+					$('#savetyStock').empty(); 
+					isSavetyStockCorrect = true;
+					
+				}
 			}
+		} else {
+			$('#txtSavetyStock').val(0);
+			isSendOrder = true;
 		}
 		
 		if(isStockCorrect == true && isNoteCorrect == true && isSavetyStockCorrect == true){
@@ -1380,7 +1409,9 @@ $(document).ready(function() {
 	        dataType: "json",
 	        data: JSON.stringify(objEditMedicineInformation),
 	        success: function(data, textStatus, jqXHR){
-	        	if(objEditMedicineInformation.stock>=objEditMedicineInformation.savetyStock){
+	        	var stock = parseInt(objEditMedicineInformation.stock);
+	        	var savetyStock = parseInt(objEditMedicineInformation.savetyStock);
+	        	if(stock>savetyStock){
 	        		turnOffStockNotificationLED(objEditMedicineInformation.boxID);
 	        	}
 	        	$('#btnOpenEditMedicineModal').trigger("click"); 
@@ -1856,10 +1887,41 @@ $(document).ready(function() {
 			$('#tdForwardFirstAddMedicine').append("<button id='btnAddMedicineForwardFirst' class='btn btn-lg btn-warning' value='editMedicine2'><font class='fontButtonNavigation'>weiter</font></button>");
 			
 			$('#btnAddMedicineForwardFirst').click(function(){
-				localStorage.setItem("destination", $(this).val());
-				localStorage.setItem("medicineName", $("#txtMedicineName").val());
-				localStorage.setItem("disease", $("#txtDisease").val());
-				window.location = "addMedicine2.html";
+				var isMedicineNameCorrect = true;
+				var isDiseasseCorrect = true;
+				
+				if($("#txtMedicineName").val()==""){
+					isMedicineNameCorrect = false;
+				} else {
+					$('#aMedicineName').empty();
+					isMedicineNameCorrect = true;
+				}
+				
+				if($("#txtDisease").val() == ""){
+					isDiseasseCorrect = false;
+				} else {
+					$('#aDisease').empty();
+					isDiseasseCorrect = true;
+				}
+				
+				if(isDiseasseCorrect==true && isMedicineNameCorrect == true){
+					localStorage.setItem("destination", $(this).val());
+					localStorage.setItem("medicineName", $("#txtMedicineName").val());
+					localStorage.setItem("disease", $("#txtDisease").val());
+					window.location = "addMedicine2.html";
+				} else {
+					if(isMedicineNameCorrect==false){
+						$('#aMedicineName').empty();
+						$('#aMedicineName').append("<img class='imgAttention'width='200' height='20' src='img/attention_icon.png'>");
+					} 
+					
+					if(isDiseasseCorrect==false){
+						$('#aDisease').empty();
+						$('#aDisease').append("<img class='imgAttention'width='200' height='20' src='img/attention_icon.png'>");
+					}
+					
+				}
+				
 			})
 			
 			//changing the original button redirect destination to the editMedicineOverview.html destination
@@ -1877,19 +1939,47 @@ $(document).ready(function() {
 		// this part will be triggered, when the destination is the second add medicine information page
 		else {
 
-			if(newObjMedicineInformation.sourceType == "misc"){
-				$('#btnSourceTypeMisc').click();
-			} else if(newObjMedicineInformation.sourceType == "doctor"){
-				$('#btnSourceTypeDoctor').click();
-			} else {
-				$('#btnSourceTypeDrugStore').click();
-			}
+			var isNoteCorrect = true;
+			var isStockCorrect = true;
+			var isSavetyStockCorrect = true;
 			
-			if(newObjMedicineInformation.sendOrder == true){
-				$('#btnSendOrderYes').click();
+			
+			
+			if(localStorage.getItem("sourceType")!=null){
+				if(localStorage.getItem("sourceType")=="misc"){
+					$('#btnSourceTypeMisc').click();
+				} else if(localStorage.getItem("sourceType")=="doctor"){
+					$('#btnSourceTypeDoctor').click();
+				} else {
+					$('#btnSourceTypeDrugStore').click();
+				}
 			} else {
-				$('#btnSendOrderNo').click();
+				if(newObjMedicineInformation.sourceType == "misc"){
+					$('#btnSourceTypeMisc').click();
+				} else if(newObjMedicineInformation.sourceType == "doctor"){
+					$('#btnSourceTypeDoctor').click();
+				} else {
+					$('#btnSourceTypeDrugStore').click();
+				}
+			} 
+			
+
+		
+			if(localStorage.getItem("sendOrder") != null){
+				if(localStorage.getItem("sendOrder") == "true"){
+					$("#btnSendOrderYes").click();
+				} else{
+					$("#btnSendOrderNo").click();
+				}
+			} else {
+				if(newObjMedicineInformation.sendOrder == true){
+					$('#btnSendOrderYes').click();
+				} else {
+					$('#btnSendOrderNo').click();
+				}
 			}
+				
+				
 			if(localStorage.getItem("stock")==null && localStorage.getItem("savetyStock")==null && localStorage.getItem("note")==null){
 				$('#txtNote').val(newObjMedicineInformation.note);
 				$('#txtStock').val(newObjMedicineInformation.stock);
@@ -1917,11 +2007,56 @@ $(document).ready(function() {
 			$('#btnSaveEditMedicineInformation').click(function(){
 				
 				
-				localStorage.setItem("note", $('#txtNote').val());
-				localStorage.setItem("stock", $('#txtStock').val());
-				localStorage.setItem("savetyStock", $('#txtSavetyStock').val());
 				
-				createEditMedicineInformationObject();
+				
+				if($('#txtNote').val()==""){
+					$('#note').empty();
+					$('#note').append("<img class='imgAttention'width='200' height='20' src='img/attention_icon.png'>");
+					isNoteCorrect = false;
+				} else {
+					$('#note').empty();
+					isNoteCorrect = true;
+				}
+
+				if($('#txtStock').val()==""){
+					$('#stock').empty();
+					$('#stock').append("<img class='imgAttention'width='200' height='20' src='img/attention_icon.png'>");
+					isStockCorrect = false;
+				} else {
+					$('#stock').empty();
+					isStockCorrect = true;
+				}
+				
+				if($('#txtSavetyStock').val()==""){
+					if(localStorage.getItem("sendOrder") == "true"){
+						isSavetyStockCorrect = false;
+						$('#savetyStock').empty();
+						$('#savetyStock').append("<img class='imgAttention'width='200' height='20' src='img/attention_icon.png'>");
+					} else {
+						$('#txtSavetyStock').val(0);
+						isSavetyStockCorrect = true;
+					}
+				} else {
+					var stock = parseInt($('#txtStock').val());
+					var savetyStock = parseInt($('#txtSavetyStock').val());
+					if(savetyStock>stock){
+						isSavetyStockCorrect = false;
+						$('#savetyStock').empty();
+						$('#savetyStock').append("<img class='imgAttention'width='200' height='20' src='img/attention_icon.png'>");	
+					} else {
+						$('#savetyStock').empty();
+						isSavetyStockCorrect = true;
+					}
+				}
+				
+				if(isNoteCorrect == true && isStockCorrect == true && isSavetyStockCorrect == true){
+					localStorage.setItem("note", $('#txtNote').val());
+					localStorage.setItem("stock", $('#txtStock').val());
+					localStorage.setItem("savetyStock", $('#txtSavetyStock').val());
+					
+					createEditMedicineInformationObject();
+				}
+				
 			})
 		}
 	}

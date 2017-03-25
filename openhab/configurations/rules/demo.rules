@@ -111,7 +111,7 @@ then
 	executeCommandLine("python@@/opt/openhab/configurations/scripts/servo.py")
 
 	var int k = -1
-    var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByBoxID/1") 
+     	var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByBoxID/1") 
 	var sourceOfSupplyInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getSourceOfSupply") 
 
 	var numberSourceOfSupplies = Integer::parseInt(transform("JSONPATH","$.numberSourceOfSupplies", sourceOfSupplyInformation ))
@@ -131,7 +131,7 @@ then
 			var recieveMail = Boolean::parseBoolean(transform("JSONPATH","$.sourceOfSupply["+k+"].recieveMail", sourceOfSupplyInformation ))
 			
 			if(recieveMail == true){
-				sendMail(email, "Medikament \""+medicineName+"\" versenden", "Bitte das Medikament \""+medicineName+"\" versenden an XXX")
+				sendMail(email, "Medikament \""+medicineName+"\" versenden", "Bitte das Medikament \""+medicineName+"\" versenden")
 			}
 		}
 	}
@@ -173,7 +173,7 @@ then
 			var recieveMail = Boolean::parseBoolean(transform("JSONPATH","$.sourceOfSupply["+k+"].recieveMail", sourceOfSupplyInformation ))
 			
 			if(recieveMail == true){
-				sendMail(email, "Medikament \""+medicineName+"\" versenden", "Bitte das Medikament \""+medicineName+"\" versenden an XXX")
+				sendMail(email, "Medikament \""+medicineName+"\" versenden", "Bitte das Medikament \""+medicineName+"\" versenden")
 			}
 		}
 	}
@@ -216,7 +216,7 @@ then
 			var recieveMail = Boolean::parseBoolean(transform("JSONPATH","$.sourceOfSupply["+k+"].recieveMail", sourceOfSupplyInformation ))
 			
 			if(recieveMail == true){
-				sendMail(email, "Medikament \""+medicineName+"\" versenden", "Bitte das Medikament \""+medicineName+"\" versenden an XXX")
+				sendMail(email, "Medikament \""+medicineName+"\" versenden", "Bitte das Medikament \""+medicineName+"\" versenden")
 			}
 		}
 	}
@@ -315,14 +315,13 @@ then
 				
 				var medicineName = arrTriggeredMedicine.state
 			
-
-
-			
 				var int numberOfContactPersons = Integer::parseInt(transform("JSONPATH","$.numberOfContactPersons", contactPerson))
 				
 				var int k = -1
 				var int i = -1
 				var int m = -1
+
+				println(listTriggeredMedicineNames)
 				while ((k=k+1) < listTriggeredMedicineIDs.size) {
 					var medicineInformation = sendHttpGetRequest("http://localhost:8080/smartmedicine/rest/medicineinformation/getMedicineInformationByMedicineID/"+listTriggeredMedicineIDs.get(k))
 					var sendNotification = Boolean::parseBoolean(transform("JSONPATH","$.sendNotification", medicineInformation)) 
@@ -335,9 +334,7 @@ then
 							var name  = transform("JSONPATH","$.psychologicalParent["+i+"].name", contactPerson)
 							var recieveNotification = Boolean::parseBoolean(transform("JSONPATH","$.psychologicalParent["+i+"].recieveNotification", contactPerson))
 							var contactTypeContactPerson = transform("JSONPATH","$.psychologicalParent["+i+"].contactType", contactPerson)
-
-
-							
+				
 						
 							if(recieveNotification==true && contactTypeMedicine == contactTypeContactPerson){
 								while ((m=m+1) < listTriggeredMedicineNames.size) {
@@ -382,6 +379,8 @@ rule "lightColor selection"
 when
     Item lightColorName received command 
 then
+
+
 	if (receivedCommand=="white") { 
 	       	sendCommand(hueColor, new HSBType(new DecimalType(0),new PercentType(0),new PercentType(0)))		
 		if(lightState==OFF){ 

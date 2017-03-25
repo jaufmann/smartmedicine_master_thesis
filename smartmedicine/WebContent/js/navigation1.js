@@ -139,7 +139,7 @@ $(document).ready(function() {
 	$('#btnBackToFirstAddMedicine').click(function(){
 		localStorage.setItem("note", $("#txtNote").val());
 		localStorage.setItem("stock", $("#txtStock").val());
-		localStorage.setItem("savetyStock", $("#txtStock").val());
+		localStorage.setItem("savetyStock", $("#txtSavetyStock").val());
 		localStorage.setItem("destination","addMedicine");
 		window.location = 'addMedicine.html';
 	})
