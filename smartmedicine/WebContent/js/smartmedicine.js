@@ -45,7 +45,6 @@ $(document).ready(function() {
 	$('#bootstrap-table').ready(function() {
 			
 		
-		
 		//$('#divHeader').append("<img width='300' src='img/SmartMedicineLogo.png'><hr>");
 		console.log(host);
 		
@@ -191,6 +190,37 @@ $(document).ready(function() {
 		else if(destination=="medicineDetailedInformation"){
 			loadMedicineDetailedInformation();
 		} else if(destination=="editMedicineInformationOverview"){
+		/*	var stock = "";
+			var savetyStock = "";
+			var boxID = "";
+			var listBoxIDs = [];
+
+			setTimeout(
+				    function() {
+				    	for(i=0; i<getMedicineInformation().length;i++){
+
+							stock = parseInt(getMedicineInformation()[i].stock);
+							savetyStock = parseInt(getMedicineInformation()[i].savetyStock);
+							boxID = parseInt(getMedicineInformation()[i].boxID);
+							listBoxIDs.push(boxID);
+							if(savetyStock<=stock){
+								turnOffStockNotificationLED(boxID, "OFF");
+							} else {
+								turnOffStockNotificationLED(boxID, "ON");
+							}
+						}
+						
+						for(i=1; i<=3;i++){
+							if(isInArray(i, listBoxIDs)!=true){
+								turnOffStockNotificationLED(i, "OFF");
+							} else {
+								turnOffStockNotificationLED(i, "ON");
+							}
+						}
+			}, 1000);
+			
+		
+		*/
 			loadEditMedicineInformationTable();
 		} else if(destination=="medicineOverview"){
 			loadMedicineOverviewTable();
@@ -1412,7 +1442,7 @@ $(document).ready(function() {
 	        	var stock = parseInt(objEditMedicineInformation.stock);
 	        	var savetyStock = parseInt(objEditMedicineInformation.savetyStock);
 	        	if(stock>savetyStock){
-	        		turnOffStockNotificationLED(objEditMedicineInformation.boxID);
+	        		turnOffStockNotificationLED(objEditMedicineInformation.boxID, "OFF");
 	        	}
 	        	$('#btnOpenEditMedicineModal').trigger("click"); 
 	        	
@@ -1428,12 +1458,12 @@ $(document).ready(function() {
 	    });
 	}
 	
-	function turnOffStockNotificationLED(ledID)
+	function turnOffStockNotificationLED(ledID, ledStatus)
 	{
 	    var request = $.ajax
 	    ({
 	        type       : "GET",
-	        url        : host+':'+port+'/CMD?ledNumber='+ledID
+	        url        : host+':'+port+'/CMD?ledNumber='+ledID+'&ledStatus='+ledStatus
 	    });
 
 	    request.done( function(data) 
@@ -2113,6 +2143,8 @@ $(document).ready(function() {
 			    	if(data.medicine.length!=0){
 			    		for(var i=0;i<data.medicine.length;i++){
 			    			objMedicineInformation.boxID = data.medicine[i].boxID;
+			    			objMedicineInformation.savetyStock = data.medicine[i].savetyStock;
+			    			objMedicineInformation.stock = data.medicine[i].stock;
 			    			arrMedicineInformationObj.push(objMedicineInformation);
 				    	}		
 			    	} else {
@@ -2520,7 +2552,7 @@ $(document).ready(function() {
 	        url: host+':'+port+'/smartmedicine/rest/medicineinformation/deleteMedicineInformation/'+medicineID,
 	        dataType: "json",
 	        success: function(data, textStatus, jqXHR){
-	        	turnOffStockNotificationLED(boxID);
+	        	turnOffStockNotificationLED(boxID, "OFF");
 	        },
 	        error: function(jqXHR, textStatus, errorThrown){
 	            alert('Medicine information could be deleted');
