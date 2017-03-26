@@ -36,7 +36,7 @@
     <table width="100%">
     <tr>
 
-    	<td width="20%"><img src="img/blue_2.png" width="40px"> &nbsp;&nbsp;&nbsp;&nbsp;<font>Lichtfarbe</font></td>
+    	<td width="20%"><img src="img/blue_2.png" width="40px"> &nbsp;&nbsp;&nbsp;&nbsp;<font><b>Lichtfarbe</b><font></td>
     	<td width="20%" align="right"> <input id="toggle-event" type="checkbox" data-toggle="toggle" data-size="large" data-width="150"></td>
     </tr>
     </table>
@@ -73,10 +73,50 @@ float:left;width:100%">
 
   
   <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="btnSaveVisualNotification"
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#myModal" id="btnSaveVisualNotification"
 style="visibility:hidden">
   Launch demo modal
 </button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" align="center">
+         <font class="statusModalSuccess"><b>Einstellungen erfolgreich gespeichert</b></font>
+        
+         <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCloseModal" style="visibility:hidden">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal Start here-->
+<div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1"
+    role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span class="glyphicon glyphicon-time">
+                    </span>&nbsp;&nbsp;Bitte warten
+                 </h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info
+                    progress-bar-striped active"
+                    style="width: 100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal ends Here -->
+
 
 
 <!------------------------------------------START INTAKE STATUS MODAL START  --------------------------------------------------->
